@@ -1,14 +1,14 @@
 <template>
   <main>
     <stats></stats>
-    <button @click="drink()">Drink</button>
-    <button @click="eat()">Eat</button>
+    <inventory></inventory>
     <button @click="sleep()">Sleep</button>
   </main>
 </template>
 
 <script>
 import stats from './Stats'
+import inventory from './Inventory'
 
 export default {
   name: 'main',
@@ -16,18 +16,6 @@ export default {
     return {}
   },
   methods: {
-    drink() {
-      this.$store.commit('increase', {
-        stat: 'water',
-        amount: 10
-      })
-    },
-    eat() {
-      this.$store.commit('increase', {
-        stat: 'food',
-        amount: 20
-      })
-    },
     sleep() {
       this.$store.commit('increase', {
         stat: 'sleep',
@@ -36,7 +24,8 @@ export default {
     }
   },
   components: {
-    stats
+    stats,
+    inventory
   }
 }
 </script>
