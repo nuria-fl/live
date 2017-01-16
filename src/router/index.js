@@ -3,10 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Stats from '../components/Stats.vue'
+import Main from '../components/Main.vue'
 
 export default new Router({
   routes: [
-    { path: '/', component: Stats },
+    { path: '/', component: Main },
   ]
 })
