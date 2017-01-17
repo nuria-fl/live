@@ -14,7 +14,6 @@ const vm = new Vue({
   }
 }).$mount()
 
-
 describe('Stats.vue', () => {
   it('should render its template', function () {
     expect(vm.$el.querySelectorAll('li').length).toBe(3)

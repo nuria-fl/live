@@ -14,6 +14,9 @@ export default {
   methods: {
     consume(item){
       let stat = item.type === 'food' ? 'food' : 'water'
+
+      // calculate risk to get sick
+
       this.$store.commit('increase', {
         stat: stat,
         amount: item.value

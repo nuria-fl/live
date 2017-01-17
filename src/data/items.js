@@ -3,7 +3,7 @@ export default [
     type: 'food',
     name: 'Rabbit',
     value: 20,
-    risk: 60
+    risk: 6
   },
   {
     type: 'food',
@@ -15,7 +15,7 @@ export default [
     type: 'drink',
     name: 'Dirty Water',
     value: 20,
-    risk: 60
+    risk: 6
   },
   {
     type: 'drink',
