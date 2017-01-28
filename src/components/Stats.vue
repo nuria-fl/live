@@ -1,15 +1,9 @@
 <template>
-  <div>
-    <div v-if="this.gameOver">
-      GAME OVER
-      <button type="button" @click="this.$emit('newGame')">Start over</button>
-    </div>
-    <ul  v-if="!this.gameOver">
-      <li v-for="(stat, key) in stats">
-        {{ key }} : {{stat}}
-      </li>
-    </ul>
-  </div>
+  <ul>
+    <li v-for="(stat, key) in stats">
+      {{ key }} : {{stat}}
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -21,7 +15,6 @@ export default {
     ...mapState(['stats', 'gameOver'])
   },
   methods: {
-    // ...mapMutations(['decrease'])
     countdown() {
       const minute = 60 * 1000
       if(this.$store.state.gameOver === false){

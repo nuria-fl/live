@@ -1,26 +1,14 @@
-<template>
-  <main>
-    <stats></stats>
-    <inventory></inventory>
+<template lang="html">
+  <div>
     <button :disabled="disabled" @click="sleep()">Sleep</button>
     <button :disabled="disabled" @click="hunt()">Hunt</button>
     <button :disabled="disabled" @click="scavenge()">Scavenge</button>
-  </main>
+  </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import stats from './Stats'
-import inventory from './Inventory'
-
 export default {
-  name: 'main',
-  data () {
-    return {}
-  },
-  computed: {
-    ...mapState(['disabled'])
-  },
+  name: 'actions',
   methods: {
     sleep() {
       this.$store.commit('increase', {
@@ -44,10 +32,6 @@ export default {
       })
       this.$store.commit('decrease', { stat: 'sleep', amount: 5 })
     }
-  },
-  components: {
-    stats,
-    inventory
   }
 }
 </script>

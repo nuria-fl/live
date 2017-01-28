@@ -5,6 +5,7 @@ export default {
     state.stats[stat] = state.stats[stat] - amount
     if (state.stats[stat] <= 0) {
       state.gameOver = true
+      state.disabled = true
     }
   },
   increase (state, {stat, amount}) {
@@ -16,10 +17,12 @@ export default {
   removeInventory (state, {item}) {
 
   },
-  disable (state, {time}){
+  disable (state, {time}) {
     state.disabled = true
-    setTimeout(function(){
-      state.disabled = false
-    }, time)
+    if (!state.gameOver) {
+      setTimeout(function () {
+        state.disabled = false
+      }, time)
+    }
   }
 }
