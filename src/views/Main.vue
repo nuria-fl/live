@@ -1,14 +1,18 @@
 <template>
-  <main>
+  <main class="o-container">
     <div v-if="this.gameOver">
       GAME OVER
-      <button type="button" @click="this.$emit('newGame')">Start over</button>
+      <button type="button" @click="newGame()">Start over</button>
     </div>
-    <div v-if="!this.gameOver">
-      <stats></stats>
-      <inventory></inventory>
-      <actions></action>
-    </div>
+    <template v-if="!this.gameOver">
+      <div class="o-container__sidebar">
+        <stats></stats>
+      </div>
+      <div class="o-container__main">
+        <inventory></inventory>
+        <actions></actions>
+      </div>
+    </template>
   </main>
 </template>
 
@@ -25,6 +29,11 @@ export default {
   },
   computed: {
     ...mapState(['disabled', 'gameOver'])
+  },
+  methods: {
+    newGame(){
+      location.reload()
+    }
   },
   components: {
     stats,

@@ -1,8 +1,12 @@
 <template lang="html">
   <div>
-    <button :disabled="disabled" @click="sleep()">Sleep</button>
-    <button :disabled="disabled" @click="hunt()">Hunt</button>
-    <button :disabled="disabled" @click="scavenge()">Scavenge</button>
+    <button
+      v-for="action in actions"
+      :disabled="disabled"
+      @click="action.method"
+      class="o-btn o-btn--default o-btn--block">
+      {{ action.name }}
+    </button>
   </div>
 </template>
 
@@ -11,6 +15,24 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'actions',
+  data () {
+    return {
+      actions: [
+        {
+          name: 'Sleep',
+          method: this.sleep
+        },
+        {
+          name: 'Hunt',
+          method: this.hunt
+        },
+        {
+          name: 'Scavenge',
+          method: this.scavenge
+        }
+      ]
+    }
+  },
   computed: {
     ...mapState(['disabled', 'gameOver'])
   },

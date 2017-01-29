@@ -1,3 +1,10 @@
-@import 'variables';
-@import 'mixins';
-@import 'normalize';
+@import 'settings/variables';
+
+@import 'tools/mixins';
+
+@import 'generic/normalize';
+
+@import 'elements/base';
+
+@import 'objects/btn';
+@import 'objects/container';
