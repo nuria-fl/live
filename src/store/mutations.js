@@ -17,12 +17,12 @@ export default {
   removeInventory (state, {item}) {
 
   },
-  disable (state, {time}) {
+  disable (state) {
+    console.log(state.disabled)
     state.disabled = true
-    if (!state.gameOver) {
-      setTimeout(function () {
-        state.disabled = false
-      }, time)
-    }
+  },
+  enable (state) {
+    console.log(state.disabled)
+    state.disabled = false
   }
 }

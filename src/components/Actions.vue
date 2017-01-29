@@ -7,30 +7,44 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'actions',
+  computed: {
+    ...mapState(['disabled', 'gameOver'])
+  },
   methods: {
     sleep() {
-      this.$store.commit('increase', {
+      this.$store.dispatch('increase', {
         stat: 'sleep',
-        amount: 30
-      })
-
-      this.$store.commit('disable', {
+        amount: 30,
         time: 5000
       })
+        .then(()=> {
+          console.log('sleeping done!');
+        })
+        .catch(()=>{
+          console.error('oops');
+        })
     },
     hunt() {
-      this.$store.commit('disable', {
-        time: 5000
-      })
-      this.$store.commit('decrease', { stat: 'sleep', amount: 10 })
+      this.$store.dispatch('decrease', { stat: 'sleep', amount: 10, time: 5000 })
+        .then(()=> {
+          console.log('hunting done!');
+        })
+        .catch(()=>{
+          console.error('oops');
+        })
     },
     scavenge() {
-      this.$store.commit('disable', {
-        time: 5000
-      })
-      this.$store.commit('decrease', { stat: 'sleep', amount: 5 })
+      this.$store.dispatch('decrease', { stat: 'sleep', amount: 5, time: 5000 })
+        .then(()=> {
+          console.log('scavenging done!');
+        })
+        .catch(()=>{
+          console.error('oops');
+        })
     }
   }
 }

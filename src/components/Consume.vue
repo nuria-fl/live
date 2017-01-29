@@ -1,15 +1,18 @@
 <template>
-  <button type="button" name="button" @click="consume(item)">{{ action }}</button>
+  <button type="button" name="button" @click="consume(item)" :disabled="disabled">{{ action }}</button>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'consume',
   props: ['item'],
   computed: {
     action() {
       return this.item.type === 'food' ? 'Eat' : 'Drink'
-    }
+    },
+    ...mapState(['disabled'])
   },
   methods: {
     consume(item){
