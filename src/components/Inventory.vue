@@ -1,31 +1,25 @@
 <template>
   <section>
-    <h2>Drinks</h2>
-    <list :list="inventoryDrinks"></list>
-
-    <h2>Food</h2>
-    <list :list="inventoryFood"></list>
-
-    <h2>Other</h2>
-
+    <h2>Inventory</h2>
+    <list :list="orderedList"></list>
   </section>
 </template>
 
 <script>
 import list from './List'
+import _ from 'lodash'
 
 export default {
   name: 'inventory',
-  data (){
+  data(){
     return {
+      order: 'asc',
+      key: 'dateAdded'
     }
   },
   computed: {
-    inventoryDrinks(){
-      return this.$store.state.inventory.filter( item => item.type === 'drink')
-    },
-    inventoryFood(){
-      return this.$store.state.inventory.filter( item => item.type === 'food')
+    orderedList(){
+      return _.orderBy(this.$store.state.inventory, this.key, this.order)
     }
   },
   components: {
