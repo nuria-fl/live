@@ -1,0 +1,29 @@
+.c-tabs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &__item {
+    display: inline-block;
+    margin: 0 .5rem 0 0;
+  }
+  &__btn {
+    margin: 0;
+    padding: 1rem;
+    background: transparent;
+    border: .1rem solid $green;
+    border-bottom: none;
+    color: $green;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    &.is-selected {
+      background: $green;
+      color: $yellow;
+    }
+  }
+  &__content {
+    margin-top: -.1rem;
+    padding: 1.5rem;
+    border: .1rem solid $green;
+  }
+}

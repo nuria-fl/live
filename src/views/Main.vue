@@ -9,9 +9,17 @@
         <stats></stats>
       </div>
       <div class="o-container__main">
-        <inventory></inventory>
-        <actions></actions>
-        <!-- <crafting></crafting> -->
+        <tab>
+          <tab-content name="actions" :selected="true">
+            <actions></actions>
+          </tab-content>
+          <tab-content name="inventory">
+            <inventory></inventory>
+          </tab-content>
+          <tab-content name="crafting">
+            <!-- <crafting></crafting> -->
+          </tab-content>
+        </tab>
       </div>
     </template>
   </section>
@@ -19,6 +27,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import tab from '../components/Tab'
+import tabContent from '../components/TabContent'
 import actions from '../components/Actions'
 import stats from '../components/Stats'
 import inventory from '../components/Inventory'
@@ -37,6 +47,8 @@ export default {
     }
   },
   components: {
+    tab,
+    tabContent,
     stats,
     inventory,
     actions
