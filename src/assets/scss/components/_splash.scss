@@ -1,0 +1,36 @@
+.c-splash {
+  padding: 10rem 0 0;
+  text-align: center;
+  &__title {
+    margin: 0;
+    font-size: 9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  &__lead {
+    font-size: 2.5rem;
+    font-style: italic;
+    font-weight: 300;
+  }
+  &__btn {
+    color: $green;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    &:before,
+    &:after {
+      content: ' — ';
+      display: inline-block;
+      transition: all .3s;
+      margin: 0 .5rem;
+    }
+    &:hover {
+      opacity: .8;
+      &:before,
+      &:after {
+        margin: 0 1rem;
+      }
+    }
+  }
+}

@@ -2,8 +2,10 @@
   width: 120rem;
   max-width: 100%;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: nowrap;
+  &--grid {
+    display: flex;
+    flex-wrap: nowrap;
+  }
   &__sidebar {
     width: 33.3%;
   }

@@ -1,8 +1,8 @@
 <template>
-  <main class="o-container">
-    <div v-if="this.gameOver">
-      GAME OVER
-      <button type="button" @click="newGame()">Start over</button>
+  <section class="o-container o-container--grid">
+    <div v-if="this.gameOver" class="c-splash">
+      <h1 class="c-splash__title">GAME OVER</h1>
+      <button type="button" @click="newGame()" class="c-splash__btn">Start over</button>
     </div>
     <template v-if="!this.gameOver">
       <div class="o-container__sidebar">
@@ -11,9 +11,10 @@
       <div class="o-container__main">
         <inventory></inventory>
         <actions></actions>
+        <!-- <crafting></crafting> -->
       </div>
     </template>
-  </main>
+  </section>
 </template>
 
 <script>
@@ -32,7 +33,7 @@ export default {
   },
   methods: {
     newGame(){
-      location.reload()
+      this.router.push('/')
     }
   },
   components: {
