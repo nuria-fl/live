@@ -15,7 +15,8 @@ export default {
     }
   },
   removeInventory (state, {item}) {
-
+    const idx = state.inventory.indexOf(item)
+    state.inventory.splice(idx, 1)
   },
   disable (state) {
     console.log(state.disabled)

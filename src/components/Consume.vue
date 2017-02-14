@@ -1,20 +1,40 @@
 <template>
-  <button type="button" name="button" @click="consume(item)" :disabled="disabled">{{ action }}</button>
+  <ul>
+    <li v-for="action in actions">
+      <button type="button" v-if="action === 'Consume'" @click="consume(item)" :disabled="disabled">
+        {{ action }}
+      </button>
+      <button type="button" v-else @click="discard(item)" :disabled="disabled">
+        {{ action }}
+      </button>
+    </li>
+  </ul>
+
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import utils from '../utils'
 
 export default {
   name: 'consume',
   props: ['item'],
   computed: {
-    action() {
-      return this.item.type === 'food' ? 'Eat' : 'Drink'
+    actions() {
+      const actions = ['discard']
+      if(this.item.type === 'food' || this.item.type === 'drink' ){
+        actions.unshift('Consume')
+      }
+      return actions
     },
     ...mapState(['disabled'])
   },
   methods: {
+    discard(item){
+      this.$store.commit('removeInventory', {
+        item
+      })
+    },
     consume(item){
       let stat = item.type === 'food' ? 'food' : 'water'
 
@@ -28,6 +48,7 @@ export default {
         stat: stat,
         amount: item.value
       })
+      this.discard(item)
     },
     calculateRisk(risk) {
       const pool = []
@@ -40,7 +61,8 @@ export default {
         }
       }
 
-      const idx = Math.floor(Math.random() * pool.length)
+      const idx = utils.randomizeWithinRange(pool.length)
+
       return pool[idx]
     }
   }

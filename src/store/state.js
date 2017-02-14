@@ -1,8 +1,18 @@
 import { MAX } from '../data/constants'
 import items from '../data/items'
+import utils from '../utils'
 
-function randomize (source, items) {
-  return [source[0], source[2]]
+const mergedItems = [...items.food, ...items.drink, ...items.junk]
+
+function randomizeItems (source, items) {
+  const arr = []
+
+  for(let i = 0; i < items; i++){
+    const idx = utils.randomizeWithinRange(items)
+    arr.push(source[idx])
+  }
+
+  return arr
 }
 
 export default {
@@ -13,5 +23,5 @@ export default {
     food: MAX,
     sleep: MAX
   },
-  inventory: randomize(items, 2)
+  inventory: randomizeItems(mergedItems, 5)
 }
