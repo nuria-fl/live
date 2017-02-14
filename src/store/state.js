@@ -7,8 +7,8 @@ const mergedItems = [...items.food, ...items.drink, ...items.junk]
 function randomizeItems (source, items) {
   const arr = []
 
-  for(let i = 0; i < items; i++){
-    const idx = utils.randomizeWithinRange(items)
+  for (let i = 0; i < items; i++) {
+    const idx = utils.randomizeWithinRange(source.length)
     arr.push(source[idx])
   }
 

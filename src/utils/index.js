@@ -1,5 +1,5 @@
 export default {
-  randomizeWithinRange(range) {
+  randomizeWithinRange (range) {
     return Math.floor(Math.random() * range)
   }
 }

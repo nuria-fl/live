@@ -17,7 +17,7 @@
             <inventory></inventory>
           </tab-content>
           <tab-content name="crafting">
-            <!-- <crafting></crafting> -->
+            <crafting></crafting>
           </tab-content>
         </tab>
       </div>
@@ -32,6 +32,7 @@ import tabContent from '../components/TabContent'
 import actions from '../components/Actions'
 import stats from '../components/Stats'
 import inventory from '../components/Inventory'
+import crafting from '../components/Crafting'
 
 export default {
   name: 'main',
@@ -51,7 +52,8 @@ export default {
     tabContent,
     stats,
     inventory,
-    actions
+    actions,
+    crafting
   }
 }
 </script>
