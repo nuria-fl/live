@@ -13,10 +13,22 @@
       border-color: $primary;
       color: $green;
     }
+    &:disabled {
+      color: $primary;
+    }
   }
   &--block {
     display: block;
     width: 100%;
     margin: 1rem 0;
+  }
+  &--link {
+    background-color: transparent;
+    border: none;
+  }
+  &:disabled {
+    opacity: .5;
+    cursor: default;
+    background-color: transparent;
   }
 }

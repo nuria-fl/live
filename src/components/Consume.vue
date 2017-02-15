@@ -1,20 +1,13 @@
 <template>
-  <ul>
-    <li v-for="action in actions">
-      <button type="button" v-if="action === 'Consume'" @click="consume(item)" :disabled="disabled">
-        {{ action }}
-      </button>
-      <button type="button" v-else @click="discard(item)" :disabled="disabled">
-        {{ action }}
-      </button>
-    </li>
-  </ul>
-
+  <popover :list="actions" @clicked="doAction">
+    {{item.name}}
+  </popover>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import utils from '../utils'
+import popover from './Popover'
 
 export default {
   name: 'consume',
@@ -23,7 +16,7 @@ export default {
     actions() {
       const actions = ['discard']
       if(this.item.type === 'food' || this.item.type === 'drink' ){
-        actions.unshift('Consume')
+        actions.unshift('consume')
       }
       return actions
     },
@@ -35,20 +28,23 @@ export default {
         item
       })
     },
-    consume(item){
-      let stat = item.type === 'food' ? 'food' : 'water'
+    doAction(action){
+      if (action === 'consume'){
+        let stat = this.item.type === 'food' ? 'food' : 'water'
 
-      const infected = this.calculateRisk(item.risk)
+        const infected = this.calculateRisk(this.item.risk)
 
-      if(infected){
-        alert('you got sick!')
+        if(infected){
+          alert('you got sick!')
+        }
+
+        this.$store.commit('increase', {
+          stat: stat,
+          amount: this.item.value
+        })
       }
 
-      this.$store.commit('increase', {
-        stat: stat,
-        amount: item.value
-      })
-      this.discard(item)
+      this.discard(this.item)
     },
     calculateRisk(risk) {
       const pool = []
@@ -65,6 +61,9 @@ export default {
 
       return pool[idx]
     }
+  },
+  components: {
+    popover
   }
 }
 </script>
