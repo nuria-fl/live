@@ -9,17 +9,10 @@ export default {
     },
     {
       type: 'food',
-      id: 'rabbit',
-      name: 'Rabbit',
+      id: 'meat',
+      name: 'Raw meat',
       value: 20,
       risk: 6
-    },
-    {
-      type: 'food',
-      id: 'rabbit-cooked',
-      name: 'Cooked Rabbit',
-      value: 25,
-      risk: 0
     }
   ],
   drink: [
@@ -29,16 +22,14 @@ export default {
       name: 'Dirty Water',
       value: 20,
       risk: 6
-    },
-    {
-      type: 'drink',
-      id: 'water-clean',
-      name: 'Clean Water',
-      value: 20,
-      risk: 0
     }
   ],
   junk: [
+    {
+      type: 'junk',
+      id: 'salt',
+      name: 'Salt'
+    },
     {
       type: 'junk',
       id: 'string',

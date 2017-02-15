@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     countdown() {
-      const minute = 60 * 1000
+      const minute = 10 * 1000
       if(this.$store.state.gameOver === false){
         setInterval(() => {
           this.$store.commit('decrease', { stat: 'water', amount: 3 })

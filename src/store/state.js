@@ -23,5 +23,6 @@ export default {
     food: MAX,
     sleep: MAX
   },
-  inventory: randomizeItems(mergedItems, 5)
+  inventory: randomizeItems(mergedItems, 5),
+  fire: false
 }

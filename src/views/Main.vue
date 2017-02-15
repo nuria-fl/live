@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     newGame(){
-      this.router.push('/')
+      location.reload()
     }
   },
   components: {

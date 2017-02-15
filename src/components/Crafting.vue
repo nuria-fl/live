@@ -2,7 +2,7 @@
   <ul>
     <li v-for="item in craftedItems">
       {{item.name}}
-      Items needed: {{item.items}}
+      <div>Items needed: {{item.items}}</div>
       <button type="button" @click="craft(item)" :disabled="!item.isCraftable">
         Craft
       </button>
@@ -12,11 +12,16 @@
 
 <script>
 import craftedItems from '../data/craftedItems'
+import cookedItems from '../data/cookedItems'
 export default {
   name: 'crafting',
   computed: {
     craftedItems(){
-      const crafted = craftedItems
+      cookedItems.forEach(item => {
+        item.condition = 'fire'
+      })
+
+      const crafted = [...craftedItems, ...cookedItems]
 
       crafted.forEach(item => {
         const currentItems = []
@@ -40,15 +45,22 @@ export default {
         // TO-DO: is length enough? deepEqual?
         if(currentItems.length === item.items.length){
           item.isCraftable = true
+          if(item.condition === 'fire' && !this.$store.state.fire){
+            item.isCraftable = false
+          }
         }
+
       })
 
       return crafted
     }
   },
   methods: {
-    craft(itemId){
-
+    craft(item){
+      item.items.forEach(item => {
+        this.$store.commit('removeInventory', {item: item.id})
+      })
+      this.$store.commit('addInventory', {item})
     }
   }
 }

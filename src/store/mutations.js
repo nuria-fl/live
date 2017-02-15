@@ -14,6 +14,9 @@ export default {
       state.stats[stat] = MAX
     }
   },
+  addInventory (state, {item}) {
+    state.inventory.push(item)
+  },
   removeInventory (state, {item}) {
     const idx = state.inventory.indexOf(item)
     state.inventory.splice(idx, 1)
