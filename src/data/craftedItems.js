@@ -7,7 +7,7 @@ export default [
   },
   {
     id: 'bow',
-    type: 'tool',
+    type: 'weapon',
     name: 'Bow',
     items: ['string', 'wood']
   },

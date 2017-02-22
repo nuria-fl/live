@@ -51,16 +51,22 @@ export default {
         })
     },
     hunt() {
-      this.$store.dispatch('decrease', { stat: 'sleep', amount: 10, time: 5000 })
-        .then(()=> {
-          console.log('hunting done!');
+      const haveWeapon = this.$store.state.inventory.filter(item => item.type === 'weapon')
+
+      if(haveWeapon.length){
+        this.$store.dispatch('hunt', {time: 8000})
+        .then((items) => {
+          console.log('You hunted: ');
+          items.forEach(item => {
+            console.log(item.name)
+          })
         })
-        .catch(()=>{
-          console.error('oops');
-        })
+      } else {
+        alert('you need to craft a weapon first')
+      }
     },
     scavenge() {
-      this.$store.dispatch('scavenge', {time: 5000})
+      this.$store.dispatch('scavenge', {time: 3000})
         .then((items) => {
           console.log('You found: ');
           items.forEach(item => {
