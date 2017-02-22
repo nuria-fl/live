@@ -60,12 +60,12 @@ export default {
         })
     },
     scavenge() {
-      this.$store.dispatch('decrease', { stat: 'sleep', amount: 5, time: 5000 })
-        .then(()=> {
-          console.log('scavenging done!');
-        })
-        .catch(()=>{
-          console.error('oops');
+      this.$store.dispatch('scavenge', {time: 5000})
+        .then((items) => {
+          console.log('You found: ');
+          items.forEach(item => {
+            console.log(item.name)
+          })
         })
     }
   }
