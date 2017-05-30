@@ -1,10 +1,10 @@
 <template lang="html">
-  <div>
-    <slot name="action"></slot>
-    <div class="c-modal" v-if="visible">
+  <div class="c-modal" v-if="visible">
+    <div class="c-modal__backdrop" @click="close()"></div>
+    <div class="c-modal__main">
       <header class="c-modal__hd">
         <slot name="header"></slot>
-        <button type="button" @click="close()">&times;</button>
+        <button type="button" @click="close()" class="c-modal__close">&times;</button>
       </header>
       <section class="c-modal__bd">
         <slot name="body"></slot>

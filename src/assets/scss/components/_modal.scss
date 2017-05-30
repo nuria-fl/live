@@ -1,7 +1,36 @@
 .c-modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  &__backdrop {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.6);
+  }
+  &__main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 1em;
+  }
+  &__close {
+    width: 1.4em;
+    height: 1.4em;
+    position: absolute;
+    top: -.7em;
+    right: -.7em;
+    background-color: $green;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
 }
