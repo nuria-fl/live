@@ -4,7 +4,7 @@
     <div class="c-popover__bd">
       <ul>
         <li v-for="item in list">
-          <button class="o-btn o-btn--link" @click="$emit('clicked', item)">{{ item }}</button>
+          <button class="o-btn o-btn--default" @click="$emit('clicked', item)">{{ item }}</button>
         </li>
       </ul>
     </div>

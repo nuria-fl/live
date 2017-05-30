@@ -7,20 +7,21 @@
   cursor: pointer;
   text-transform: uppercase;
   &--default {
-    color: $primary;
+    color: $green;
     &:hover {
-      background: $primary;
-      border-color: $primary;
-      color: $green;
-    }
-    &:disabled {
       color: $primary;
+      border-color: $green;
+      background: $green;
     }
   }
   &--block {
     display: block;
     width: 100%;
     margin: 1rem 0;
+  }
+  &--lg {
+    padding-top: 1em;
+    padding-bottom: 1em;
   }
   &--link {
     background-color: transparent;
@@ -29,6 +30,6 @@
   &:disabled {
     opacity: .5;
     cursor: default;
-    background-color: transparent;
+    pointer-events: none;
   }
 }

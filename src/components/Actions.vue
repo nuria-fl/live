@@ -4,7 +4,7 @@
       v-for="action in actions"
       :disabled="disabled"
       @click="action.method"
-      class="o-btn o-btn--default o-btn--block">
+      class="o-btn o-btn--default o-btn--block o-btn--lg">
       {{ action.name }}
     </button>
   </div>
