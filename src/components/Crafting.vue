@@ -2,8 +2,14 @@
   <ul>
     <li v-for="item in craftedItems">
       {{item.name}}
-      <div>Items needed: {{item.items}}</div>
-      <button type="button" @click="craft(item)" :disabled="!item.isCraftable">
+      <div>
+        Items needed:
+        {{item.items.join(', ')}}
+      </div>
+      <button
+        type="button"
+        class="o-btn o-btn--default"
+        @click="craft(item)" :disabled="!item.isCraftable">
         Craft
       </button>
     </li>

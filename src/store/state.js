@@ -2,7 +2,6 @@ import { MAX } from '../data/constants'
 import items from '../data/items'
 import utils from '../utils'
 
-const existingItems = [...items.food, ...items.drink, ...items.junk]
 const state = {
   gameOver: false,
   disabled: false,
@@ -11,8 +10,8 @@ const state = {
     food: MAX,
     sleep: MAX
   },
-  existingItems: existingItems,
-  inventory: utils.randomizeItems(existingItems, 5),
+  existingItems: items,
+  inventory: utils.randomizeItems(items, 2),
   fire: false
 }
 

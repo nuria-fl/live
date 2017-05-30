@@ -27,7 +27,7 @@ export default [
     id: 'jerky',
     type: 'food',
     name: 'Jerky',
-    items: ['raw-meat', 'salt'],
+    items: ['meat', 'salt'],
     value: 20,
     risk: 0
   }

@@ -22,11 +22,9 @@ export default {
     state.inventory.splice(idx, 1)
   },
   disable (state) {
-    console.log(state.disabled)
     state.disabled = true
   },
   enable (state) {
-    console.log(state.disabled)
     state.disabled = false
   }
 }
