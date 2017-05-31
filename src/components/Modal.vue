@@ -4,14 +4,16 @@
     <div class="c-modal__main">
       <header class="c-modal__hd">
         <slot name="header"></slot>
-        <button type="button" @click="close()" class="c-modal__close">&times;</button>
+        <button v-if="isCloseable" type="button" @click="close()" class="c-modal__close">&times;</button>
       </header>
       <section class="c-modal__bd">
         <slot name="body"></slot>
       </section>
       <footer class="c-modal__ft">
-        <button type="button" class="o-btn o-btn--default">Close</button>
-        <button type="button" class="o-btn o-btn--primary">Ok</button>
+        <button v-if="isCloseable" type="button" class="o-btn o-btn--default" @click="close()">
+          {{ closeText }}
+        </button>
+        <slot name="actions"></slot>
       </footer>
     </div>
   </div>
@@ -24,6 +26,16 @@ export default {
   data(){
     return {
       visible: false
+    }
+  },
+  props: {
+    isCloseable: {
+      type: Boolean,
+      default: true
+    },
+    closeText: {
+      type: String,
+      default: 'Close'
     }
   },
   methods: {
