@@ -7,9 +7,14 @@
       class="o-btn o-btn--default o-btn--block o-btn--lg">
       {{ action.name }}
     </button>
-    <modal :visible="true" ref="modal">
+    <modal ref="modalResult">
       <div slot="body">
         You got {{ lastActionResult }}
+      </div>
+    </modal>
+    <modal :isCloseable="false" ref="modalAction">
+      <div slot="body">
+        {{ currentAction }}
       </div>
     </modal>
   </div>
@@ -24,6 +29,7 @@ export default {
   data () {
     return {
       lastActionResult: '',
+      currentAction: null,
       actions: [
         {
           name: 'Sleep',
@@ -45,13 +51,15 @@ export default {
   },
   methods: {
     sleep() {
+      this.openStatusModal('Sleeping')
+
       this.$store.dispatch('increase', {
         stat: 'sleep',
         amount: 30,
         time: 5000
       })
         .then(()=> {
-          console.log('sleeping done!');
+          this.handleResult()
         })
         .catch(()=>{
           console.error('oops');
@@ -61,6 +69,7 @@ export default {
       const haveWeapon = this.$store.state.inventory.filter(item => item.type === 'weapon')
 
       if(haveWeapon.length){
+        this.openStatusModal('Hunting')
         this.lastActionResult = ''
 
         this.$store.dispatch('hunt', {time: 8000})
@@ -72,6 +81,7 @@ export default {
       }
     },
     scavenge() {
+      this.openStatusModal('Scavenging')
       this.lastActionResult = ''
 
       this.$store.dispatch('scavenge', {time: 3000})
@@ -79,13 +89,27 @@ export default {
           this.handleResult(items)
         })
     },
+    openStatusModal(action) {
+      this.currentAction = action
+
+      this.$refs.modalAction.open();
+    },
+    closeStatusModal() {
+      this.currentAction = null
+
+      this.$refs.modalAction.close();
+    },
     handleResult(items) {
-      const itemsAcquired = []
-      items.forEach(item => {
-         itemsAcquired.push(item.name)
-      })
-      this.$refs.modal.open();
-      this.lastActionResult = itemsAcquired.join(', ')
+      this.closeStatusModal()
+
+      if(items) {
+        const itemsAcquired = []
+        items.forEach(item => {
+          itemsAcquired.push(item.name)
+        })
+        this.$refs.modalResult.open();
+        this.lastActionResult = itemsAcquired.join(', ')
+      }
     }
   },
   components: {
