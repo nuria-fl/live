@@ -1,35 +1,73 @@
 <template lang="html">
-  <ul>
-    <li v-for="item in craftedItems">
-      {{item.name}}
-      <div>
-        Items needed:
-        {{item.items.join(', ')}}
-      </div>
-      <button
-        type="button"
-        class="o-btn o-btn--default"
-        @click="craft(item)" :disabled="!item.isCraftable">
-        Craft
-      </button>
-    </li>
-  </ul>
+  <div>
+    <h2>WEAPONS</h2>
+    <ul>
+      <li v-for="item in weapons">
+        {{item.name}}
+        <div>
+          Items needed:
+          {{item.items.join(', ')}}
+        </div>
+        <button
+          type="button"
+          class="o-btn o-btn--default"
+          @click="craft(item)" :disabled="!item.isCraftable">
+          Craft
+        </button>
+      </li>
+    </ul>
+
+    <h2>FOOD</h2>
+    <ul>
+      <li v-for="item in foodItems">
+        {{item.name}}
+        <div>
+          Items needed:
+          {{item.items.join(', ')}}
+        </div>
+        <button
+          type="button"
+          class="o-btn o-btn--default"
+          @click="craft(item)" :disabled="!item.isCraftable">
+          Craft
+        </button>
+      </li>
+    </ul>
+
+    <h2>TOOLS</h2>
+    <ul>
+      <li v-for="item in tools">
+        {{item.name}}
+        <div>
+          Items needed:
+          {{item.items.join(', ')}}
+        </div>
+        <button
+          type="button"
+          class="o-btn o-btn--default"
+          @click="craft(item)" :disabled="!item.isCraftable">
+          Craft
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-import craftedItems from '../data/craftedItems'
-import cookedItems from '../data/cookedItems'
+import craftableItems from '../data/craftableItems'
+import cookableItems from '../data/cookableItems'
+
 export default {
   name: 'crafting',
   computed: {
-    craftedItems(){
-      cookedItems.forEach(item => {
+    craftableItems(){
+      cookableItems.forEach(item => {
         item.condition = 'fire'
       })
 
-      const crafted = [...craftedItems, ...cookedItems]
+      const craftable = [...craftableItems, ...cookableItems]
 
-      crafted.forEach(item => {
+      craftable.forEach(item => {
         const currentItems = []
 
         //create temporary inventory to see if we have enough items
@@ -38,7 +76,7 @@ export default {
         item.items.forEach(itemNeeded => {
           const idx = inventory.indexOf(itemNeeded)
 
-          if ( idx > -1){
+          if ( idx !== -1){
             // if we find the item we remove it from the temp inventory
             inventory.splice(idx, 1)
             currentItems.push(itemNeeded)
@@ -48,7 +86,8 @@ export default {
         })
 
         // if we have all the items we can craft the item
-        // TO-DO: is length enough? deepEqual?
+        // TODO: is length enough? deepEqual?
+
         if(currentItems.length === item.items.length){
           item.isCraftable = true
           if(item.condition === 'fire' && !this.$store.state.fire){
@@ -58,7 +97,16 @@ export default {
 
       })
 
-      return crafted
+      return craftable
+    },
+    foodItems() {
+      return this.craftableItems.filter(item => item.type === 'food')
+    },
+    tools() {
+      return this.craftableItems.filter(item => item.type === 'tool')
+    },
+    weapons() {
+      return this.craftableItems.filter(item => item.type === 'weapon')
     }
   },
   methods: {
