@@ -112,7 +112,7 @@ export default {
   methods: {
     craft(item){
       item.items.forEach(item => {
-        this.$store.commit('removeInventory', {item: item.id})
+        this.$store.commit('removeInventory', {item})
       })
       this.$store.commit('addInventory', {item})
     }
