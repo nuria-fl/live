@@ -1,5 +1,9 @@
 import { MAX } from '../data/constants'
 
+const findIndexById = (id, collection) => {
+  return collection.findIndex(item => item.id === id)
+}
+
 export default {
   decrease (state, {stat, amount}) {
     state.stats[stat] = state.stats[stat] - amount
@@ -18,8 +22,11 @@ export default {
     state.inventory.push(item)
   },
   removeInventory (state, {item}) {
-    const idx = state.inventory.indexOf(item)
-    state.inventory.splice(idx, 1)
+    const idx = findIndexById(item, state.inventory)
+
+    if (idx !== -1) {
+      state.inventory.splice(idx, 1)
+    }
   },
   disable (state) {
     state.disabled = true

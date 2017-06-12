@@ -25,7 +25,7 @@ export default {
   methods: {
     discard(item){
       this.$store.commit('removeInventory', {
-        item
+        item: item.id
       })
     },
     doAction(action){
