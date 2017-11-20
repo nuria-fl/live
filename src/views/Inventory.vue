@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import list from './List'
 import _ from 'lodash'
+import list from '../components/List'
 
 export default {
   name: 'inventory',

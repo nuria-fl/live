@@ -22,7 +22,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import modal from './Modal'
+import modal from '../components/Modal'
 
 export default {
   name: 'actions',

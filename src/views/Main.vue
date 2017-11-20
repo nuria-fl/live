@@ -9,17 +9,17 @@
         <stats></stats>
       </div>
       <div class="o-container__main">
-        <tab>
-          <tab-content name="actions" :selected="true">
-            <actions></actions>
-          </tab-content>
-          <tab-content name="inventory">
-            <inventory></inventory>
-          </tab-content>
-          <tab-content name="crafting">
-            <crafting></crafting>
-          </tab-content>
-        </tab>
+        <ul class="c-tabs">
+          <li v-for="menuItem in navMenu" :key="menuItem" class="c-tabs__item">
+            <router-link
+              :to="{name: menuItem}"
+              class="c-tabs__btn"
+              :class="{ 'is-selected' : $route.name === menuItem }">
+              {{ menuItem }}
+            </router-link>
+          </li>
+        </ul>
+        <router-view></router-view>
       </div>
     </template>
   </section>
@@ -27,33 +27,29 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import tab from '../components/Tab'
-import tabContent from '../components/TabContent'
-import actions from '../components/Actions'
 import stats from '../components/Stats'
-import inventory from '../components/Inventory'
-import crafting from '../components/Crafting'
 
 export default {
   name: 'main',
   data () {
-    return {}
+    return {
+      navMenu: [
+        'Actions',
+        'Inventory',
+        'Crafting'
+      ]
+    }
   },
   computed: {
     ...mapState(['disabled', 'gameOver'])
   },
   methods: {
     newGame(){
-      location.reload()
+      this.$emit('newGame')
     }
   },
   components: {
-    tab,
-    tabContent,
-    stats,
-    inventory,
-    actions,
-    crafting
+    stats
   }
 }
 </script>

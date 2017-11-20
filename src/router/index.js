@@ -3,12 +3,27 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Splash from '../views/Splash.vue'
-import Main from '../views/Main.vue'
+import Actions from '../views/Actions.vue'
+import Inventory from '../views/Inventory.vue'
+import Crafting from '../views/Crafting.vue'
 
 export default new Router({
+  linkExactActiveClass: true,
   routes: [
-    { path: '/', component: Splash },
-    { path: '/play', component: Main }
+    {
+      path: '/',
+      name: 'Actions',
+      component: Actions
+    },
+    {
+      path: '/inventory',
+      name: 'Inventory',
+      component: Inventory
+    },
+    {
+      path: '/crafting',
+      name: 'Crafting',
+      component: Crafting
+    }
   ]
 })
