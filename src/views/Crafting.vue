@@ -10,7 +10,6 @@
         </div>
         <button
           type="button"
-          class="o-btn o-btn--default"
           @click="craft(item)" :disabled="!item.isCraftable">
           Craft
         </button>
@@ -27,7 +26,6 @@
         </div>
         <button
           type="button"
-          class="o-btn o-btn--default"
           @click="craft(item)" :disabled="!item.isCraftable">
           Craft
         </button>
@@ -44,7 +42,6 @@
         </div>
         <button
           type="button"
-          class="o-btn o-btn--default"
           @click="craft(item)" :disabled="!item.isCraftable">
           Craft
         </button>

@@ -3,8 +3,7 @@
     <button
       v-for="action in actions"
       :disabled="disabled"
-      @click="action.method"
-      class="o-btn o-btn--default o-btn--block o-btn--lg">
+      @click="action.method">
       {{ action.name }}
     </button>
     <modal ref="modalResult">

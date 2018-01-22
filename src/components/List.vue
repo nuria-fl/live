@@ -1,6 +1,6 @@
 <template>
-  <ul class="c-grid">
-    <li v-for="item in list" class="c-grid__item">
+  <ul>
+    <li v-for="item in list">
       <consume :item="item"></consume>
     </li>
   </ul>

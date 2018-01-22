@@ -5,10 +5,11 @@
   "author": "blended.io",
   "private": true,
   "scripts": {
-    "prepush": "npm run codestyle",
+    "prepush": "npm run lint",
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
-    "codestyle": "standard src/**/*.js",
+    "lint": "standard src/**/*.js",
+    "lint:fix": "standard --fix src/**/*.js",
     "watch": "karma start test/unit/karma.conf.js",
     "test": "karma start test/unit/karma.conf.js --single-run"
   },

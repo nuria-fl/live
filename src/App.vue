@@ -1,10 +1,10 @@
 <template>
   <main>
-  	<section class="o-container c-splash" v-if="!hasStarted">
-  		<h1 class="c-splash__title">Live</h1>
-    	<p class="c-splash__lead">A game about survival</p>
-    	<button @click="start" class="c-splash__btn">New Game</button>
-  	</section>
+    <section v-if="!hasStarted">
+      <h1>Live</h1>
+      <p>A game about survival</p>
+      <button @click="start">New Game</button>
+    </section>
     <main-component v-else @newGame="start"></main-component>
   </main>
 </template>
@@ -13,11 +13,11 @@
 import Main from './views/Main'
 
 export default {
-	data() {
+  data() {
     return {
-		  hasStarted: false
+      hasStarted: false
     }
-	},
+  },
   components: {
     MainComponent: Main
   },
@@ -29,4 +29,10 @@ export default {
 
 }
 </script>
-<style src="./assets/scss/index.scss" lang="scss"></style>
+
+<style lang="scss">
+  body {
+    font-family: monospace;
+  }
+</style>
+<!-- <style src="./assets/scss/index.scss" lang="scss"></style> -->

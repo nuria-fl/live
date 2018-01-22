@@ -1,16 +1,14 @@
 <template lang="html">
-  <div class="c-modal" v-if="visible">
-    <div class="c-modal__backdrop" @click="close()"></div>
-    <div class="c-modal__main">
-      <header class="c-modal__hd">
+  <div v-if="visible">
+    <div>
+      <header>
         <slot name="header"></slot>
-        <button v-if="isCloseable" type="button" @click="close()" class="c-modal__close">&times;</button>
       </header>
-      <section class="c-modal__bd">
+      <section>
         <slot name="body"></slot>
       </section>
-      <footer class="c-modal__ft">
-        <button v-if="isCloseable" type="button" class="o-btn o-btn--default" @click="close()">
+      <footer>
+        <button v-if="isCloseable" type="button" @click="close()">
           {{ closeText }}
         </button>
         <slot name="actions"></slot>
@@ -35,7 +33,7 @@ export default {
     },
     closeText: {
       type: String,
-      default: 'Close'
+      default: 'Ok'
     }
   },
   methods: {

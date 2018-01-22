@@ -1,10 +1,10 @@
 <template lang="html">
-  <div class="c-popover">
+  <div>
     <slot></slot>
-    <div class="c-popover__bd">
+    <div>
       <ul>
         <li v-for="item in list">
-          <button class="o-btn o-btn--default" @click="$emit('clicked', item)">{{ item }}</button>
+          <button @click="$emit('clicked', item)">{{ item }}</button>
         </li>
       </ul>
     </div>
