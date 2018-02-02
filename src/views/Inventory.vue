@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2>Inventory</h2>
+    <h2>Inventory {{ length }}/{{ maxLength }}</h2>
     <list :list="orderedList"></list>
   </section>
 </template>
@@ -8,7 +8,8 @@
 <script>
 import { mapState } from 'vuex'
 import _ from 'lodash'
-import list from '../components/List'
+import { MAXINVENTORY } from '@/data/constants'
+import list from '@/components/List'
 
 export default {
   name: 'inventory',
@@ -20,6 +21,12 @@ export default {
   },
   computed: {
     ...mapState(['inventory']),
+    length() {
+      return this.inventory.length
+    },
+    maxLength() {
+      return MAXINVENTORY
+    },
     orderedList(){
       return _.orderBy(this.inventory, this.key, this.order)
     }

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import modal from '../components/Modal'
 
 export default {
@@ -46,10 +46,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['disabled', 'gameOver', 'inventory'])
+    ...mapState(['disabled', 'gameOver', 'inventory']),
+    ...mapGetters(['isInventoryFull', 'slotsInInventoryLeft'])
   },
   methods: {
     ...mapActions(['increaseAsync', 'hunt', 'scavenge']),
+    handleFullInventory() {
+      alert('Your inventory is full. Remove at least one item to proceed.')
+    },
     sleep() {
       this.openStatusModal('Sleeping')
 
@@ -66,6 +70,11 @@ export default {
         })
     },
     goHunt() {
+      if(this.isInventoryFull) {
+        this.handleFullInventory()
+        return
+      }
+
       const hasWeapon = this.inventory.filter(item => item.type === 'weapon').length > 0
 
       if(hasWeapon){
@@ -81,6 +90,11 @@ export default {
       }
     },
     goScavenge() {
+      if(this.isInventoryFull) {
+        this.handleFullInventory()
+        return
+      }
+
       this.openStatusModal('Scavenging')
       this.lastActionResult = ''
 

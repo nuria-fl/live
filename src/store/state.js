@@ -1,4 +1,4 @@
-import { MAX } from '../data/constants'
+import { MAX, MAXINVENTORY } from '../data/constants'
 import items from '../data/items'
 import utils from '../utils'
 
@@ -15,4 +15,9 @@ const state = {
   fire: false
 }
 
-export default state
+const getters = {
+  isInventoryFull: () => state.inventory.length === MAXINVENTORY,
+  slotsInInventoryLeft: () => MAXINVENTORY - state.inventory.length
+}
+
+export { state, getters }

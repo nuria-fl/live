@@ -11,7 +11,7 @@ export default {
           resolve()
         }, time)
       } else {
-        reject()
+        reject(new Error('game is over'))
       }
     })
   },
@@ -25,18 +25,20 @@ export default {
           resolve()
         }, time)
       } else {
-        reject()
+        reject(new Error('game is over'))
       }
     })
   },
-  scavenge ({state, commit}, {time}) {
+  scavenge ({state, getters, commit}, {time}) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
         setTimeout(function () {
           const scavengeableItems = state.existingItems.filter(item => item.action === 'scavenge')
 
-          const newItems = utils.randomizeItems(scavengeableItems, 3)
+          const numberOfItems = getters.slotsInInventoryLeft > 3 ? 3 : getters.slotsInInventoryLeft
+
+          const newItems = utils.randomizeItems(scavengeableItems, numberOfItems)
 
           newItems.forEach(item => {
             commit('addInventory', {item: item})
@@ -50,7 +52,7 @@ export default {
           resolve(newItems)
         }, time)
       } else {
-        reject()
+        reject(new Error('game is over'))
       }
     })
   },
@@ -61,7 +63,7 @@ export default {
         setTimeout(function () {
           const huntableItems = state.existingItems.filter(item => item.action === 'hunt')
 
-          const newItems = utils.randomizeItems(huntableItems, 2)
+          const newItems = utils.randomizeItems(huntableItems, 1)
 
           newItems.forEach(item => {
             commit('addInventory', {item: item})
@@ -75,7 +77,7 @@ export default {
           resolve(newItems)
         }, time)
       } else {
-        reject()
+        reject(new Error('game is over'))
       }
     })
   }

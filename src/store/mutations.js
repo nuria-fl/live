@@ -1,4 +1,4 @@
-import { MAX } from '../data/constants'
+import { MAX, MAXINVENTORY } from '../data/constants'
 
 const findIndexById = (id, collection) => {
   return collection.findIndex(item => item.id === id)
@@ -19,7 +19,9 @@ export default {
     }
   },
   addInventory (state, {item}) {
-    state.inventory.push(item)
+    if (state.inventory.length < MAXINVENTORY) {
+      state.inventory.push(item)
+    }
   },
   removeInventory (state, {item}) {
     const idx = findIndexById(item, state.inventory)
