@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.e1982d91d62f0f6b4bc2d0e35d0722b0.css"],"names":[],"mappings":"AACA,KACE,qBAAuB,CACxB,AAED,WACE,WAAY,AACZ,aAAc,AACd,4BAA8B,CAC/B","file":"app.e1982d91d62f0f6b4bc2d0e35d0722b0.css","sourcesContent":["\nbody {\n  font-family: monospace;\n}\n\n.inventory {\n  width: 100%;\n  display: flex;\n  justify-content: space-around;\n}\n"]}
