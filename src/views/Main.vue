@@ -23,7 +23,7 @@ import Crafting from './Crafting'
 import Inventory from './Inventory'
 
 export default {
-  name: 'main',
+  name: 'mainElement',
   data () {
     return {
       navMenu: [
@@ -54,7 +54,9 @@ export default {
 <style lang="scss">
   .inventory {
     width: 100%;
-    display: flex;
-    justify-content: space-around;
+    @media screen and (min-width: 680px) {
+      display: flex;
+      justify-content: space-around;
+    }
   }
 </style>

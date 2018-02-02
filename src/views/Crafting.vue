@@ -51,12 +51,14 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import craftableItems from '../data/craftableItems'
 import cookableItems from '../data/cookableItems'
 
 export default {
   name: 'crafting',
   computed: {
+    ...mapState(['inventory', 'fire']),
     craftableItems(){
       cookableItems.forEach(item => {
         item.condition = 'fire'
@@ -68,7 +70,7 @@ export default {
         const currentItems = []
 
         //create temporary inventory to see if we have enough items
-        const inventory = this.$store.state.inventory.map(item => item.id)
+        const inventory = this.inventory.map(item => item.id)
 
         item.items.forEach(itemNeeded => {
           const idx = inventory.indexOf(itemNeeded)
@@ -87,7 +89,7 @@ export default {
 
         if(currentItems.length === item.items.length){
           item.isCraftable = true
-          if(item.condition === 'fire' && !this.$store.state.fire){
+          if(item.condition === 'fire' && !this.fire){
             item.isCraftable = false
           }
         }
@@ -107,11 +109,12 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['removeInventory', 'addInventory']),
     craft(item){
       item.items.forEach(item => {
-        this.$store.commit('removeInventory', {item})
+        this.removeInventory({item})
       })
-      this.$store.commit('addInventory', {item})
+      this.addInventory({item})
     }
   }
 }

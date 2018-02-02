@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import modal from '../components/Modal'
 
 export default {
@@ -36,23 +36,24 @@ export default {
         },
         {
           name: 'Hunt',
-          method: this.hunt
+          method: this.goHunt
         },
         {
           name: 'Scavenge',
-          method: this.scavenge
+          method: this.goScavenge
         }
       ]
     }
   },
   computed: {
-    ...mapState(['disabled', 'gameOver'])
+    ...mapState(['disabled', 'gameOver', 'inventory'])
   },
   methods: {
+    ...mapActions(['increaseAsync', 'hunt', 'scavenge']),
     sleep() {
       this.openStatusModal('Sleeping')
 
-      this.$store.dispatch('increase', {
+      this.increaseAsync({
         stat: 'sleep',
         amount: 30,
         time: 5000
@@ -64,14 +65,14 @@ export default {
           console.error('oops');
         })
     },
-    hunt() {
-      const haveWeapon = this.$store.state.inventory.filter(item => item.type === 'weapon')
+    goHunt() {
+      const hasWeapon = this.inventory.filter(item => item.type === 'weapon').length > 0
 
-      if(haveWeapon.length){
+      if(hasWeapon){
         this.openStatusModal('Hunting')
         this.lastActionResult = ''
 
-        this.$store.dispatch('hunt', {time: 8000})
+        this.hunt({time: 8000})
           .then((items) => {
             this.handleResult(items)
           })
@@ -79,11 +80,11 @@ export default {
         alert('you need to craft a weapon first')
       }
     },
-    scavenge() {
+    goScavenge() {
       this.openStatusModal('Scavenging')
       this.lastActionResult = ''
 
-      this.$store.dispatch('scavenge', {time: 3000})
+      this.scavenge({time: 3000})
         .then((items) => {
           this.handleResult(items)
         })

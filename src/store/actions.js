@@ -1,7 +1,7 @@
 import utils from '../utils'
 
 export default {
-  decrease ({state, commit}, {stat, amount, time}) {
+  decreaseAsync ({state, commit}, {stat, amount, time}) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
@@ -15,7 +15,7 @@ export default {
       }
     })
   },
-  increase ({state, commit}, {stat, amount, time}) {
+  increaseAsync ({state, commit}, {stat, amount, time}) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {

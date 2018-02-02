@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import utils from '../utils'
 import popover from './Popover'
 
@@ -23,10 +23,9 @@ export default {
     ...mapState(['disabled'])
   },
   methods: {
+    ...mapMutations(['removeInventory', 'increase']),
     discard(item){
-      this.$store.commit('removeInventory', {
-        item: item.id
-      })
+      this.removeInventory({item: item.id})
     },
     doAction(action){
       if (action === 'consume'){
@@ -38,7 +37,7 @@ export default {
           alert('you got sick!')
         }
 
-        this.$store.commit('increase', {
+        this.increase({
           stat: stat,
           amount: this.item.value
         })

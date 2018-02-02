@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'stats',
@@ -20,13 +20,14 @@ export default {
     ...mapState(['stats', 'gameOver'])
   },
   methods: {
+    ...mapMutations(['decrease']),
     countdown() {
       const minute = 10 * 1000
-      if(this.$store.state.gameOver === false){
+      if(this.gameOver === false){
         this.loop = setInterval(() => {
-          this.$store.commit('decrease', { stat: 'water', amount: 3 })
-          this.$store.commit('decrease', { stat: 'food', amount: 2 })
-          this.$store.commit('decrease', { stat: 'sleep', amount: 1 })
+          this.decrease({ stat: 'water', amount: 3 })
+          this.decrease({ stat: 'food', amount: 2 })
+          this.decrease({ stat: 'sleep', amount: 1 })
         }, minute)
       }
     },

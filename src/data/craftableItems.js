@@ -21,7 +21,7 @@ export default [
     id: 'water-collector',
     type: 'tool',
     name: 'Water collector',
-    items: ['plastic', 'rope']
+    items: ['plastic', 'rope', 'bottle']
   },
   {
     id: 'jerky',

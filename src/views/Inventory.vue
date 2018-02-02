@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import _ from 'lodash'
 import list from '../components/List'
 
@@ -18,8 +19,9 @@ export default {
     }
   },
   computed: {
+    ...mapState(['inventory']),
     orderedList(){
-      return _.orderBy(this.$store.state.inventory, this.key, this.order)
+      return _.orderBy(this.inventory, this.key, this.order)
     }
   },
   components: {
