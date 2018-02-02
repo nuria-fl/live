@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Main from './views/Main'
+import Main from '@/views/Main'
 
 export default {
   data() {
@@ -35,4 +35,3 @@ export default {
     font-family: monospace;
   }
 </style>
-<!-- <style src="./assets/scss/index.scss" lang="scss"></style> -->
