@@ -1,7 +1,7 @@
 {
-  "name": "testtt",
+  "name": "Live",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A game about survival",
   "author": "Nuria <soriano.nuria@gmail.com>",
   "private": true,
   "scripts": {
