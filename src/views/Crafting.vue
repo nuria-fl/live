@@ -35,9 +35,21 @@
       </li>
     </ul>
 
-    <h2>FOOD</h2>
+    <h2>FOOD AND WATER</h2>
     <ul>
       <li v-for="item in foodItems">
+        {{item.name}}
+        <div>
+          Items needed:
+          {{item.items.join(', ')}}
+        </div>
+        <button
+          type="button"
+          @click="craft(item)" :disabled="!item.isCraftable">
+          Craft
+        </button>
+      </li>
+      <li v-for="item in drinkItems">
         {{item.name}}
         <div>
           Items needed:
@@ -122,6 +134,9 @@ export default {
     },
     foodItems() {
       return this.craftableItems.filter(item => item.type === 'food')
+    },
+    drinkItems() {
+      return this.craftableItems.filter(item => item.type === 'drink')
     },
     tools() {
       return this.craftableItems.filter(item => item.type === 'tool')
