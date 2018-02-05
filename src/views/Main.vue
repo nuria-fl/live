@@ -4,7 +4,7 @@
       <h1>GAME OVER</h1>
       <button type="button" @click="newGame()">Start over</button>
     </div>
-    <div v-if="!this.gameOver" class="inventory">
+    <div v-if="!this.gameOver" class="hud">
       <div>
         <stats></stats>
         <actions></actions>
@@ -52,11 +52,16 @@ export default {
 </script>
 
 <style lang="scss">
-  .inventory {
-    width: 100%;
+  .hud {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
     @media screen and (min-width: 680px) {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
+      > * {
+        flex: 1 1 0;
+      }
     }
   }
 </style>
