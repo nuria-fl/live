@@ -12,7 +12,6 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import utils from '../utils'
-import popover from './Popover'
 
 export default {
   name: 'consume',
