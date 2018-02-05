@@ -1,5 +1,9 @@
 # live
 
-Creating a game with Vue.
+Text based survival game made with Vue.
 
-For now, taking inspiration from [Survive](https://www.thesurvivegame.com/) for game ideas and mechanics.
+Play here: http://nuria-fl.github.io/live/
+
+## License
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
