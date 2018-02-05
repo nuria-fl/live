@@ -1,7 +1,13 @@
 <template>
   <ul>
     <li v-for="(stat, key) in stats">
-      {{ key }} : {{stat}}
+      {{ key }}:
+      <strong :class="{
+        warning: stat < 50,
+        danger: stat < 20
+      }">
+        {{stat}}
+      </strong>
     </li>
   </ul>
 </template>
@@ -44,3 +50,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .warning {
+    color: #fa0;
+  }
+  .danger {
+    color: #c00;
+  }
+</style>
