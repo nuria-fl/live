@@ -10,7 +10,7 @@
         </div>
         <button
           type="button"
-          @click="craft(item)" :disabled="!item.isCraftable">
+          @click="craft(item)" :disabled="!item.isCraftable || disabled">
           Craft
         </button>
       </li>
@@ -26,7 +26,7 @@
         </div>
         <button
           type="button"
-          @click="startFire()" :disabled="!fire.isCraftable">
+          @click="startFire()" :disabled="!fire.isCraftable || disabled">
           Craft
         </button>
       </li>
@@ -45,7 +45,7 @@
         </div>
         <button
           type="button"
-          @click="craft(item)" :disabled="!item.isCraftable">
+          @click="craft(item)" :disabled="!item.isCraftable || disabled">
           Craft
         </button>
       </li>
@@ -57,7 +57,7 @@
         </div>
         <button
           type="button"
-          @click="craft(item)" :disabled="!item.isCraftable">
+          @click="craft(item)" :disabled="!item.isCraftable || disabled">
           Craft
         </button>
       </li>
@@ -73,7 +73,7 @@
         </div>
         <button
           type="button"
-          @click="craft(item)" :disabled="!item.isCraftable">
+          @click="craft(item)" :disabled="!item.isCraftable || disabled">
           Craft
         </button>
       </li>
@@ -89,7 +89,7 @@ import cookableItems from '../data/cookableItems'
 export default {
   name: 'crafting',
   computed: {
-    ...mapState(['inventory', 'hasFire']),
+    ...mapState(['inventory', 'hasFire', 'disabled']),
     craftableItems(){
       cookableItems.forEach(item => {
         item.condition = 'fire'

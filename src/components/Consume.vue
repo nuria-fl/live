@@ -3,7 +3,7 @@
     {{item.name}}
     <ul>
       <li v-for="action in actions" class="action">
-        <button @click="doAction(action)">{{ action }}</button>
+        <button @click="doAction(action)" :disabled="disabled">{{ action }}</button>
       </li>
     </ul>
   </section>
