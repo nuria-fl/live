@@ -29,7 +29,7 @@ export default {
   props: {
     isCloseable: {
       type: Boolean,
-      default: true
+      default: false
     },
     closeText: {
       type: String,
@@ -39,6 +39,9 @@ export default {
   methods: {
     open(){
       this.visible = true
+      if (!this.isCloseable) {
+        setTimeout(this.close, 3000)
+      }
     },
     close(){
       this.visible = false
