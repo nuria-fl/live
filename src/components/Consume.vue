@@ -1,7 +1,12 @@
 <template>
-  <popover :list="actions" @clicked="doAction">
+  <section>
     {{item.name}}
-  </popover>
+    <ul>
+      <li v-for="action in actions" class="action">
+        <button @click="doAction">{{ action }}</button>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script>
@@ -60,9 +65,12 @@ export default {
 
       return pool[idx]
     }
-  },
-  components: {
-    popover
   }
 }
 </script>
+
+<style lang="scss">
+  .action {
+    margin: 0;
+  }
+</style>

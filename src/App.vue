@@ -34,4 +34,7 @@ export default {
   body {
     font-family: monospace;
   }
+  li {
+    margin: 1em 0;
+  }
 </style>
