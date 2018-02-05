@@ -12,7 +12,7 @@ const state = {
   },
   existingItems: items,
   inventory: utils.randomizeItems(items, 2),
-  fire: false
+  hasFire: false
 }
 
 const getters = {

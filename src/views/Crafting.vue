@@ -16,6 +16,25 @@
       </li>
     </ul>
 
+    <h2>FIRE</h2>
+    <ul>
+      <li v-if="!hasFire">
+        Start a fire to cook items
+        <div>
+          Items needed:
+          {{fire.items.join(', ')}}
+        </div>
+        <button
+          type="button"
+          @click="startFire()" :disabled="!fire.isCraftable">
+          Craft
+        </button>
+      </li>
+      <li v-else>
+        Fire is burning
+      </li>
+    </ul>
+
     <h2>FOOD</h2>
     <ul>
       <li v-for="item in foodItems">
@@ -58,7 +77,7 @@ import cookableItems from '../data/cookableItems'
 export default {
   name: 'crafting',
   computed: {
-    ...mapState(['inventory', 'fire']),
+    ...mapState(['inventory', 'hasFire']),
     craftableItems(){
       cookableItems.forEach(item => {
         item.condition = 'fire'
@@ -89,7 +108,7 @@ export default {
 
         if(currentItems.length === item.items.length){
           item.isCraftable = true
-          if(item.condition === 'fire' && !this.fire){
+          if(item.condition === 'fire' && !this.hasFire){
             item.isCraftable = false
           }
         }
@@ -97,6 +116,9 @@ export default {
       })
 
       return craftable
+    },
+    fire() {
+      return this.craftableItems.find(item => item.type === 'fire')
     },
     foodItems() {
       return this.craftableItems.filter(item => item.type === 'food')
@@ -109,12 +131,18 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['removeInventory', 'addInventory']),
+    ...mapMutations(['removeInventory', 'addInventory', 'enableFire']),
     craft(item){
       item.items.forEach(item => {
         this.removeInventory({item})
       })
       this.addInventory({item})
+    },
+    startFire() {
+      this.fire.items.forEach(item => {
+        this.removeInventory({item})
+      })
+      this.enableFire()
     }
   }
 }

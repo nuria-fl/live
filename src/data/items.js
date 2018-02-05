@@ -52,5 +52,11 @@ export default [
     id: 'bottle',
     name: 'Empty bottle',
     action: 'scavenge'
+  },
+  {
+    type: 'junk',
+    id: 'flint',
+    name: 'Flint',
+    action: 'scavenge'
   }
 ]

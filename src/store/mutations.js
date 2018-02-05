@@ -35,5 +35,8 @@ export default {
   },
   enable (state) {
     state.disabled = false
+  },
+  enableFire (state) {
+    state.hasFire = true
   }
 }

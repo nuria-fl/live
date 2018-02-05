@@ -1,5 +1,11 @@
 export default [
   {
+    id: 'fire',
+    type: 'fire',
+    name: 'Fire',
+    items: ['wood', 'flint']
+  },
+  {
     id: 'rope',
     type: 'tool',
     name: 'Rope',

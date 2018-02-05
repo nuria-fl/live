@@ -3,7 +3,7 @@ export default [
     id: 'meat-cooked',
     type: 'food',
     name: 'Cooked meat',
-    items: ['raw-meat'],
+    items: ['meat'],
     value: 20,
     risk: 0
   },
