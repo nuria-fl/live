@@ -2,18 +2,12 @@
   <div>
     <h2>WEAPONS</h2>
     <ul>
-      <li v-for="item in weapons">
-        {{item.name}}
-        <div>
-          Items needed:
-          {{item.items.join(', ')}}
-        </div>
-        <button
-          type="button"
-          @click="craft(item)" :disabled="!item.isCraftable || disabled">
-          Craft
-        </button>
-      </li>
+      <craftable-item
+        v-for="item in weapons"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
     </ul>
 
     <h2>FIRE</h2>
@@ -37,57 +31,43 @@
 
     <h2>FOOD AND WATER</h2>
     <ul>
-      <li v-for="item in foodItems">
-        {{item.name}}
-        <div>
-          Items needed:
-          {{item.items.join(', ')}}
-        </div>
-        <button
-          type="button"
-          @click="craft(item)" :disabled="!item.isCraftable || disabled">
-          Craft
-        </button>
-      </li>
-      <li v-for="item in drinkItems">
-        {{item.name}}
-        <div>
-          Items needed:
-          {{item.items.join(', ')}}
-        </div>
-        <button
-          type="button"
-          @click="craft(item)" :disabled="!item.isCraftable || disabled">
-          Craft
-        </button>
-      </li>
+      <craftable-item
+        v-for="item in foodItems"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
+      <craftable-item
+        v-for="item in drinkItems"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
     </ul>
 
     <h2>TOOLS</h2>
     <ul>
-      <li v-for="item in tools">
-        {{item.name}}
-        <div>
-          Items needed:
-          {{item.items.join(', ')}}
-        </div>
-        <button
-          type="button"
-          @click="craft(item)" :disabled="!item.isCraftable || disabled">
-          Craft
-        </button>
-      </li>
+      <craftable-item
+        v-for="item in tools"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
     </ul>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import craftableItems from '../data/craftableItems'
-import cookableItems from '../data/cookableItems'
+import craftableItems from '@/data/craftableItems'
+import cookableItems from '@/data/cookableItems'
+import CraftableItem from '@/components/CraftableItem'
 
 export default {
   name: 'crafting',
+  components: {
+    CraftableItem
+  },
   computed: {
     ...mapState(['inventory', 'hasFire', 'disabled']),
     craftableItems(){
@@ -97,13 +77,14 @@ export default {
 
       const craftable = [...craftableItems, ...cookableItems]
 
-      craftable.forEach(item => {
+      return craftable.map(item => {
+        const newItem = {...item}
         const currentItems = []
 
         //create temporary inventory to see if we have enough items
         const inventory = this.inventory.map(item => item.id)
 
-        item.items.forEach(itemNeeded => {
+        newItem.items.forEach(itemNeeded => {
           const idx = inventory.indexOf(itemNeeded)
 
           if ( idx !== -1){
@@ -111,23 +92,22 @@ export default {
             inventory.splice(idx, 1)
             currentItems.push(itemNeeded)
           } else {
-            item.isCraftable = false
+            newItem.isCraftable = false
           }
         })
 
         // if we have all the items we can craft the item
         // TODO: is length enough? deepEqual?
 
-        if(currentItems.length === item.items.length){
-          item.isCraftable = true
-          if(item.condition === 'fire' && !this.hasFire){
-            item.isCraftable = false
+        if(currentItems.length === newItem.items.length){
+          newItem.isCraftable = true
+          if(newItem.condition === 'fire' && !this.hasFire){
+            newItem.isCraftable = false
           }
         }
 
+        return newItem
       })
-
-      return craftable
     },
     fire() {
       return this.craftableItems.find(item => item.type === 'fire')
