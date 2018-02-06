@@ -1,21 +1,21 @@
 <template lang="html">
   <div>
-    <button
-      v-for="action in actions"
-      :disabled="disabled"
-      @click="action.method">
-      {{ action.name }}
-    </button>
+    <p>
+      <button
+        v-for="action in actions"
+        :disabled="disabled"
+        @click="action.method">
+        {{ action.name }}
+      </button>
+    </p>
     <modal ref="modalResult">
       <div slot="body">
         You got {{ lastActionResult }}
       </div>
     </modal>
-    <modal :isCloseable="false" ref="modalAction">
-      <div slot="body">
-        {{ currentAction }}
-      </div>
-    </modal>
+    <div v-show="inProgress" class="progress">
+      {{ currentAction }}
+    </div>
   </div>
 </template>
 
@@ -29,6 +29,7 @@ export default {
     return {
       lastActionResult: '',
       currentAction: null,
+      inProgress: false,
       actions: [
         {
           name: 'Sleep',
@@ -55,7 +56,7 @@ export default {
       alert('Your inventory is full. Remove at least one item to proceed.')
     },
     sleep() {
-      this.openStatusModal('Sleeping')
+      this.startProgress('Sleeping')
 
       this.increaseAsync({
         stat: 'sleep',
@@ -78,7 +79,7 @@ export default {
       const hasWeapon = this.inventory.filter(item => item.type === 'weapon').length > 0
 
       if(hasWeapon){
-        this.openStatusModal('Hunting')
+        this.startProgress('Hunting')
         this.lastActionResult = ''
 
         this.hunt({time: 8000})
@@ -95,7 +96,7 @@ export default {
         return
       }
 
-      this.openStatusModal('Scavenging')
+      this.startProgress('Scavenging')
       this.lastActionResult = ''
 
       this.scavenge({time: 3000})
@@ -103,18 +104,8 @@ export default {
           this.handleResult(items)
         })
     },
-    openStatusModal(action) {
-      this.currentAction = action
-
-      this.$refs.modalAction.open();
-    },
-    closeStatusModal() {
-      this.currentAction = null
-
-      this.$refs.modalAction.close();
-    },
     handleResult(items) {
-      this.closeStatusModal()
+      this.endProgress()
 
       if(items) {
         const itemsAcquired = []
@@ -124,6 +115,14 @@ export default {
         this.$refs.modalResult.open();
         this.lastActionResult = itemsAcquired.join(', ')
       }
+    },
+    startProgress(action) {
+      this.currentAction = action
+      this.inProgress = true
+    },
+    endProgress() {
+      this.currentAction = null
+      this.inProgress = false
     }
   },
   components: {
@@ -131,3 +130,25 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .progress {
+    &:after {
+      content: '...';
+      animation: progress 1.5s linear infinite;
+      display: inline;
+    }
+  }
+
+  @keyframes progress {
+    0% {
+      content: '.'
+    }
+    33.333% {
+      content: '..'
+    }
+    66.666% {
+      content: '...'
+    }
+  }
+</style>
