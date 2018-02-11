@@ -36,5 +36,13 @@ export default [
     items: ['meat', 'salt'],
     value: 20,
     risk: 0
+  },
+  {
+    id: 'medicinal-tea',
+    type: 'drink',
+    name: 'Medicinal tea',
+    items: ['water-clean', 'medicinal-herbs'],
+    value: 20,
+    risk: 0
   }
 ]

@@ -38,5 +38,12 @@ export default {
   },
   enableFire (state) {
     state.hasFire = true
+  },
+  getSick (state) {
+    state.isSick = true
+  },
+  getCured (state) {
+    state.isSick = false
+    state.stats.health = MAX
   }
 }

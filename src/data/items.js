@@ -58,5 +58,11 @@ export default [
     id: 'flint',
     name: 'Flint',
     action: 'scavenge'
+  },
+  {
+    type: 'junk',
+    id: 'medicinal-herbs',
+    name: 'Medicinal herbs',
+    action: 'scavenge'
   }
 ]

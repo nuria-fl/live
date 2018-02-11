@@ -27,7 +27,7 @@ export default {
     ...mapState(['disabled'])
   },
   methods: {
-    ...mapMutations(['removeInventory', 'increase']),
+    ...mapMutations(['removeInventory', 'increase', 'getSick', 'getCured']),
     discard(item){
       this.removeInventory({item: item.id})
     },
@@ -37,8 +37,12 @@ export default {
 
         const infected = this.calculateRisk(this.item.risk)
 
-        if(infected){
+        if (infected) {
           alert('you got sick!')
+          this.getSick()
+        } else if (this.item.id === 'medicinal-tea') {
+          alert('you got cured!')
+          this.getCured()
         }
 
         this.increase({

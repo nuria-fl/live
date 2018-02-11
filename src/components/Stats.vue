@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['stats', 'gameOver'])
+    ...mapState(['stats', 'gameOver', 'isSick'])
   },
   methods: {
     ...mapMutations(['decrease']),
@@ -34,6 +34,9 @@ export default {
           this.decrease({ stat: 'water', amount: 3 })
           this.decrease({ stat: 'food', amount: 2 })
           this.decrease({ stat: 'sleep', amount: 1 })
+          if (this.isSick) {
+            this.decrease({ stat: 'health', amount: 2 })
+          }
         }, minute)
       }
     },

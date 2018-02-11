@@ -6,13 +6,15 @@ const state = {
   gameOver: false,
   disabled: false,
   stats: {
+    health: MAX,
     water: MAX,
     food: MAX,
     sleep: MAX
   },
   existingItems: items,
   inventory: utils.randomizeItems(items, 2),
-  hasFire: false
+  hasFire: false,
+  isSick: false
 }
 
 const getters = {
