@@ -6,6 +6,11 @@
       <button @click="start">New Game</button>
     </section>
     <main-component v-else @newGame="start"></main-component>
+    <footer>
+      <a href="https://github.com/nuria-fl/live">Github</a>
+      ·
+      <a href="https://twitter.com/pincfloit">Twitter</a>
+    </footer>
   </main>
 </template>
 
@@ -36,5 +41,14 @@ export default {
   }
   li {
     margin: 1em 0;
+  }
+  footer {
+    margin-top: 2em;
+    @media screen and (min-width: 680px) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 1em;
+    }
   }
 </style>
