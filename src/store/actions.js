@@ -44,7 +44,7 @@ export default {
             commit('addInventory', {item: item})
           })
 
-          commit('decrease', {stat: 'sleep', amount: 10})
+          commit('decrease', {stat: 'sleep', amount: 5})
           commit('decrease', {stat: 'water', amount: 5})
           commit('decrease', {stat: 'sleep', amount: 3})
           commit('enable')
@@ -69,7 +69,7 @@ export default {
             commit('addInventory', {item: item})
           })
 
-          commit('decrease', {stat: 'sleep', amount: 20})
+          commit('decrease', {stat: 'sleep', amount: 10})
           commit('decrease', {stat: 'water', amount: 10})
           commit('decrease', {stat: 'sleep', amount: 6})
           commit('enable')

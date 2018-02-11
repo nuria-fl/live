@@ -60,7 +60,7 @@ export default {
 
       this.increaseAsync({
         stat: 'sleep',
-        amount: 30,
+        amount: 35,
         time: 5000
       })
         .then(()=> {
