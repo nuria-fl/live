@@ -22,7 +22,7 @@ export default {
   name: 'consume',
   props: ['item'],
   computed: {
-    ...mapState(['hasFire']),
+    ...mapState(['hasFire', 'disabled']),
     showFireTip() {
       return this.item.condition === 'fire' && !this.hasFire
     }

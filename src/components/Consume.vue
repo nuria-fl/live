@@ -14,17 +14,16 @@ import { mapState, mapMutations } from 'vuex'
 import utils from '../utils'
 
 export default {
-  name: 'consume',
   props: ['item'],
   computed: {
+    ...mapState(['disabled']),
     actions() {
       const actions = ['discard']
       if(this.item.type === 'food' || this.item.type === 'drink' ){
         actions.unshift('consume')
       }
       return actions
-    },
-    ...mapState(['disabled'])
+    }
   },
   methods: {
     ...mapMutations(['removeInventory', 'increase', 'getSick', 'getCured']),

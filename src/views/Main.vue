@@ -2,6 +2,7 @@
   <section>
     <div v-if="this.gameOver">
       <h1>GAME OVER</h1>
+      <p>You survived {{ daysSurvived }} days</p>
       <button type="button" @click="newGame()">Start over</button>
     </div>
     <div v-if="!this.gameOver" class="hud">
@@ -40,7 +41,7 @@ export default {
     Stats
   },
   computed: {
-    ...mapState(['disabled', 'gameOver'])
+    ...mapState(['disabled', 'gameOver', 'daysSurvived'])
   },
   methods: {
     newGame(){

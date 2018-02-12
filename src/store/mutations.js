@@ -5,6 +5,9 @@ const findIndexById = (id, collection) => {
 }
 
 export default {
+  increaseDayCount (state) {
+    state.daysSurvived++
+  },
   decrease (state, {stat, amount}) {
     state.stats[stat] = state.stats[stat] - amount
     if (state.stats[stat] <= 0) {

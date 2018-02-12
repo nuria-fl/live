@@ -14,7 +14,8 @@ const state = {
   existingItems: items,
   inventory: utils.randomizeItems(items, 2),
   hasFire: false,
-  isSick: false
+  isSick: false,
+  daysSurvived: 0
 }
 
 const getters = {
