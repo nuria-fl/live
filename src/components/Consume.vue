@@ -16,7 +16,7 @@ import utils from '../utils'
 export default {
   props: ['item'],
   computed: {
-    ...mapState(['disabled']),
+    ...mapState(['disabled', 'isSick']),
     actions() {
       const actions = ['discard']
       if(this.item.type === 'food' || this.item.type === 'drink' ){
@@ -40,7 +40,9 @@ export default {
           alert('you got sick!')
           this.getSick()
         } else if (this.item.id === 'medicinal-tea') {
-          alert('you got cured!')
+          if (this.isSick) {
+            alert('you got cured!')
+          }
           this.getCured()
         }
 

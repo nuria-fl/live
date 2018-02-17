@@ -1,31 +1,30 @@
 <template lang="html">
   <div>
-    <h2>WEAPONS</h2>
+    <h2>CAMP UPGRADES</h2>
     <ul>
-      <craftable-item
-        v-for="item in weapons"
-        :key="item.id"
-        :item="item"
-        @craft="craft"
-      />
-    </ul>
-
-    <h2>FIRE</h2>
-    <ul>
-      <li v-if="!hasFire">
-        Start a fire to cook items
-        <div>
-          Items needed:
-          {{fire.items.join(', ')}}
-        </div>
-        <button
-          type="button"
-          @click="startFire()" :disabled="!fire.isCraftable || disabled">
-          Craft
-        </button>
-      </li>
-      <li v-else>
-        Fire is burning
+      <li v-for="item in camp">
+        <template v-if="item.id === 'fire'">
+          <template v-if="!hasFire">
+            Start a fire to cook items
+            <div>
+              Items needed:
+              {{item.items.join(', ')}}
+            </div>
+            <button
+              type="button"
+              @click="startFire(item)" :disabled="!item.isCraftable || disabled">
+              Craft
+            </button>
+          </template>
+          <template v-else>
+            Fire is burning
+          </template>
+        </template>
+        <water-collector
+          v-if="item.id === 'water-collector'"
+          :item="item"
+          :disabled="disabled">
+        </water-collector>
       </li>
     </ul>
 
@@ -54,6 +53,17 @@
         @craft="craft"
       />
     </ul>
+
+    <h2>WEAPONS</h2>
+    <ul>
+      <craftable-item
+        v-for="item in weapons"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
+    </ul>
+
   </div>
 </template>
 
@@ -62,11 +72,13 @@ import { mapState, mapMutations } from 'vuex'
 import craftableItems from '@/data/craftableItems'
 import cookableItems from '@/data/cookableItems'
 import CraftableItem from '@/components/CraftableItem'
+import WaterCollector from '@/components/WaterCollector'
 
 export default {
   name: 'crafting',
   components: {
-    CraftableItem
+    CraftableItem,
+    WaterCollector
   },
   computed: {
     ...mapState(['inventory', 'hasFire', 'disabled']),
@@ -109,8 +121,8 @@ export default {
         return newItem
       })
     },
-    fire() {
-      return this.craftableItems.find(item => item.type === 'fire')
+    camp() {
+      return this.craftableItems.filter(item => item.type === 'camp')
     },
     foodItems() {
       return this.craftableItems.filter(item => item.type === 'food')
@@ -133,8 +145,8 @@ export default {
       })
       this.addInventory({item})
     },
-    startFire() {
-      this.fire.items.forEach(item => {
+    startFire(item) {
+      item.items.forEach(item => {
         this.removeInventory({item})
       })
       this.enableFire()

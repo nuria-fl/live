@@ -7,8 +7,9 @@
     </section>
     <main-component v-else @newGame="start"></main-component>
     <footer>
+      Bug report via
       <a href="https://github.com/nuria-fl/live">Github</a>
-      ·
+      or
       <a href="https://twitter.com/pincfloit">Twitter</a>
     </footer>
   </main>

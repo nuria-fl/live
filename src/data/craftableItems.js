@@ -1,7 +1,7 @@
 export default [
   {
     id: 'fire',
-    type: 'fire',
+    type: 'camp',
     name: 'Fire',
     items: ['wood', 'flint']
   },
@@ -9,7 +9,7 @@ export default [
     id: 'rope',
     type: 'tool',
     name: 'Rope',
-    items: ['string', 'string', 'string']
+    items: ['string', 'string']
   },
   {
     id: 'bow',
@@ -17,15 +17,15 @@ export default [
     name: 'Bow',
     items: ['string', 'wood']
   },
-  {
-    id: 'knife',
-    type: 'tool',
-    name: 'Knife',
-    items: ['flint', 'wood', 'rope']
-  },
+  // {
+  //   id: 'knife',
+  //   type: 'tool',
+  //   name: 'Knife',
+  //   items: ['flint', 'wood', 'rope']
+  // },
   {
     id: 'water-collector',
-    type: 'tool',
+    type: 'camp',
     name: 'Water collector',
     items: ['plastic', 'rope', 'bottle']
   },
