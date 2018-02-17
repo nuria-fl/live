@@ -1,3 +1,8 @@
+## 0.4.0 - 2018-02-11
+### New features
+- Water collector
+- Days survived counter
+
 ## 0.3.0 - 2018-02-11
 ### New features
 - Display hint for items that need fire
