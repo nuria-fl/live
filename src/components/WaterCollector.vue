@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -40,11 +40,10 @@ export default {
   props: {
     item: {
       type: Object
-    },
-    disabled: {
-      type: Boolean,
-      required: true
-    },
+    }
+  },
+  computed: {
+    ...mapState(['disabled'])
   },
   methods: {
     ...mapMutations(['increase', 'removeInventory', 'addInventory']),
