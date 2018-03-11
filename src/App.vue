@@ -37,8 +37,11 @@ export default {
 </script>
 
 <style lang="scss">
+  @import './assets/styles/index';
+
   body {
-    font-family: monospace;
+    margin: 0;
+    font-family: 'Fira Mono', monospace;
   }
   li {
     margin: 1em 0;

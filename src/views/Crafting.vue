@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <camp-upgrades />
-    <h2>FOOD AND WATER</h2>
+    <h2 class="SectionTitle">Food and water</h2>
     <ul>
       <craftable-item
         v-for="item in foodItems"
@@ -17,7 +17,7 @@
       />
     </ul>
 
-    <h2>TOOLS</h2>
+    <h2 class="SectionTitle">Tools</h2>
     <ul>
       <craftable-item
         v-for="item in tools"
@@ -27,7 +27,7 @@
       />
     </ul>
 
-    <h2>WEAPONS</h2>
+    <h2 class="SectionTitle">Weapons</h2>
     <ul>
       <craftable-item
         v-for="item in weapons"

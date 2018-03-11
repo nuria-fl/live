@@ -1,0 +1,22 @@
+.Btn {
+  margin: 0;
+  padding: .5em .7em;
+  background: #C4C4C4;
+  border: none;
+  transition: all .3s;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .9;
+    box-shadow: 0 .2em .2em rgba(0,0,0,.4);
+  }
+
+  &:disabled,
+  &:disabled:hover {
+    cursor: default;
+    opacity: 1;
+    background: #E3E3E3;
+    box-shadow: none;
+    color: #999;
+  }
+}

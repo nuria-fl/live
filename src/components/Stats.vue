@@ -1,8 +1,8 @@
 <template>
-  <section>
-    Days survived: {{ daysSurvived }}
-    <ul>
-      <li v-for="(stat, key) in stats">
+    <ul class="stats">
+      <li
+        v-for="(stat, key) in stats"
+        class="stats__item">
         {{ key }}:
         <strong :class="{
           warning: stat < 50,
@@ -12,18 +12,15 @@
         </strong>
       </li>
     </ul>
-  </section>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'stats',
   data() {
     return {
-      decreaseLoop: null,
-      daysLoop: null
+      decreaseLoop: null
     }
   },
   mounted(){
@@ -33,25 +30,15 @@ export default {
     this.resetGameLoop()
   },
   computed: {
-    ...mapState(['stats', 'gameOver', 'isSick', 'daysSurvived']),
+    ...mapState(['stats', 'gameOver', 'isSick']),
     isActive() {
       return this.gameOver === false
     },
   },
   methods: {
-    ...mapMutations(['decrease', 'increaseDayCount']),
+    ...mapMutations(['decrease']),
     startGameLoop() {
-      this.startDayTimer()
       this.decreaseStats()
-    },
-    startDayTimer() {
-      const day = 1000 * 60
-      this.daysLoop = setTimeout(() => {
-        if (this.isActive) {
-          this.increaseDayCount()
-          this.startDayTimer()
-        }
-      }, day)
     },
     decreaseStats() {
       const decreaseInterval = 12 * 1000
@@ -71,8 +58,6 @@ export default {
     },
     resetGameLoop(){
       clearTimeout(this.decreaseLoop)
-      clearTimeout(this.daysLoop)
-      this.daysLoop = null
       this.decreaseLoop = null
     }
   }
@@ -80,6 +65,15 @@ export default {
 </script>
 
 <style lang="scss">
+  .stats {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    &__item {
+      padding: 0 1em;
+    }
+  }
   .warning {
     color: #fa0;
   }

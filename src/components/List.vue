@@ -1,7 +1,8 @@
 <template>
-  <ul>
+  <ul class="List">
     <li v-for="item in list">
-      <consume :item="item"></consume>
+      <consume
+        :item="item" />
     </li>
   </ul>
 </template>

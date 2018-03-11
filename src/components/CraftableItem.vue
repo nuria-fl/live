@@ -1,12 +1,13 @@
 <template>
   <li>
-    {{item.name}}
+    <h4>{{item.name}}</h4>
     <div>
       Items needed:
       {{item.items.join(', ')}}
     </div>
     <button
       type="button"
+      class="Btn"
       @click="craft" :disabled="!item.isCraftable || disabled">
       Craft
     </button>

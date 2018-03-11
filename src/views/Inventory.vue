@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2>Inventory {{ length }}/{{ maxLength }}</h2>
+    <h2 class="SectionTitle">Backpack {{ length }}/{{ maxLength }}</h2>
     <list :list="orderedList"></list>
   </section>
 </template>

@@ -1,13 +1,6 @@
 <template lang="html">
   <div>
-    <p>
-      <button
-        v-for="action in actions"
-        :disabled="disabled"
-        @click="action.method">
-        {{ action.name }}
-      </button>
-    </p>
+    <h2 class="SectionTitle">Actions</h2>
     <modal ref="modalResult">
       <div slot="body">
         You got {{ lastActionResult }}
@@ -16,6 +9,22 @@
     <div v-show="inProgress" class="progress">
       {{ currentAction }}
     </div>
+    <button
+      type="button"
+      class="Btn Action"
+      v-for="action in actions"
+      :disabled="disabled"
+      @click="action.method">
+      <h3 class="Action__title">
+        {{ action.name }}
+      </h3>
+      <p class="Action__stats">
+        {{ action.stats }}
+      </p>
+      <p class="Action__desc">
+        {{ action.description }}
+      </p>
+    </button>
   </div>
 </template>
 
@@ -33,14 +42,20 @@ export default {
       actions: [
         {
           name: 'Sleep',
+          description: 'Rest to replenish your energy',
+          stats: '+35 energy',
           method: this.sleep
         },
         {
           name: 'Hunt',
+          description: 'Hunt for food and fur to craft equipment',
+          stats: '-10 energy, -10 water. -6 food',
           method: this.goHunt
         },
         {
           name: 'Scavenge',
+          description: 'Find useful items to survive',
+          stats: '-5 energy, -5 water. -3 food',
           method: this.goScavenge
         }
       ]
@@ -132,6 +147,29 @@ export default {
 </script>
 
 <style lang="scss">
+  .Action {
+    display: block;
+    width: 100%;
+    margin: 1em 0;
+    padding: .7em;
+    border: none;
+    text-align: left;
+
+    &__title {
+      margin: 0;
+      font-size: 1.4em;
+    }
+    &__stats {
+      margin: .2em 0;
+      color: #666;
+    }
+    &__desc {
+      margin: 0;
+    }
+    &:disabled &__stats {
+      color: #bbb;
+    }
+  }
   .progress {
     &:after {
       content: '...';

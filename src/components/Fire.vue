@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h4>Fire</h4>
     <template v-if="!hasFire">
       Start a fire to cook items
       <div>
@@ -8,6 +9,7 @@
       </div>
       <button
         type="button"
+        class="Btn"
         @click="startFire(item)" :disabled="!item.isCraftable || disabled">
         Craft
       </button>

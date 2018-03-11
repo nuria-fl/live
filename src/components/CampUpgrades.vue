@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>CAMP UPGRADES</h2>
+    <h2 class="SectionTitle">Camp upgrades</h2>
     <ul>
       <li v-for="item in items">
         <fire

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h4>Water collector</h4>
     <template v-if="!hasWaterCollector">
       Build a water collector to get rain water
       <div>
@@ -8,6 +9,7 @@
       </div>
       <button
         type="button"
+        class="Btn"
         @click="buildWaterCollector()" :disabled="!item.isCraftable || disabled">
         Craft
       </button>

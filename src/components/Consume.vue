@@ -1,12 +1,17 @@
 <template>
-  <section>
-    {{item.name}}
-    <ul>
-      <li v-for="action in actions" class="action">
-        <button @click="doAction(action)" :disabled="disabled">{{ action }}</button>
-      </li>
-    </ul>
-  </section>
+  <article class="Item">
+    <h4>{{ item.name }}</h4>
+    <p>{{ item.description }}</p>
+    <div class="Item__actions">
+      <button
+        v-for="action in actions"
+        class="Btn"
+        @click="doAction(action)"
+        :disabled="disabled">
+        {{ action }}
+      </button>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -20,7 +25,7 @@ export default {
     actions() {
       const actions = ['discard']
       if(this.item.type === 'food' || this.item.type === 'drink' ){
-        actions.unshift('consume')
+        actions.push('consume')
       }
       return actions
     }
@@ -74,7 +79,13 @@ export default {
 </script>
 
 <style lang="scss">
-  .action {
+  .Item {
     margin: 0;
+    &__actions {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row-reverse;
+    }
   }
 </style>

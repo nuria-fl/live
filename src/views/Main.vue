@@ -5,19 +5,33 @@
       <p>You survived {{ daysSurvived }} days</p>
       <button type="button" @click="newGame()">Start over</button>
     </div>
-    <div v-if="!this.gameOver" class="hud">
-      <div>
-        <stats></stats>
-        <actions></actions>
+    <div v-if="!this.gameOver">
+      <header class="Header">
+        <div class="Header__content">
+          <mobile-menu></mobile-menu>
+          <stats></stats>
+          <days-counter></days-counter>
+        </div>
+      </header>
+      <div class="Main">
+        <div class="Main__column">
+          <actions></actions>
+        </div>
+        <div class="Main__column">
+          <inventory></inventory>
+        </div>
+        <div class="Main__column">
+          <crafting></crafting>
+        </div>
       </div>
-      <inventory></inventory>
-      <crafting></crafting>
     </div>
   </section>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import DaysCounter from '../components/DaysCounter'
+import MobileMenu from '../components/MobileMenu'
 import Stats from '../components/Stats'
 import Actions from './Actions'
 import Crafting from './Crafting'
@@ -38,6 +52,8 @@ export default {
     Actions,
     Crafting,
     Inventory,
+    DaysCounter,
+    MobileMenu,
     Stats
   },
   computed: {
@@ -53,15 +69,33 @@ export default {
 </script>
 
 <style lang="scss">
-  .hud {
+  .Header {
+    background: #DDD;
+    &__content {
+      width: 95%;
+      max-width: 1400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+    }
+  }
+
+  .Main {
     width: 95%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
     @media screen and (min-width: 680px) {
       display: flex;
       justify-content: space-between;
       > * {
         flex: 1 1 0;
+      }
+    }
+
+    &__column {
+      @media screen and (min-width: 680px) {
+        padding: 0 1em;
       }
     }
   }
