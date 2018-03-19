@@ -11,6 +11,8 @@
       <a href="https://github.com/nuria-fl/live">Github</a>
       or
       <a href="https://twitter.com/pincfloit">Twitter</a>
+      ·
+      ☕ <a href='https://ko-fi.com/G2G5AV2X'>Buy Me a Coffee</a>
     </footer>
   </main>
 </template>
