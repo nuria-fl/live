@@ -88,6 +88,7 @@ export default {
     @media screen and (min-width: 680px) {
       display: flex;
       justify-content: space-between;
+      padding-bottom: 4em;
       > * {
         flex: 1 1 0;
       }

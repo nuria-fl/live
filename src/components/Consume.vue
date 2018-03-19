@@ -81,6 +81,8 @@ export default {
 <style lang="scss">
   .Item {
     margin: 0;
+    padding: 0 0 .5em;
+    border-bottom: .05em solid #333;
     &__actions {
       width: 100%;
       display: flex;

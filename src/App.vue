@@ -1,12 +1,12 @@
 <template>
   <main>
-    <section v-if="!hasStarted">
+    <section v-if="!hasStarted" class="Splash">
       <h1>Live</h1>
       <p>A game about survival</p>
       <button @click="start">New Game</button>
     </section>
     <main-component v-else @newGame="start"></main-component>
-    <footer>
+    <footer class="Footer">
       Bug report via
       <a href="https://github.com/nuria-fl/live">Github</a>
       or
@@ -48,8 +48,14 @@ export default {
   li {
     margin: 1em 0;
   }
-  footer {
+  .Splash {
+    padding-top: 3em;
+    text-align: center;
+  }
+  .Footer {
+    width: 100%;
     margin-top: 2em;
+    background: rgba(255,255,255,.8);
     @media screen and (min-width: 680px) {
       position: fixed;
       bottom: 0;
