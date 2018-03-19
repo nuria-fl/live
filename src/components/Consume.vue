@@ -2,7 +2,7 @@
   <article class="Item">
     <h4>{{ item.name }}</h4>
     <p>{{ item.description }}</p>
-    <div class="Item__actions">
+    <div class="Item__actions Item__actions--multi">
       <button
         v-for="action in actions"
         class="Btn"
@@ -83,11 +83,16 @@ export default {
     margin: 0;
     padding: 0 0 .5em;
     border-bottom: .05em solid #333;
+    p {
+      margin: .5em 0;
+    }
     &__actions {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      flex-direction: row-reverse;
+      &--multi {
+        flex-direction: row-reverse;
+      }
     }
   }
 </style>

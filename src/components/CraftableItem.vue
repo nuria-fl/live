@@ -1,19 +1,21 @@
 <template>
   <li>
-    <h4>{{item.name}}</h4>
-    <div>
-      Items needed:
-      {{item.items.join(', ')}}
-    </div>
-    <button
-      type="button"
-      class="Btn"
-      @click="craft" :disabled="!item.isCraftable || disabled">
-      Craft
-    </button>
-    <span v-show="showFireTip">
-      (You need fire to craft this item)
-    </span>
+    <article class="Item">
+      <h4>{{item.name}}</h4>
+      <p>
+        Items needed:
+        {{item.items.join(', ')}}
+      </p>
+      <button
+        type="button"
+        class="Btn"
+        @click="craft" :disabled="!item.isCraftable || disabled">
+        Craft
+      </button>
+      <span v-show="showFireTip">
+        (You need fire to craft this item)
+      </span>
+    </article>
   </li>
 </template>
 
@@ -35,4 +37,3 @@ export default {
   }
 }
 </script>
-

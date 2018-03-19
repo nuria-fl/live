@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <article class="Item">
     <h4>Fire</h4>
     <template v-if="!hasFire">
-      Start a fire to cook items
-      <div>
+      <p>
         Items needed:
         {{item.items.join(', ')}}
-      </div>
+        <br>
+        Start a fire to cook items
+      </p>
       <button
         type="button"
         class="Btn"
@@ -14,10 +15,10 @@
         Craft
       </button>
     </template>
-    <template v-else>
+    <p v-else>
       Fire is burning
-    </template>
-  </div>
+    </p>
+  </article>
 </template>
 
 <script>

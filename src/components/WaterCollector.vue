@@ -1,18 +1,21 @@
 <template>
-  <div>
+  <article class="Item">
     <h4>Water collector</h4>
     <template v-if="!hasWaterCollector">
-      Build a water collector to get rain water
-      <div>
+      <p>
         Items needed:
         {{item.items.join(', ')}}
+        <br>
+        Build a water collector to get rain water
+      </p>
+      <div class="Item__actions">
+        <button
+          type="button"
+          class="Btn"
+          @click="buildWaterCollector()" :disabled="!item.isCraftable || disabled">
+          Craft
+        </button>
       </div>
-      <button
-        type="button"
-        class="Btn"
-        @click="buildWaterCollector()" :disabled="!item.isCraftable || disabled">
-        Craft
-      </button>
     </template>
     <template v-else-if="isCollecting">
       Uses remaining: {{ usesRemaining - 1 }}<br>
@@ -22,9 +25,14 @@
     </template>
     <template v-else>
       Uses remaining: {{ usesRemaining }}<br>
-      <button @click="drinkWater" :disabled="disabled">Drink water</button>
+      <button
+        class="Btn"
+        @click="drinkWater"
+        :disabled="disabled">
+        Drink water
+      </button>
     </template>
-  </div>
+  </article>
 </template>
 
 <script>
@@ -68,7 +76,7 @@ export default {
         stat: 'water',
         amount: 20
       })
-      this.usesRemaining-- 
+      this.usesRemaining--
 
       if(this.usesRemaining === 0) {
         this.hasWaterCollector = false
