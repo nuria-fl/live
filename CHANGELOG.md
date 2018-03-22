@@ -1,3 +1,7 @@
+## 0.5.0 - 2018-03-22
+### New features
+- New UI
+
 ## 0.4.0 - 2018-02-11
 ### New features
 - Water collector
