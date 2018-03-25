@@ -1,10 +1,10 @@
 <template>
     <div class="Menu">
-      <button
+      <div
         class="Btn Menu__toggle"
         @click="toggleMenu">
         <span></span>
-      </button>
+      </div>
       <ul class="Menu__dropdown" v-show="isMenuVisible">
         <li @click="goTo('home')">
           Actions
@@ -65,7 +65,7 @@ export default {
         content: '';
         display: block;
         width: 100%;
-        height: 2px;
+        height: 1px;
         background: #000;
       }
     }
