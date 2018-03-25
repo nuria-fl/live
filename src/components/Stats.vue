@@ -1,9 +1,9 @@
 <template>
-    <ul class="stats">
+    <ul class="Stats">
       <li
         v-for="(stat, key) in stats"
-        class="stats__item">
-        {{ key }}:
+        class="Stats__item">
+        <span class="Stats__icon">{{ icons[key] }}</span>
         <strong :class="{
           warning: stat < 50,
           danger: stat < 20
@@ -20,7 +20,13 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      decreaseLoop: null
+      decreaseLoop: null,
+      icons: {
+        health: '❤️',
+        water: '💧',
+        food: '🍗',
+        sleep: '⚡'
+      }
     }
   },
   mounted(){
@@ -44,7 +50,7 @@ export default {
       const decreaseInterval = 12 * 1000
       this.loop = setTimeout(() => {
         if (this.isActive) {
-        
+
           this.decrease({ stat: 'water', amount: 3 })
           this.decrease({ stat: 'food', amount: 1 })
           this.decrease({ stat: 'sleep', amount: 2 })
@@ -65,13 +71,22 @@ export default {
 </script>
 
 <style lang="scss">
-  .stats {
+  .Stats {
     display: flex;
     margin: 0;
     padding: 0;
     list-style: none;
     &__item {
-      padding: 0 1em;
+      margin: 0;
+      white-space: nowrap;
+      padding: .1em 1em .1em 0;
+      @media screen and (min-width: 680px) {
+        margin: 1em 0;
+        padding-left: 1em;
+      }
+    }
+    &__icon {
+      filter: grayscale(50%);
     }
   }
   .warning {

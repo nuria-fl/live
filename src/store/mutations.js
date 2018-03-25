@@ -5,6 +5,9 @@ const findIndexById = (id, collection) => {
 }
 
 export default {
+  changePage (state, {newPage}) {
+    state.currentPage = newPage
+  },
   increaseDayCount (state) {
     state.daysSurvived++
   },

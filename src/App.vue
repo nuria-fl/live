@@ -3,7 +3,7 @@
     <section v-if="!hasStarted" class="Splash">
       <h1>Live</h1>
       <p>A game about survival</p>
-      <button @click="start">New Game</button>
+      <button @click="start" class="Btn">New Game</button>
     </section>
     <main-component v-else @newGame="start"></main-component>
     <footer class="Footer">
@@ -55,12 +55,12 @@ export default {
   .Footer {
     width: 100%;
     margin-top: 2em;
+    padding: 1em;
     background: rgba(255,255,255,.8);
     @media screen and (min-width: 680px) {
       position: fixed;
       bottom: 0;
       left: 0;
-      padding: 1em;
     }
   }
 </style>
