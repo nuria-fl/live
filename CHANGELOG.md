@@ -1,3 +1,7 @@
+## 0.5.1 - 2018-03-25
+### Fixes
+- Fix mobile menu
+
 ## 0.5.0 - 2018-03-22
 ### New features
 - New UI
