@@ -16,7 +16,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import utils from '../utils'
+import utils from '@/utils'
+import eventBus from '@/utils/eventBus'
 
 export default {
   props: ['item'],
@@ -42,11 +43,16 @@ export default {
         const infected = this.calculateRisk(this.item.risk)
 
         if (infected) {
-          alert('you got sick!')
+          console.log('get sick');
+          eventBus.$emit('showModal', {
+            body: 'You got sick!'
+          })
           this.getSick()
         } else if (this.item.id === 'medicinal-tea') {
           if (this.isSick) {
-            alert('you got cured!')
+            eventBus.$emit('showModal', {
+              body: 'You got cured!'
+            })
           }
           this.getCured()
         }

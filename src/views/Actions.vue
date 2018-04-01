@@ -1,14 +1,19 @@
 <template lang="html">
   <div>
     <h2 class="SectionTitle">Actions</h2>
-    <modal ref="modalResult">
-      <div slot="body">
+
+    <modal :visible.sync="showResults" :isCloseable="true">
+      <p slot="body">
         You got {{ lastActionResult }}
-      </div>
+      </p>
     </modal>
-    <div v-show="inProgress" class="progress">
-      {{ currentAction }}
-    </div>
+
+    <modal :visible.sync="inProgress">
+      <p slot="body" class="progress">
+        {{ currentAction }}
+      </p>
+    </modal>
+
     <button
       type="button"
       class="Btn Action"
@@ -30,7 +35,8 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import modal from '../components/Modal'
+import modal from '@/components/Modal'
+import eventBus from '@/utils/eventBus'
 
 export default {
   name: 'actions',
@@ -39,6 +45,7 @@ export default {
       lastActionResult: '',
       currentAction: null,
       inProgress: false,
+      showResults: false,
       actions: [
         {
           name: 'Sleep',
@@ -68,7 +75,9 @@ export default {
   methods: {
     ...mapActions(['increaseAsync', 'hunt', 'scavenge']),
     handleFullInventory() {
-      alert('Your inventory is full. Remove at least one item to proceed.')
+      eventBus.$emit('showModal', {
+        body: 'Your inventory is full. Remove at least one item to proceed.'
+      })
     },
     sleep() {
       this.startProgress('Sleeping')
@@ -102,7 +111,9 @@ export default {
             this.handleResult(items)
           })
       } else {
-        alert('you need to craft a weapon first')
+        eventBus.$emit('showModal', {
+          body: 'You need to craft a weapon first'
+        })
       }
     },
     goScavenge() {
@@ -127,7 +138,7 @@ export default {
         items.forEach(item => {
           itemsAcquired.push(item.name)
         })
-        this.$refs.modalResult.open();
+        this.showResults = true
         this.lastActionResult = itemsAcquired.join(', ')
       }
     },

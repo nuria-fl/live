@@ -6,6 +6,7 @@
       <button class="Btn" @click="newGame()">Start over</button>
     </div>
     <div v-if="!this.gameOver">
+      <alert></alert>
       <header class="Header">
         <div class="Header__content">
           <mobile-menu></mobile-menu>
@@ -30,9 +31,10 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import DaysCounter from '../components/DaysCounter'
-import MobileMenu from '../components/MobileMenu'
-import Stats from '../components/Stats'
+import DaysCounter from '@/components/DaysCounter'
+import MobileMenu from '@/components/MobileMenu'
+import Stats from '@/components/Stats'
+import Alert from '@/components/Alert'
 import Actions from './Actions'
 import Crafting from './Crafting'
 import Inventory from './Inventory'
@@ -50,6 +52,7 @@ export default {
     }
   },
   components: {
+    Alert,
     Actions,
     Crafting,
     Inventory,
