@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import DaysCounter from '@/components/DaysCounter'
 import MobileMenu from '@/components/MobileMenu'
 import Stats from '@/components/Stats'
@@ -63,6 +63,7 @@ export default {
   mounted () {
     const bdSize = document.querySelector('body').getBoundingClientRect()
     this.isMobile = bdSize.width <= 680
+    this.initInventory()
   },
   computed: {
     ...mapState(['disabled', 'gameOver', 'daysSurvived', 'currentPage']),
@@ -77,6 +78,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['initInventory']),
     newGame(){
       window.location.reload()
       // this.$emit('newGame')

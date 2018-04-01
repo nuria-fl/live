@@ -7,10 +7,13 @@ const utils = {
 
     for (let i = 0; i < items; i++) {
       const idx = utils.randomizeWithinRange(source.length)
-      arr.push(source[idx])
+      arr.push({...source[idx]})
     }
 
     return arr
+  },
+  generateId () {
+    return '_' + Math.random().toString(36).substr(2, 9)
   }
 }
 

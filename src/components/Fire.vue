@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapActions } from 'vuex'
 
   export default {
     props: {
@@ -32,14 +32,13 @@
       }
     },
     computed: {
-      ...mapState([ 'hasFire', 'disabled'])
+      ...mapState([ 'hasFire', 'disabled', 'inventory'])
     },
     methods: {
-      ...mapMutations(['removeInventory', 'enableFire']),
+      ...mapMutations(['enableFire']),
+      ...mapActions(['removeItemsById']),
       startFire(item) {
-        this.item.items.forEach(item => {
-          this.removeInventory({item})
-        })
+        this.removeItemsById(this.item.items)
         this.enableFire()
       }
     }

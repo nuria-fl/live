@@ -1,6 +1,10 @@
-import utils from '../utils'
+import utils from '@/utils'
 
 export default {
+  initInventory ({state, commit}) {
+    const startingItems = utils.randomizeItems(state.existingItems, 2)
+    startingItems.forEach(item => commit('addInventory', {item}))
+  },
   decreaseAsync ({state, commit}, {stat, amount, time}) {
     return new Promise((resolve, reject) => {
       commit('disable')
@@ -41,7 +45,7 @@ export default {
           const newItems = utils.randomizeItems(scavengeableItems, numberOfItems)
 
           newItems.forEach(item => {
-            commit('addInventory', {item: item})
+            commit('addInventory', {item})
           })
 
           commit('decrease', {stat: 'sleep', amount: 5})
@@ -79,6 +83,15 @@ export default {
       } else {
         reject(new Error('game is over'))
       }
+    })
+  },
+  removeItemsById ({state, commit}, items) {
+    const findItemByName = (itemName) => {
+      return state.inventory.find(item => item.id === itemName)
+    }
+
+    items.map(findItemByName).forEach(item => {
+      commit('removeInventory', item.uid)
     })
   }
 }

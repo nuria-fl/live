@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -56,11 +56,10 @@ export default {
     ...mapState(['disabled'])
   },
   methods: {
-    ...mapMutations(['increase', 'removeInventory', 'addInventory']),
+    ...mapMutations(['increase', 'addInventory']),
+    ...mapActions(['removeItemsById']),
     buildWaterCollector() {
-      this.item.items.forEach(item => {
-        this.removeInventory({item})
-      })
+      this.removeItemsById(this.item.items)
       this.usesRemaining = 3
       this.hasWaterCollector = true
       this.startCollecting()

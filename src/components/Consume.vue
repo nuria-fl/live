@@ -34,7 +34,7 @@ export default {
   methods: {
     ...mapMutations(['removeInventory', 'increase', 'getSick', 'getCured']),
     discard(item){
-      this.removeInventory({item: item.id})
+      this.removeInventory(item.uid)
     },
     doAction(action){
       if (action === 'consume'){

@@ -1,7 +1,8 @@
 import { MAX, MAXINVENTORY } from '../data/constants'
+import utils from '@/utils'
 
-const findIndexById = (id, collection) => {
-  return collection.findIndex(item => item.id === id)
+const findIndexById = (uid, collection) => {
+  return collection.findIndex(item => item.uid === uid)
 }
 
 export default {
@@ -26,11 +27,12 @@ export default {
   },
   addInventory (state, {item}) {
     if (state.inventory.length < MAXINVENTORY) {
+      item.uid = utils.generateId()
       state.inventory.push(item)
     }
   },
-  removeInventory (state, {item}) {
-    const idx = findIndexById(item, state.inventory)
+  removeInventory (state, uid) {
+    const idx = findIndexById(uid, state.inventory)
 
     if (idx !== -1) {
       state.inventory.splice(idx, 1)

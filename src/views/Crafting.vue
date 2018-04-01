@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import CraftableItem from '@/components/CraftableItem'
 import CampUpgrades from '@/components/CampUpgrades'
@@ -68,11 +68,10 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['removeInventory', 'addInventory', 'enableFire']),
+    ...mapMutations(['addInventory', 'enableFire']),
+    ...mapActions(['removeItemsById']),
     craft(item){
-      item.items.forEach(item => {
-        this.removeInventory({item})
-      })
+      this.removeItemsById(item.items)
       this.addInventory({item})
     }
   }
