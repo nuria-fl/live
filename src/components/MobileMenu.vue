@@ -10,7 +10,7 @@
           Actions
         </li>
         <li @click="goTo('inventory')">
-          Backpack
+          Backpack ({{ length }}/{{ maxLength }})
         </li>
         <li @click="goTo('crafting')">
           Crafting
@@ -20,13 +20,23 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import { MAXINVENTORY } from '@/data/constants'
 
 export default {
   data () {
     return {
       isMenuVisible: false
     }
+  },
+  computed: {
+    ...mapState(['inventory']),
+    length() {
+      return this.inventory.length
+    },
+    maxLength() {
+      return MAXINVENTORY
+    },
   },
   methods: {
     ...mapMutations(['changePage']),
