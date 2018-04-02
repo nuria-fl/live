@@ -1,6 +1,6 @@
 <template>
   <article class="Item">
-    <h4>{{ item.name }}</h4>
+    <h4>{{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : ''}}</h4>
     <p>{{ item.description }}</p>
     <div class="Item__actions Item__actions--multi">
       <button

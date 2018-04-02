@@ -28,7 +28,19 @@ export default {
       return MAXINVENTORY
     },
     orderedList(){
-      return _.orderBy(this.inventory, this.key, this.order)
+      return this.inventory.reduce((accumulator, current) => {
+        const item = {...current}
+        const alreadyExistingItem = accumulator.find(accItem => accItem.id === item.id)
+
+        if (alreadyExistingItem) {
+          alreadyExistingItem.amount++
+        } else {
+          item.amount = 1
+          accumulator.push(item)
+        }
+
+        return accumulator
+      }, [])
     }
   },
   components: {
