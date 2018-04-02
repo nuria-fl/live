@@ -1,3 +1,11 @@
+## 0.6.0 - 2018-04-02
+### New features
+- Better alert system
+- Add backpack items number to mobile menu
+- Aggregate inventory items of the same type into single space
+### Fixes
+- Minor inventory issues
+
 ## 0.5.1 - 2018-03-25
 ### Fixes
 - Fix mobile menu
