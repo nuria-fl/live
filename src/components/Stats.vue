@@ -52,7 +52,7 @@ export default {
         if (this.isActive) {
 
           this.decrease({ stat: 'water', amount: 3 })
-          this.decrease({ stat: 'food', amount: 1 })
+          this.decrease({ stat: 'food', amount: 2 })
           this.decrease({ stat: 'sleep', amount: 2 })
           if (this.isSick) {
             this.decrease({ stat: 'health', amount: 2 })
