@@ -16,7 +16,7 @@ export default {
   data(){
     return {
       order: 'asc',
-      key: 'dateAdded'
+      key: 'id'
     }
   },
   computed: {
@@ -28,7 +28,7 @@ export default {
       return MAXINVENTORY
     },
     orderedList(){
-      return this.inventory.reduce((accumulator, current) => {
+      const aggregatedInventory = this.inventory.reduce((accumulator, current) => {
         const item = {...current}
         const alreadyExistingItem = accumulator.find(accItem => accItem.id === item.id)
 
@@ -41,6 +41,8 @@ export default {
 
         return accumulator
       }, [])
+
+      return _.orderBy(aggregatedInventory, this.key, this.order)
     }
   },
   components: {
