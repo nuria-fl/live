@@ -1,3 +1,7 @@
+## 0.6.1 - 2018-04-03
+### Fixes
+- Fixed bug that only removed one string when crafting rope
+
 ## 0.6.0 - 2018-04-02
 ### New features
 - Better alert system
