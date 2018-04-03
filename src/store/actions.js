@@ -90,8 +90,9 @@ export default {
       return state.inventory.find(item => item.id === itemName)
     }
 
-    items.map(findItemByName).forEach(item => {
-      commit('removeInventory', item.uid)
+    items.forEach(item => {
+      const itemToRemove = findItemByName(item)
+      commit('removeInventory', itemToRemove.uid)
     })
   }
 }
