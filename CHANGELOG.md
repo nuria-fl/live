@@ -1,3 +1,7 @@
+## 0.6.2 - 2018-04-03
+### Fixes
+- Fixed water collector being lost on mobile on section change
+
 ## 0.6.1 - 2018-04-03
 ### Fixes
 - Fixed bug that only removed one string when crafting rope
