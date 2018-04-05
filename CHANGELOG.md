@@ -1,4 +1,4 @@
-## 0.6.2 - 2018-04-03
+## 0.6.2 - 2018-04-05
 ### Fixes
 - Fixed water collector being lost on mobile on section change
 
