@@ -15,13 +15,13 @@
         </div>
       </header>
       <div class="Main">
-        <div class="Main__column" v-if="mobileHome">
+        <div class="Main__column" v-show="mobileHome">
           <actions></actions>
         </div>
-        <div class="Main__column" v-if="mobileInventory">
+        <div class="Main__column" v-show="mobileInventory">
           <inventory></inventory>
         </div>
-        <div class="Main__column" v-if="mobileCrafting">
+        <div class="Main__column" v-show="mobileCrafting">
           <crafting></crafting>
         </div>
       </div>

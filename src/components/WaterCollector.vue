@@ -24,7 +24,7 @@
       </span>
     </template>
     <template v-else>
-      Uses remaining: {{ usesRemaining }}<br>
+      Uses remaining: {{ usesRemaining - 1 }}<br>
       <button
         class="Btn"
         @click="drinkWater"
