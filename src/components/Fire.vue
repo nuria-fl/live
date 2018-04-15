@@ -11,20 +11,35 @@
       <button
         type="button"
         class="Btn"
-        @click="startFire(item)" :disabled="!item.isCraftable || disabled">
+        @click="startFire()" :disabled="!item.isCraftable || disabled">
         Craft
       </button>
     </template>
-    <p v-else>
-      Fire is burning
-    </p>
+    <div v-else>
+      <p>{{ statusMessage }}</p>
+      <button
+        v-show="fireStatus > 0"
+        type="button"
+        class="Btn"
+        :disabled="!hasWood || disabled"
+        @click="rekindle()">
+        Add more wood
+      </button>
+    </div>
   </article>
 </template>
 
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex'
+  import eventBus from '@/utils/eventBus'
 
   export default {
+    data () {
+      return {
+        fireStatus: 0,
+        fireInterval: null
+      }
+    },
     props: {
       item: {
         type: Object,
@@ -32,14 +47,52 @@
       }
     },
     computed: {
-      ...mapState([ 'hasFire', 'disabled', 'inventory'])
+      ...mapState([ 'hasFire', 'disabled', 'inventory']),
+      hasWood() {
+        return !!this.inventory.find(item => item.id === 'wood')
+      },
+      statusMessage() {
+        switch(this.fireStatus) {
+          case 0:
+            return 'Fire is burning hot'
+          case 1:
+            return 'Fire is burning'
+          case 2:
+            return 'Fire is burning low'
+        }
+      }
     },
     methods: {
-      ...mapMutations(['enableFire']),
+      ...mapMutations(['enableFire', 'disableFire']),
       ...mapActions(['removeItemsById']),
-      startFire(item) {
+      startFire() {
         this.removeItemsById(this.item.items)
         this.enableFire()
+        this.startFireInterval()
+      },
+      startFireInterval() {
+        const day = 1000 * 60
+
+        this.fireInterval = setInterval(() => {
+          this.fireStatus++
+          if (this.fireStatus === 3) {
+            this.resetFire()
+          }
+        }, day)
+      },
+      resetFire() {
+        clearInterval(this.fireInterval)
+        eventBus.$emit('showModal', {
+          body: 'Fire has burnt out!'
+        })
+        this.disableFire()
+        this.fireStatus = 0
+      },
+      rekindle() {
+        this.removeItemsById(['wood'])
+        this.fireStatus = 0
+        clearInterval(this.fireInterval)
+        this.startFireInterval()
       }
     }
   }
