@@ -1,3 +1,8 @@
+## 0.7.0 - 2018-04-15
+### New features
+- Add fullstory and track start and end game events
+- Fire burns out after a while unless rekindled
+
 ## 0.6.2 - 2018-04-05
 ### Fixes
 - Fixed water collector being lost on mobile on section change
