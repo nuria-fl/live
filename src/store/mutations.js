@@ -1,5 +1,6 @@
 import { MAX, MAXINVENTORY } from '../data/constants'
 import utils from '@/utils'
+import tracking from '@/utils/tracking'
 
 const findIndexById = (uid, collection) => {
   return collection.findIndex(item => item.uid === uid)
@@ -15,6 +16,7 @@ export default {
   decrease (state, {stat, amount}) {
     state.stats[stat] = state.stats[stat] - amount
     if (state.stats[stat] <= 0) {
+      tracking.trackEvent('game', 'game-over', stat, state.daysSurvived)
       state.gameOver = true
       state.disabled = true
     }

@@ -19,6 +19,7 @@
 
 <script>
 import Main from '@/views/Main'
+import tracking from '@/utils/tracking'
 
 export default {
   data() {
@@ -29,8 +30,12 @@ export default {
   components: {
     MainComponent: Main
   },
+  mounted() {
+    tracking.trackEvent('game', 'landed')
+  },
   methods: {
     start() {
+      tracking.trackEvent('game', 'start')
       this.hasStarted = true
     }
   }

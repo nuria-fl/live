@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "build": "node build/build.js",
+    "start": "NODE_ENV=development npm run dev",
+    "build": "NODE_ENV=production node build/build.js",
     "lint": "standard src/**/*.js",
     "lint:fix": "standard --fix src/**/*.js",
     "prepush": "npm run lint"
