@@ -12,15 +12,15 @@ const trackEvent = function (
     label = undefined,
     value = undefined
 ) {
-  if (!isProduction) {
-        // eslint-disable-next-line no-console
+  if (isProduction && window.ga) {
+    window.ga('send', 'event', category, action, label, value)
+  } else {
+    // eslint-disable-next-line no-console
     console.info(`[TRACKER] send`, 'event', category, action, label, value)
 
     if (value !== undefined && isNaN(value)) {
       throw Error('If defined, event value must be an integer')
     }
-  } else {
-    window.ga('send', 'event', category, action, label, value)
   }
 }
 

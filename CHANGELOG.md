@@ -1,3 +1,7 @@
+## 0.7.1 - 2018-04-16
+### Fixes
+- Fix google analytics bug
+
 ## 0.7.0 - 2018-04-15
 ### New features
 - Add fullstory and track start and end game events

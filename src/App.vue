@@ -30,9 +30,6 @@ export default {
   components: {
     MainComponent: Main
   },
-  mounted() {
-    tracking.trackEvent('game', 'landed')
-  },
   methods: {
     start() {
       tracking.trackEvent('game', 'start')
