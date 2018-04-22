@@ -1,3 +1,7 @@
+## 0.7.2 - 2018-04-22
+### Fixes
+- Use correct google analytics tracking function
+
 ## 0.7.1 - 2018-04-16
 ### Fixes
 - Fix google analytics bug
