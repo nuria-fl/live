@@ -13,7 +13,11 @@ const trackEvent = function (
     value = undefined
 ) {
   if (isProduction && window.ga) {
-    window.ga('send', 'event', category, action, label, value)
+    window.gtag('event', action, {
+      'event_category': category,
+      'event_label': label,
+      'value': value
+    })
   } else {
     // eslint-disable-next-line no-console
     console.info(`[TRACKER] send`, 'event', category, action, label, value)
