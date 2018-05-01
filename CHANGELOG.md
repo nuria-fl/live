@@ -1,3 +1,8 @@
+## 0.8.0 - 2018-05-01
+### New features
+- Add pause game functionality (button and on visibility change)
+- Inform users about cause of death
+
 ## 0.7.2 - 2018-04-22
 ### Fixes
 - Use correct google analytics tracking function
