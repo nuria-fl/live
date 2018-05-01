@@ -5,6 +5,7 @@ import cookableItems from '@/data/cookableItems'
 
 const state = {
   gameOver: false,
+  paused: false,
   disabled: false,
   stats: {
     health: MAX,

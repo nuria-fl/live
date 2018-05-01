@@ -7,6 +7,14 @@ const findIndexById = (uid, collection) => {
 }
 
 export default {
+  pauseGame (state) {
+    state.paused = true
+    state.disabled = true
+  },
+  playGame (state) {
+    state.paused = false
+    state.disabled = false
+  },
   changePage (state, {newPage}) {
     state.currentPage = newPage
   },

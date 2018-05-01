@@ -7,6 +7,7 @@
     </section>
     <main-component v-else @newGame="start"></main-component>
     <footer class="Footer">
+      <game-status-button v-if="hasStarted"></game-status-button>
       Bug report via
       <a href="https://github.com/nuria-fl/live">Github</a>
       or
@@ -19,6 +20,7 @@
 
 <script>
 import Main from '@/views/Main'
+import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
 
 export default {
@@ -28,7 +30,8 @@ export default {
     }
   },
   components: {
-    MainComponent: Main
+    MainComponent: Main,
+    GameStatusButton
   },
   methods: {
     start() {

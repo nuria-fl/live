@@ -16,11 +16,11 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import gameLoop from '@/mixins/gameLoop'
 
 export default {
   data() {
     return {
-      decreaseLoop: null,
       icons: {
         health: '❤️',
         water: '💧',
@@ -29,12 +29,7 @@ export default {
       }
     }
   },
-  mounted(){
-    this.startGameLoop()
-  },
-  beforeDestroy(){
-    this.resetGameLoop()
-  },
+  mixins: [ gameLoop ],
   computed: {
     ...mapState(['stats', 'gameOver', 'isSick']),
     isActive() {
@@ -61,10 +56,6 @@ export default {
           this.decreaseStats()
         }
       }, decreaseInterval)
-    },
-    resetGameLoop(){
-      clearTimeout(this.decreaseLoop)
-      this.decreaseLoop = null
     }
   }
 }

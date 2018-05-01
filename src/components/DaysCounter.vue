@@ -6,19 +6,10 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+import gameLoop from '@/mixins/gameLoop'
 
 export default {
-  data() {
-    return {
-      daysLoop: null
-    }
-  },
-  mounted(){
-    this.startGameLoop()
-  },
-  beforeDestroy(){
-    this.resetGameLoop()
-  },
+  mixins: [ gameLoop ],
   computed: {
     ...mapState(['gameOver', 'daysSurvived']),
     isActive() {
@@ -32,16 +23,12 @@ export default {
     },
     startDayTimer() {
       const day = 1000 * 60
-      this.daysLoop = setTimeout(() => {
+      this.loop = setTimeout(() => {
         if (this.isActive) {
           this.increaseDayCount()
           this.startDayTimer()
         }
       }, day)
-    },
-    resetGameLoop(){
-      clearTimeout(this.daysLoop)
-      this.daysLoop = null
     }
   }
 }
