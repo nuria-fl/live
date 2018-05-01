@@ -1,6 +1,6 @@
 <template>
   <button class="GameStatusButton" @click="toggleStatus">
-    <img :src="`/static/${iconName}.svg`" :alt="iconName">
+    <img :src="`./static/${iconName}.svg`" :alt="iconName">
   </button>
 </template>
 
