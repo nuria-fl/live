@@ -2,6 +2,7 @@
   <section>
     <div v-if="this.gameOver" class="Splash">
       <h1>GAME OVER</h1>
+      <p>{{ deathText }}</p>
       <p>You survived {{ daysSurvived }} days</p>
       <button class="Btn" @click="newGame()">Start over</button>
     </div>
@@ -66,7 +67,7 @@ export default {
     this.initInventory()
   },
   computed: {
-    ...mapState(['disabled', 'gameOver', 'daysSurvived', 'currentPage']),
+    ...mapState(['disabled', 'gameOver', 'daysSurvived', 'currentPage', 'causeOfDeath']),
     mobileHome () {
       return this.isMobile === false || this.isMobile && this.currentPage === 'home'
     },
@@ -75,6 +76,18 @@ export default {
     },
     mobileCrafting () {
       return this.isMobile === false || this.isMobile && this.currentPage === 'crafting'
+    },
+    deathText() {
+      switch (this.causeOfDeath) {
+        case 'sleep':
+          return 'You died from exhaustion. Remember, sleeping is important, even in the wild.'
+        case 'water':
+          return 'You died of thirst. A water collector could have saved your life.'
+        case 'food':
+          return 'You died of hunger. A sturdy weapon would have provided you with a steady food supply.'
+        case 'health':
+          return 'You died of sickness. Skip the paleo diet, cooking your food is important.'
+      }
     }
   },
   methods: {
