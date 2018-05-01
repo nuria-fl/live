@@ -1,3 +1,7 @@
+## 0.8.1 - 2018-05-01
+### Fixes
+- Fix game status button icon path
+
 ## 0.8.0 - 2018-05-01
 ### New features
 - Add pause game functionality (button and on visibility change)
