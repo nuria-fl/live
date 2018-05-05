@@ -2,7 +2,15 @@
 
 Text based survival game made with Vue.
 
-Play here: http://nuria-fl.github.io/live/
+Play here: http://nuriasatorres.com/live
+
+## Contributing
+
+At the time I'm not accepting contributions. Feel free to open an issue if you have any bug or feature suggestion though.
+
+## Roadmap
+
+I don't have any roadmap, but I have a [trello board](https://trello.com/b/ZpVOL1Sx) with some ideas.
 
 ## License
 
