@@ -1,5 +1,5 @@
 import { MAX, MAXINVENTORY } from '../data/constants'
-import items from '../data/items'
+import items from '@/data/items'
 import craftableItems from '@/data/craftableItems'
 import cookableItems from '@/data/cookableItems'
 

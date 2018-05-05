@@ -4,7 +4,7 @@
     <template v-if="!hasFire">
       <p>
         Items needed:
-        {{item.items.join(', ')}}
+        {{ itemsNeeded }}
         <br>
         Start a fire to cook items
       </p>
@@ -32,6 +32,7 @@
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex'
   import eventBus from '@/utils/eventBus'
+  import items from '@/utils/items'
 
   export default {
     data () {
@@ -60,6 +61,9 @@
           case 2:
             return 'Fire is burning low'
         }
+      },
+      itemsNeeded() {
+        return this.item.items.map(items.getName).join(', ')
       }
     },
     methods: {

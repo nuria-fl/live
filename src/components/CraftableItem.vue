@@ -4,7 +4,7 @@
       <h4>{{item.name}}</h4>
       <p>
         Items needed:
-        {{item.items.join(', ')}}
+        {{ itemsNeeded }}
       </p>
       <button
         type="button"
@@ -21,6 +21,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import items from '@/utils/items'
 export default {
   name: 'consume',
   props: ['item'],
@@ -28,6 +29,9 @@ export default {
     ...mapState(['hasFire', 'disabled']),
     showFireTip() {
       return this.item.condition === 'fire' && !this.hasFire
+    },
+    itemsNeeded() {
+      return this.item.items.map(items.getName).join(', ')
     }
   },
   methods: {

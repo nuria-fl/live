@@ -4,7 +4,7 @@
     <template v-if="!hasWaterCollector">
       <p>
         Items needed:
-        {{item.items.join(', ')}}
+        {{ itemsNeeded }}
         <br>
         Build a water collector to get rain water
       </p>
@@ -37,6 +37,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import items from '@/utils/items'
 
 export default {
   data() {
@@ -53,7 +54,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['disabled'])
+    ...mapState(['disabled']),
+    itemsNeeded() {
+      return this.item.items.map(items.getName).join(', ')
+    }
   },
   methods: {
     ...mapMutations(['increase', 'addInventory']),
