@@ -1,6 +1,13 @@
 <template>
   <article class="Item">
-    <h4>{{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : ''}}</h4>
+    <h4>
+      {{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : ''}}
+      <span
+        v-if="isConsumable"
+         class="Item__stats">
+        +{{ item.value }} {{ typeName }}
+      </span>
+    </h4>
     <p>{{ item.description }}</p>
     <div class="Item__actions Item__actions--multi">
       <button
@@ -23,9 +30,20 @@ export default {
   props: ['item'],
   computed: {
     ...mapState(['disabled', 'isSick']),
+    isConsumable() {
+      return this.item.type === 'food' || this.item.type === 'drink'
+    },
+    typeName() {
+      if (this.item.type === 'food') {
+        return 'food'
+      }
+      if (this.item.type === 'drink') {
+        return 'water'
+      }
+    },
     actions() {
       const actions = ['discard']
-      if(this.item.type === 'food' || this.item.type === 'drink' ){
+      if(this.isConsumable){
         actions.push('consume')
       }
       return actions
@@ -42,8 +60,7 @@ export default {
 
         const infected = this.calculateRisk(this.item.risk)
 
-        if (infected) {
-          console.log('get sick');
+        if (infected && !this.isSick) {
           eventBus.$emit('showModal', {
             body: 'You got sick!'
           })
@@ -90,7 +107,11 @@ export default {
     padding: 0 0 .5em;
     border-bottom: .05em solid #333;
     p {
-      margin: .5em 0;
+      margin: .2em 0;
+    }
+    &__stats {
+      color: #666;
+      font-weight: 400;
     }
     &__actions {
       width: 100%;

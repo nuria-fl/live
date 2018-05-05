@@ -3,9 +3,10 @@ export default [
     type: 'food',
     id: 'berries',
     name: 'Berries',
-    value: 5,
+    value: 3,
     risk: 0,
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Small amount of vitamins and fiber'
   },
   {
     type: 'food',
@@ -13,7 +14,8 @@ export default [
     name: 'Raw meat',
     value: 20,
     risk: 6,
-    action: 'hunt'
+    action: 'hunt',
+    description: 'Careful, might have parasites!'
   },
   {
     type: 'drink',
@@ -21,48 +23,56 @@ export default [
     name: 'Dirty Water',
     value: 20,
     risk: 6,
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'It will calm your thirst, but might make you sick'
   },
   {
     type: 'junk',
     id: 'salt',
     name: 'Salt',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful to preserve food'
   },
   {
     type: 'junk',
     id: 'string',
     name: 'String',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful for crafting'
   },
   {
     type: 'junk',
     id: 'wood',
     name: 'Wood',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful for crafting'
   },
   {
     type: 'junk',
     id: 'plastic',
     name: 'Plastic',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful for crafting'
   },
   {
     type: 'junk',
     id: 'bottle',
     name: 'Empty bottle',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful for crafting'
   },
   {
     type: 'junk',
     id: 'flint',
     name: 'Flint',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Useful for crafting'
   },
   {
     type: 'junk',
     id: 'medicinal-herbs',
     name: 'Medicinal herbs',
-    action: 'scavenge'
+    action: 'scavenge',
+    description: 'Healing properties when brewed'
   }
 ]
