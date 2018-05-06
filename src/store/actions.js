@@ -65,20 +65,26 @@ export default {
       commit('disable')
       if (!state.gameOver) {
         setTimeout(function () {
-          const huntableItems = state.existingItems.filter(item => item.action === 'hunt')
-
-          const newItems = utils.randomizeItems(huntableItems, 1)
-
-          newItems.forEach(item => {
-            commit('addInventory', {item: item})
-          })
-
           commit('decrease', {stat: 'sleep', amount: 10})
           commit('decrease', {stat: 'water', amount: 10})
           commit('decrease', {stat: 'sleep', amount: 6})
           commit('enable')
 
-          resolve(newItems)
+          const isSuccesful = utils.calculateProbability(8)
+
+          if (isSuccesful) {
+            const huntableItems = state.existingItems.filter(item => item.action === 'hunt')
+
+            const newItems = utils.randomizeItems(huntableItems, 1)
+
+            newItems.forEach(item => {
+              commit('addInventory', {item: item})
+            })
+
+            resolve(newItems)
+          } else {
+            resolve(false)
+          }
         }, time)
       } else {
         reject(new Error('game is over'))

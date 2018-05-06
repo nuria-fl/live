@@ -58,7 +58,7 @@ export default {
       if (action === 'consume'){
         let stat = this.item.type === 'food' ? 'food' : 'water'
 
-        const infected = this.calculateRisk(this.item.risk)
+        const infected = utils.calculateProbability(this.item.risk)
 
         if (infected && !this.isSick) {
           eventBus.$emit('showModal', {
@@ -81,21 +81,6 @@ export default {
       }
 
       this.discard(this.item)
-    },
-    calculateRisk(risk) {
-      const pool = []
-
-      for(let i = 0; i < 10; i++){
-        if(i < risk) {
-          pool.push(true)
-        } else {
-          pool.push(false)
-        }
-      }
-
-      const idx = utils.randomizeWithinRange(pool.length)
-
-      return pool[idx]
     }
   }
 }

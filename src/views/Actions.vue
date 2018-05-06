@@ -107,8 +107,13 @@ export default {
         this.lastActionResult = ''
 
         this.hunt({time: 8000})
-          .then((items) => {
+          .then(items => {
             this.handleResult(items)
+            if (items === false) {
+              eventBus.$emit('showModal', {
+                body: 'You were unable to track down any animal. Better luck next time.'
+              })
+            }
           })
       } else {
         eventBus.$emit('showModal', {

@@ -1,3 +1,9 @@
+## 0.9.0 - 2018-05-06
+### New features
+- Hunting sometimes fails
+- Added stats and description to inventory items
+- Humanize names of items needed for crafting
+
 ## 0.8.1 - 2018-05-01
 ### Fixes
 - Fix game status button icon path

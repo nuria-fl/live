@@ -1,4 +1,19 @@
 const utils = {
+  calculateProbability (probability) {
+    const pool = []
+
+    for (let i = 0; i < 10; i++) {
+      if (i < probability) {
+        pool.push(true)
+      } else {
+        pool.push(false)
+      }
+    }
+
+    const idx = this.randomizeWithinRange(pool.length)
+
+    return pool[idx]
+  },
   randomizeWithinRange (range) {
     return Math.floor(Math.random() * range)
   },
