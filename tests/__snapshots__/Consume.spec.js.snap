@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Consume It should match snapshot 1`] = `
+<article
+  class="Item"
+>
+  <h4>
+    
+    Berries 
+    
+    <span
+      class="Item__stats"
+    >
+      
+      +3 food
+    
+    </span>
+  </h4>
+   
+  <p>
+    Small amount of vitamins and fiber
+  </p>
+   
+  <div
+    class="Item__actions Item__actions--multi"
+  >
+    <button
+      class="Btn"
+    >
+      
+      discard
+    
+    </button>
+    <button
+      class="Btn"
+    >
+      
+      consume
+    
+    </button>
+  </div>
+</article>
+`;

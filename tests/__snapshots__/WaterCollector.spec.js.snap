@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WaterCollector It should match snapshot 1`] = `
+<article
+  class="Item"
+>
+  <h4>
+    Water collector
+  </h4>
+   
+    Uses remaining: 2
+  <br />
+   
+  <span
+    class="progress"
+  >
+    
+      Collecting water
+    
+  </span>
+</article>
+`;

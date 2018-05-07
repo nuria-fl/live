@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Fire It should match snapshot 1`] = `
+<article
+  class="Item"
+>
+  <h4>
+    Fire
+  </h4>
+   
+  <p>
+    
+      Items needed:
+      Wood, Flint
+      
+    <br />
+    
+      Start a fire to cook items
+    
+  </p>
+   
+  <button
+    class="Btn"
+    type="button"
+  >
+    
+      Craft
+    
+  </button>
+</article>
+`;
