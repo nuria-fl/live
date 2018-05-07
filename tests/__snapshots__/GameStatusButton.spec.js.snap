@@ -1,3 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GameStatusButton It should match snapshot 1`] = `undefined`;
+exports[`GameStatusButton It should match snapshot 1`] = `
+<button
+  class="GameStatusButton"
+>
+  <img
+    alt="pause"
+    src="./static/pause.svg"
+  />
+</button>
+`;

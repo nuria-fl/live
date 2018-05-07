@@ -1,3 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CraftableItem It should match snapshot 1`] = `undefined`;
+exports[`CraftableItem It should match snapshot 1`] = `
+<li>
+  <article
+    class="Item"
+  >
+    <h4>
+      Bow
+    </h4>
+     
+    <p>
+      
+      Items needed:
+      String, Wood
+    
+    </p>
+     
+    <button
+      class="Btn"
+      type="button"
+    >
+      
+      Craft
+    
+    </button>
+     
+    <span
+      style="display: none;"
+    >
+      
+      (You need fire to craft this item)
+    
+    </span>
+  </article>
+</li>
+`;

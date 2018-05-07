@@ -25,6 +25,6 @@ describe('Stats', () => {
   })
 
   test('It should match snapshot', () => {
-    expect(wrapper.$el).toMatchSnapshot()
+    expect(wrapper.vm.$el).toMatchSnapshot()
   })
 })

@@ -38,7 +38,7 @@ describe('Consume', () => {
   })
 
   test('It should match snapshot', () => {
-    expect(wrapper.$el).toMatchSnapshot()
+    expect(wrapper.vm.$el).toMatchSnapshot()
   })
 
   test('Calls removeInventory when discarting', () => {

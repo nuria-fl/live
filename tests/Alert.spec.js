@@ -1,15 +1,17 @@
-import { shallow } from 'vue-test-utils'
+import { mount } from 'vue-test-utils'
 
 import Alert from '../src/components/Alert'
 
-describe('Alert', () => {
+describe('Alert snapshot', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(Alert)
+    wrapper = mount(Alert)
   })
 
-  test('It should match snapshot', () => {
-    expect(wrapper.$el).toMatchSnapshot()
+  test('should match snapshot', () => {
+    wrapper.setData({visible: true, text: 'hi'})
+
+    expect(wrapper.vm.$el).toMatchSnapshot()
   })
 })

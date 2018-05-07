@@ -34,7 +34,7 @@ describe('CraftableItem', () => {
   })
 
   test('It should match snapshot', () => {
-    expect(wrapper.$el).toMatchSnapshot()
+    expect(wrapper.vm.$el).toMatchSnapshot()
   })
 
   test('Emits craft event', () => {

@@ -15,7 +15,7 @@ describe('Modal', () => {
   })
 
   test('It should match snapshot', () => {
-    expect(wrapper.$el).toMatchSnapshot()
+    expect(wrapper.vm.$el).toMatchSnapshot()
   })
 
   test('It should emit update event when clicking close button', () => {
