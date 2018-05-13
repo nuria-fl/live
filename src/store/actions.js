@@ -50,7 +50,7 @@ export default {
 
           commit('decrease', {stat: 'sleep', amount: 5})
           commit('decrease', {stat: 'water', amount: 5})
-          commit('decrease', {stat: 'sleep', amount: 3})
+          commit('decrease', {stat: 'food', amount: 3})
           commit('enable')
 
           resolve(newItems)
@@ -67,7 +67,7 @@ export default {
         setTimeout(function () {
           commit('decrease', {stat: 'sleep', amount: 10})
           commit('decrease', {stat: 'water', amount: 10})
-          commit('decrease', {stat: 'sleep', amount: 6})
+          commit('decrease', {stat: 'food', amount: 6})
           commit('enable')
 
           const isSuccesful = utils.calculateProbability(8)
