@@ -56,13 +56,13 @@ export default {
         {
           name: 'Hunt',
           description: 'Hunt for food and fur to craft equipment',
-          stats: '-10 energy, -10 water. -6 food',
+          stats: '-10 energy, -10 water, -6 food',
           method: this.goHunt
         },
         {
           name: 'Scavenge',
           description: 'Find useful items to survive',
-          stats: '-5 energy, -5 water. -3 food',
+          stats: '-5 energy, -5 water, -3 food',
           method: this.goScavenge
         }
       ]
