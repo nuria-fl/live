@@ -1,3 +1,7 @@
+## 0.10.1 - 2018-05-13
+###Fixes
+- Fix scavenging and hunting not lowering food stat
+
 ## 0.10.0 - 2018-05-13
 ### New features
 - Berries now provide food and water
