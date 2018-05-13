@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
 
 const app = new Vue(Vue.util.extend({
   store
 }, App))
 
 if (process.env.NODE_ENV === 'production') {
+  Raven
+      .config('https://a213b9d98bea413b845785da0cecb4d0@sentry.io/1205827')
+      .addPlugin(RavenVue, Vue)
+      .install();
+
   window['_fs_debug'] = false;
   window['_fs_host'] = 'fullstory.com';
   window['_fs_org'] = 'BM5SM';
