@@ -1,3 +1,10 @@
+## 0.10.0 - 2018-05-13
+### New features
+- Berries now provide food and water
+- Add Sentry
+###Fixes
+- Fix fire and water collector continue working while game is paused
+
 ## 0.9.0 - 2018-05-06
 ### New features
 - Hunting sometimes fails
