@@ -3,16 +3,21 @@ export default [
     type: 'food',
     id: 'berries',
     name: 'Berries',
-    value: 3,
+    value: {
+      food: 3,
+      water: 3
+    },
     risk: 0,
     action: 'scavenge',
-    description: 'Small amount of vitamins and fiber'
+    description: 'Small amount of vitamins and water'
   },
   {
     type: 'food',
     id: 'meat',
     name: 'Raw meat',
-    value: 20,
+    value: {
+      food: 20
+    },
     risk: 6,
     action: 'hunt',
     description: 'Careful, might have parasites!'
@@ -21,7 +26,9 @@ export default [
     type: 'drink',
     id: 'water-dirty',
     name: 'Dirty Water',
-    value: 20,
+    value: {
+      water: 20
+    },
     risk: 6,
     action: 'scavenge',
     description: 'It will calm your thirst, but might make you sick'

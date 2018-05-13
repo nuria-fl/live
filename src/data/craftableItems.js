@@ -34,7 +34,9 @@ export default [
     type: 'food',
     name: 'Jerky',
     items: ['meat', 'salt'],
-    value: 20,
+    value: {
+      food: 20
+    },
     risk: 0
   },
   {
@@ -42,7 +44,9 @@ export default [
     type: 'drink',
     name: 'Medicinal tea',
     items: ['water-clean', 'medicinal-herbs'],
-    value: 20,
+    value: {
+      water: 20
+    },
     risk: 0
   }
 ]

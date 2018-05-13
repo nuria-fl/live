@@ -4,8 +4,10 @@
       {{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : ''}}
       <span
         v-if="isConsumable"
-         class="Item__stats">
-        +{{ item.value }} {{ typeName }}
+        class="Item__stats">
+        <span v-for="stat, key in stats" :key="key">
+          +{{ stat }} {{ key }}
+        </span>
       </span>
     </h4>
     <p>{{ item.description }}</p>
@@ -47,6 +49,11 @@ export default {
         actions.push('consume')
       }
       return actions
+    },
+    stats() {
+      if(this.isConsumable){
+        return this.item.value
+      }
     }
   },
   methods: {
@@ -74,9 +81,11 @@ export default {
           this.getCured()
         }
 
-        this.increase({
-          stat: stat,
-          amount: this.item.value
+        Object.keys(this.stats).forEach(stat => {
+          this.increase({
+            stat: stat,
+            amount: this.stats[stat]
+          })
         })
       }
 

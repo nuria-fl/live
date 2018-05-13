@@ -4,7 +4,9 @@ export default [
     type: 'food',
     name: 'Cooked meat',
     items: ['meat'],
-    value: 20,
+    value: {
+      food: 20
+    },
     risk: 0
   },
   {
@@ -12,7 +14,9 @@ export default [
     type: 'drink',
     name: 'Clean water',
     items: ['water-dirty'],
-    value: 20,
+    value: {
+      water: 20
+    },
     risk: 0
   }
 ]
