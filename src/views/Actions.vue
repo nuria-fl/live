@@ -192,6 +192,11 @@ export default {
       animation: progress 1.5s linear infinite;
       display: inline;
     }
+    .paused & {
+      &:after {
+        display: none;
+      }
+    }
   }
 
   @keyframes progress {

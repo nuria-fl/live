@@ -38,7 +38,8 @@
     data () {
       return {
         fireStatus: 0,
-        fireInterval: null
+        fireLoop: null,
+        currentTime: 0
       }
     },
     props: {
@@ -46,6 +47,9 @@
         type: Object,
         required: true
       }
+    },
+    mounted() {
+      eventBus.$on('gameStatusChange', this.handleGameStatusChange)
     },
     computed: {
       ...mapState([ 'hasFire', 'disabled', 'inventory']),
@@ -72,31 +76,49 @@
       startFire() {
         this.removeItemsById(this.item.items)
         this.enableFire()
-        this.startFireInterval()
+        this.startFireLoop()
       },
-      startFireInterval() {
-        const day = 1000 * 60
-
-        this.fireInterval = setInterval(() => {
-          this.fireStatus++
-          if (this.fireStatus === 3) {
-            this.resetFire()
+      startFireLoop() {
+        this.fireLoop = setTimeout(() => {
+          this.currentTime++
+          if (this.currentTime === 60) { // 1000 * 60 = game day
+            this.currentTime = 0
+            this.fireStatus++
+            if (this.fireStatus === 3) {
+              this.resetFire()
+              return
+            }
           }
-        }, day)
+          this.startFireLoop()
+        }, 1000)
       },
       resetFire() {
-        clearInterval(this.fireInterval)
+        clearTimeout(this.fireLoop)
         eventBus.$emit('showModal', {
           body: 'Fire has burnt out!'
         })
         this.disableFire()
         this.fireStatus = 0
+        this.currentTime = 0
       },
       rekindle() {
         this.removeItemsById(['wood'])
         this.fireStatus = 0
-        clearInterval(this.fireInterval)
-        this.startFireInterval()
+        this.currentTime = 0
+        clearTimeout(this.fireLoop)
+        this.startFireLoop()
+      },
+      pauseFire() {
+        clearTimeout(this.fireLoop)
+      },
+      handleGameStatusChange (isPaused) {
+        if (this.hasFire) {
+          if (isPaused) {
+            this.pauseFire()
+          } else {
+            this.startFireLoop()
+          }
+        }
       }
     }
   }

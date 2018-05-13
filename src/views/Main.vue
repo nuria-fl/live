@@ -6,7 +6,7 @@
       <p>You survived {{ daysSurvived }} days</p>
       <button class="Btn" @click="newGame()">Start over</button>
     </div>
-    <div v-if="!this.gameOver">
+    <div v-if="!this.gameOver" :class="{paused: paused}">
       <alert></alert>
       <header class="Header">
         <div class="Header__content">
@@ -67,7 +67,7 @@ export default {
     this.initInventory()
   },
   computed: {
-    ...mapState(['disabled', 'gameOver', 'daysSurvived', 'currentPage', 'causeOfDeath']),
+    ...mapState(['disabled', 'paused', 'gameOver', 'daysSurvived', 'currentPage', 'causeOfDeath']),
     mobileHome () {
       return this.isMobile === false || this.isMobile && this.currentPage === 'home'
     },

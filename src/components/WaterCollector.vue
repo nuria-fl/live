@@ -37,6 +37,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import eventBus from '@/utils/eventBus'
 import items from '@/utils/items'
 
 export default {
@@ -45,13 +46,18 @@ export default {
       hasWaterCollector: false,
       isCollecting: false,
       isReady: false,
-      usesRemaining: 3
+      usesRemaining: 3,
+      currentTime: 0,
+      waterTimeout: null
     }
   },
   props: {
     item: {
       type: Object
     }
+  },
+  mounted() {
+    eventBus.$on('gameStatusChange', this.handleGameStatusChange)
   },
   computed: {
     ...mapState(['disabled']),
@@ -70,9 +76,18 @@ export default {
     },
     startCollecting() {
       this.isCollecting = true
-      setTimeout(() => {
-        this.isCollecting = false
-      }, 1000 * 60)
+      this.startCollectingLoop()
+    },
+    startCollectingLoop() {
+      this.waterTimeout = setTimeout(() => {
+        this.currentTime++
+        if (this.currentTime === 60) {
+          this.isCollecting = false
+          this.currentTime = 0
+        } else {
+          this.startCollectingLoop()
+        }
+      }, 1000)
     },
     drinkWater() {
       this.increase({
@@ -85,6 +100,18 @@ export default {
         this.hasWaterCollector = false
       } else {
         this.startCollecting()
+      }
+    },
+    pauseWaterCollector() {
+      clearTimeout(this.waterTimeout)
+    },
+    handleGameStatusChange (isPaused) {
+      if (this.hasWaterCollector) {
+        if (isPaused) {
+          this.pauseWaterCollector()
+        } else {
+          this.startCollectingLoop()
+        }
       }
     }
   }
