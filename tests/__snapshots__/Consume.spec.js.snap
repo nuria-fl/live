@@ -11,14 +11,21 @@ exports[`Consume It should match snapshot 1`] = `
     <span
       class="Item__stats"
     >
+      <span>
+        
+        +3 food
       
-      +3 food
-    
+      </span>
+      <span>
+        
+        +3 water
+      
+      </span>
     </span>
   </h4>
    
   <p>
-    Small amount of vitamins and fiber
+    Small amount of vitamins and water
   </p>
    
   <div

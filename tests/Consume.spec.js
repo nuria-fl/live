@@ -28,10 +28,13 @@ describe('Consume', () => {
           type: 'food',
           id: 'berries',
           name: 'Berries',
-          value: 3,
+          value: {
+            food: 3,
+            water: 3
+          },
           risk: 0,
           action: 'scavenge',
-          description: 'Small amount of vitamins and fiber'
+          description: 'Small amount of vitamins and water'
         }
       }
     })
