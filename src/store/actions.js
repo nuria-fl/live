@@ -2,7 +2,8 @@ import utils from '@/utils'
 
 export default {
   initInventory ({state, commit}) {
-    const startingItems = utils.randomizeItems(state.existingItems, 2)
+    const scavengeableItems = state.existingItems.filter(item => item.action === 'scavenge')
+    const startingItems = utils.randomizeItems(scavengeableItems, 2)
     startingItems.forEach(item => commit('addInventory', item))
   },
   decreaseAsync ({state, commit}, {stat, amount, time}) {
