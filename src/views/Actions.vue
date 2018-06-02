@@ -51,7 +51,7 @@ export default {
           name: 'Sleep',
           description: 'Rest to replenish your energy',
           stats: '+35 energy',
-          method: this.sleep
+          method: this.energy
         },
         {
           name: 'Hunt',
@@ -79,11 +79,11 @@ export default {
         body: 'Your inventory is full. Remove at least one item to proceed.'
       })
     },
-    sleep() {
+    energy() {
       this.startProgress('Sleeping')
 
       this.increaseAsync({
-        stat: 'sleep',
+        stat: 'energy',
         amount: 35,
         time: 5000
       })
@@ -100,7 +100,8 @@ export default {
         return
       }
 
-      const hasWeapon = this.inventory.filter(item => item.type === 'weapon').length > 0
+      const weapons = ['bow']
+      const hasWeapon = this.inventory.filter(item => weapons.indexOf(item.id) > -1).length > 0
 
       if(hasWeapon){
         this.startProgress('Hunting')

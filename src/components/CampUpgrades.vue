@@ -2,19 +2,19 @@
   <div>
     <h2 class="SectionTitle">Camp upgrades</h2>
     <ul>
-      <li v-for="item in items">
+      <li v-for="upgrade in upgrades">
         <fire
-           v-if="item.id === 'fire'"
-           :item="item">
+           v-if="upgrade.id === 'fire'"
+           :item="upgrade">
         </fire>
         <water-collector
-          v-if="item.id === 'water-collector'"
-          :item="item">
+          v-if="upgrade.id === 'water-collector'"
+          :item="upgrade">
         </water-collector>
       </li>
     </ul>
   </div>
-  
+
 </template>
 
 <script>
@@ -28,10 +28,7 @@ export default {
     WaterCollector
   },
   computed: {
-    ...mapGetters([ 'craftableItems' ]),
-    items() {
-      return this.craftableItems.filter(item => item.type === 'camp')
-    }
+    ...mapGetters([ 'upgrades' ])
   }
 }
 </script>

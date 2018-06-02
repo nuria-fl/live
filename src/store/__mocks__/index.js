@@ -45,7 +45,7 @@ export const state = {
     health: 100,
     water: 100,
     food: 100,
-    sleep: 100
+    energy: 100
   },
   existingItems: items,
   inventory: [],

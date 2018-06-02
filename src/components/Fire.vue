@@ -67,14 +67,14 @@
         }
       },
       itemsNeeded() {
-        return this.item.items.map(items.getName).join(', ')
+        return this.item.itemsNeeded.map(items.getName).join(', ')
       }
     },
     methods: {
       ...mapMutations(['enableFire', 'disableFire']),
       ...mapActions(['removeItemsById']),
       startFire() {
-        this.removeItemsById(this.item.items)
+        this.removeItemsById(this.item.itemsNeeded)
         this.enableFire()
         this.startFireLoop()
       },

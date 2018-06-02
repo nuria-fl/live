@@ -31,7 +31,7 @@ export default {
       return this.item.condition === 'fire' && !this.hasFire
     },
     itemsNeeded() {
-      return this.item.items.map(items.getName).join(', ')
+      return this.item.itemsNeeded.map(items.getName).join(', ')
     }
   },
   methods: {

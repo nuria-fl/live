@@ -79,7 +79,7 @@ export default {
     },
     deathText() {
       switch (this.causeOfDeath) {
-        case 'sleep':
+        case 'energy':
           return 'You died from exhaustion. Remember, sleeping is important, even in the wild.'
         case 'water':
           return 'You died of thirst. A water collector could have saved your life.'

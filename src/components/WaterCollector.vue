@@ -62,14 +62,14 @@ export default {
   computed: {
     ...mapState(['disabled']),
     itemsNeeded() {
-      return this.item.items.map(items.getName).join(', ')
+      return this.item.itemsNeeded.map(items.getName).join(', ')
     }
   },
   methods: {
     ...mapMutations(['increase', 'addInventory']),
     ...mapActions(['removeItemsById']),
     buildWaterCollector() {
-      this.removeItemsById(this.item.items)
+      this.removeItemsById(this.item.itemsNeeded)
       this.usesRemaining = 3
       this.hasWaterCollector = true
       this.startCollecting()

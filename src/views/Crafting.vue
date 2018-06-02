@@ -4,13 +4,13 @@
     <h2 class="SectionTitle">Food and water</h2>
     <ul>
       <craftable-item
-        v-for="item in foodItems"
+        v-for="item in consumables"
         :key="item.id"
         :item="item"
         @craft="craft"
       />
       <craftable-item
-        v-for="item in drinkItems"
+        v-for="item in medicine"
         :key="item.id"
         :item="item"
         @craft="craft"
@@ -43,6 +43,8 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
+import items from '@/data/items'
+
 import CraftableItem from '@/components/CraftableItem'
 import CampUpgrades from '@/components/CampUpgrades'
 
@@ -53,26 +55,34 @@ export default {
   },
   computed: {
     ...mapState(['hasFire', 'disabled']),
-    ...mapGetters(['craftableItems']),
-    foodItems() {
-      return this.craftableItems.filter(item => item.type === 'food')
+    ...mapGetters(['recipes']),
+    consumables() {
+      return this.recipes.filter(recipe => recipe.category === 'consumable')
     },
-    drinkItems() {
-      return this.craftableItems.filter(item => item.type === 'drink')
+    medicine() {
+      return this.recipes.filter(recipe => recipe.category === 'medicine')
     },
     tools() {
-      return this.craftableItems.filter(item => item.type === 'tool')
+      return this.recipes.filter(recipe => recipe.category === 'tool')
     },
     weapons() {
-      return this.craftableItems.filter(item => item.type === 'weapon')
+      return this.recipes.filter(recipe => recipe.category === 'weapon')
     }
   },
   methods: {
     ...mapMutations(['addInventory', 'enableFire']),
     ...mapActions(['removeItemsById']),
-    craft(item){
-      this.removeItemsById(item.items)
-      this.addInventory({item})
+    craft(recipe){
+      this.removeItemsById(recipe.itemsNeeded)
+      const itemsToCraft = recipe.result.map(itemId => {
+        return items.find(item => item.id === itemId)
+      })
+
+      console.log(itemsToCraft)
+
+      itemsToCraft.forEach(item => {
+        this.addInventory({...item})
+      })
     }
   }
 }

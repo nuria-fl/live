@@ -5,7 +5,10 @@
       <span
         v-if="isConsumable"
         class="Item__stats">
-        <span v-for="stat, key in stats" :key="key">
+        <span
+          v-for="stat, key in stats"
+          v-if="(stat > 0)"
+          :key="key">
           +{{ stat }} {{ key }}
         </span>
       </span>
@@ -33,15 +36,7 @@ export default {
   computed: {
     ...mapState(['disabled', 'isSick']),
     isConsumable() {
-      return this.item.type === 'food' || this.item.type === 'drink'
-    },
-    typeName() {
-      if (this.item.type === 'food') {
-        return 'food'
-      }
-      if (this.item.type === 'drink') {
-        return 'water'
-      }
+      return this.item.consumable
     },
     actions() {
       const actions = ['discard']
