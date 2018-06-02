@@ -24,9 +24,10 @@ describe('WaterCollector', () => {
       propsData: {
         item: {
           id: 'water-collector',
-          type: 'camp',
           name: 'Water collector',
-          items: ['plastic', 'rope', 'bottle'],
+          description: 'Collects rain water',
+          itemsNeeded: ['plastic', 'rope', 'bottle'],
+          toolsNeeded: [],
           isCraftable: true
         }
       }

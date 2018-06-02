@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export const getters = {
   isInventoryFull: jest.fn().mockReturnValue(false),
   slotsInInventoryLeft: jest.fn().mockReturnValue(8),
-  craftableItems: jest.fn().mockReturnValue()
+  recipes: jest.fn().mockReturnValue(),
+  upgrades: jest.fn().mockReturnValue()
 };
 
 export const mutations = {
