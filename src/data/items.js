@@ -25,6 +25,4 @@ const items = [...objects, ...consumableItems].map(item => {
   }
 })
 
-console.log(items)
-
 export default items

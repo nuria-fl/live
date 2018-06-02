@@ -1,11 +1,13 @@
 <template lang="html">
-  <div v-if="visible" class="Modal">
+  <div
+    v-if="visible"
+    class="Modal">
     <div class="Modal__content">
       <header>
-        <slot name="header"></slot>
+        <slot name="header"/>
       </header>
       <section>
-        <slot name="body"></slot>
+        <slot name="body"/>
       </section>
       <footer>
         <button
@@ -14,7 +16,7 @@
           @click="close()">
           {{ closeText }}
         </button>
-        <slot name="actions"></slot>
+        <slot name="actions"/>
       </footer>
     </div>
   </div>
@@ -38,10 +40,10 @@ export default {
     }
   },
   methods: {
-    open(){
+    open () {
       this.$emit('update:visible', true)
     },
-    close(){
+    close () {
       this.$emit('update:visible', false)
     }
   }

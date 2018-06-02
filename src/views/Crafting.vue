@@ -56,29 +56,27 @@ export default {
   computed: {
     ...mapState(['hasFire', 'disabled']),
     ...mapGetters(['recipes']),
-    consumables() {
+    consumables () {
       return this.recipes.filter(recipe => recipe.category === 'consumable')
     },
-    medicine() {
+    medicine () {
       return this.recipes.filter(recipe => recipe.category === 'medicine')
     },
-    tools() {
+    tools () {
       return this.recipes.filter(recipe => recipe.category === 'tool')
     },
-    weapons() {
+    weapons () {
       return this.recipes.filter(recipe => recipe.category === 'weapon')
     }
   },
   methods: {
     ...mapMutations(['addInventory', 'enableFire']),
     ...mapActions(['removeItemsById']),
-    craft(recipe){
+    craft (recipe) {
       this.removeItemsById(recipe.itemsNeeded)
       const itemsToCraft = recipe.result.map(itemId => {
         return items.find(item => item.id === itemId)
       })
-
-      console.log(itemsToCraft)
 
       itemsToCraft.forEach(item => {
         this.addInventory({...item})

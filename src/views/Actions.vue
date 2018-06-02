@@ -2,23 +2,28 @@
   <div>
     <h2 class="SectionTitle">Actions</h2>
 
-    <modal :visible.sync="showResults" :isCloseable="true">
+    <modal
+      :visible.sync="showResults"
+      :is-closeable="true">
       <p slot="body">
         You got {{ lastActionResult }}
       </p>
     </modal>
 
     <modal :visible.sync="inProgress">
-      <p slot="body" class="progress">
+      <p
+        slot="body"
+        class="progress">
         {{ currentAction }}
       </p>
     </modal>
 
     <button
+      v-for="action in actions"
+      :key="action.name"
+      :disabled="disabled"
       type="button"
       class="Btn Action"
-      v-for="action in actions"
-      :disabled="disabled"
       @click="action.method">
       <h3 class="Action__title">
         {{ action.name }}
@@ -39,7 +44,9 @@ import modal from '@/components/Modal'
 import eventBus from '@/utils/eventBus'
 
 export default {
-  name: 'actions',
+  components: {
+    modal
+  },
   data () {
     return {
       lastActionResult: '',
@@ -74,12 +81,12 @@ export default {
   },
   methods: {
     ...mapActions(['increaseAsync', 'hunt', 'scavenge']),
-    handleFullInventory() {
+    handleFullInventory () {
       eventBus.$emit('showModal', {
         body: 'Your inventory is full. Remove at least one item to proceed.'
       })
     },
-    energy() {
+    energy () {
       this.startProgress('Sleeping')
 
       this.increaseAsync({
@@ -87,15 +94,15 @@ export default {
         amount: 35,
         time: 5000
       })
-        .then(()=> {
+        .then(() => {
           this.handleResult()
         })
-        .catch(()=>{
-          console.error('oops');
+        .catch(() => {
+          console.error('oops')
         })
     },
-    goHunt() {
-      if(this.isInventoryFull) {
+    goHunt () {
+      if (this.isInventoryFull) {
         this.handleFullInventory()
         return
       }
@@ -103,7 +110,7 @@ export default {
       const weapons = ['bow']
       const hasWeapon = this.inventory.filter(item => weapons.indexOf(item.id) > -1).length > 0
 
-      if(hasWeapon){
+      if (hasWeapon) {
         this.startProgress('Hunting')
         this.lastActionResult = ''
 
@@ -122,8 +129,8 @@ export default {
         })
       }
     },
-    goScavenge() {
-      if(this.isInventoryFull) {
+    goScavenge () {
+      if (this.isInventoryFull) {
         this.handleFullInventory()
         return
       }
@@ -136,10 +143,10 @@ export default {
           this.handleResult(items)
         })
     },
-    handleResult(items) {
+    handleResult (items) {
       this.endProgress()
 
-      if(items) {
+      if (items) {
         const itemsAcquired = []
         items.forEach(item => {
           itemsAcquired.push(item.name)
@@ -148,17 +155,14 @@ export default {
         this.lastActionResult = itemsAcquired.join(', ')
       }
     },
-    startProgress(action) {
+    startProgress (action) {
       this.currentAction = action
       this.inProgress = true
     },
-    endProgress() {
+    endProgress () {
       this.currentAction = null
       this.inProgress = false
     }
-  },
-  components: {
-    modal
   }
 }
 </script>

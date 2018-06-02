@@ -1,15 +1,16 @@
 <template>
   <li>
     <article class="Item">
-      <h4>{{item.name}}</h4>
+      <h4>{{ item.name }}</h4>
       <p>
         Items needed:
         {{ itemsNeeded }}
       </p>
       <button
+        :disabled="!item.isCraftable || disabled"
         type="button"
         class="Btn"
-        @click="craft" :disabled="!item.isCraftable || disabled">
+        @click="craft">
         Craft
       </button>
       <span v-show="showFireTip">
@@ -23,19 +24,24 @@
 import { mapState } from 'vuex'
 import items from '@/utils/items'
 export default {
-  name: 'consume',
-  props: ['item'],
+  name: 'Consume',
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     ...mapState(['hasFire', 'disabled']),
-    showFireTip() {
+    showFireTip () {
       return this.item.condition === 'fire' && !this.hasFire
     },
-    itemsNeeded() {
+    itemsNeeded () {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     }
   },
   methods: {
-    craft() {
+    craft () {
       this.$emit('craft', this.item)
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <modal
-    :isCloseable="true"
+    :is-closeable="true"
     :visible.sync="visible"
     @update:visible="closeModal">
     <p slot="body">{{ text }}</p>
@@ -12,24 +12,24 @@ import Modal from '@/components/Modal'
 import eventBus from '@/utils/eventBus'
 
 export default {
+  components: {
+    Modal
+  },
   data () {
     return {
       visible: false,
       text: ''
     }
   },
-  components: {
-    Modal
-  },
   mounted () {
     eventBus.$on('showModal', this.showModal)
   },
   methods: {
-    showModal(data) {
+    showModal (data) {
       this.visible = true
       this.text = data.body
     },
-    closeModal() {
+    closeModal () {
       this.text = ''
     }
   }

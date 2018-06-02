@@ -33,7 +33,7 @@ const isCraftable = recipe => {
     const idx = inventory.indexOf(itemNeeded)
 
     if (idx !== -1) {
-        // if we find the item we remove it from the temp inventory
+      // if we find the item we remove it from the temp inventory
       inventory.splice(idx, 1)
       currentItems.push(itemNeeded)
     } else {

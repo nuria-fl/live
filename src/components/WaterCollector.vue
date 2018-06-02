@@ -10,9 +10,10 @@
       </p>
       <div class="Item__actions">
         <button
+          :disabled="!item.isCraftable || disabled"
           type="button"
           class="Btn"
-          @click="buildWaterCollector()" :disabled="!item.isCraftable || disabled">
+          @click="buildWaterCollector()">
           Craft
         </button>
       </div>
@@ -26,9 +27,9 @@
     <template v-else>
       Uses remaining: {{ usesRemaining - 1 }}<br>
       <button
+        :disabled="disabled"
         class="Btn"
-        @click="drinkWater"
-        :disabled="disabled">
+        @click="drinkWater">
         Drink water
       </button>
     </template>
@@ -41,7 +42,13 @@ import eventBus from '@/utils/eventBus'
 import items from '@/utils/items'
 
 export default {
-  data() {
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
+  data () {
     return {
       hasWaterCollector: false,
       isCollecting: false,
@@ -51,34 +58,29 @@ export default {
       waterTimeout: null
     }
   },
-  props: {
-    item: {
-      type: Object
-    }
-  },
-  mounted() {
-    eventBus.$on('gameStatusChange', this.handleGameStatusChange)
-  },
   computed: {
     ...mapState(['disabled']),
-    itemsNeeded() {
+    itemsNeeded () {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     }
+  },
+  mounted () {
+    eventBus.$on('gameStatusChange', this.handleGameStatusChange)
   },
   methods: {
     ...mapMutations(['increase', 'addInventory']),
     ...mapActions(['removeItemsById']),
-    buildWaterCollector() {
+    buildWaterCollector () {
       this.removeItemsById(this.item.itemsNeeded)
       this.usesRemaining = 3
       this.hasWaterCollector = true
       this.startCollecting()
     },
-    startCollecting() {
+    startCollecting () {
       this.isCollecting = true
       this.startCollectingLoop()
     },
-    startCollectingLoop() {
+    startCollectingLoop () {
       this.waterTimeout = setTimeout(() => {
         this.currentTime++
         if (this.currentTime === 60) {
@@ -89,20 +91,20 @@ export default {
         }
       }, 1000)
     },
-    drinkWater() {
+    drinkWater () {
       this.increase({
         stat: 'water',
         amount: 20
       })
       this.usesRemaining--
 
-      if(this.usesRemaining === 0) {
+      if (this.usesRemaining === 0) {
         this.hasWaterCollector = false
       } else {
         this.startCollecting()
       }
     },
-    pauseWaterCollector() {
+    pauseWaterCollector () {
       clearTimeout(this.waterTimeout)
     },
     handleGameStatusChange (isPaused) {
