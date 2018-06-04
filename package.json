@@ -10,7 +10,7 @@
     "build": "NODE_ENV=production node build/build.js",
     "lint": "eslint src/**/*{.js,.vue}",
     "lint:fix": "eslint --fix src/**/*{.js,.vue}",
-    "prepush": "npm run lint",
+    "precommit": "npm run lint",
     "test": "jest tests"
   },
   "dependencies": {
