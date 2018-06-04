@@ -61,12 +61,12 @@ export default [
     description: 'Lets you hunt and defend yourself',
     action: 'craft',
     usesUntilBreakdown: 5
-  },
-  {
-    id: 'knife',
-    name: 'Knife',
-    description: 'Useful tool',
-    action: 'craft',
-    usesUntilBreakdown: 5
   }
+  // {
+  //   id: 'knife',
+  //   name: 'Knife',
+  //   description: 'Useful tool',
+  //   action: 'craft',
+  //   usesUntilBreakdown: 5
+  // }
 ]
