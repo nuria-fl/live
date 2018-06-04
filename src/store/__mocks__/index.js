@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export const getters = {
   isInventoryFull: jest.fn().mockReturnValue(false),
   slotsInInventoryLeft: jest.fn().mockReturnValue(8),
-  craftableItems: jest.fn().mockReturnValue()
+  recipes: jest.fn().mockReturnValue(),
+  upgrades: jest.fn().mockReturnValue()
 };
 
 export const mutations = {
@@ -45,7 +46,7 @@ export const state = {
     health: 100,
     water: 100,
     food: 100,
-    sleep: 100
+    energy: 100
   },
   existingItems: items,
   inventory: [],

@@ -1,17 +1,19 @@
 <template>
-    <ul class="Stats">
-      <li
-        v-for="(stat, key) in stats"
-        class="Stats__item">
-        <span class="Stats__icon">{{ icons[key] }}</span>
-        <strong :class="{
+  <ul class="Stats">
+    <li
+      v-for="(stat, key) in stats"
+      :key="key"
+      class="Stats__item">
+      <span class="Stats__icon">{{ icons[key] }}</span>
+      <strong
+        :class="{
           warning: stat < 50,
           danger: stat < 20
-        }">
-          {{stat}}
-        </strong>
-      </li>
-    </ul>
+      }">
+        {{ stat }}
+      </strong>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -19,36 +21,35 @@ import { mapState, mapMutations } from 'vuex'
 import gameLoop from '@/mixins/gameLoop'
 
 export default {
-  data() {
+  mixins: [ gameLoop ],
+  data () {
     return {
       icons: {
         health: '❤️',
         water: '💧',
         food: '🍗',
-        sleep: '⚡'
+        energy: '⚡'
       }
     }
   },
-  mixins: [ gameLoop ],
   computed: {
     ...mapState(['stats', 'gameOver', 'isSick']),
-    isActive() {
+    isActive () {
       return this.gameOver === false
-    },
+    }
   },
   methods: {
     ...mapMutations(['decrease']),
-    startGameLoop() {
+    startGameLoop () {
       this.decreaseStats()
     },
-    decreaseStats() {
+    decreaseStats () {
       const decreaseInterval = 12 * 1000
       this.loop = setTimeout(() => {
         if (this.isActive) {
-
           this.decrease({ stat: 'water', amount: 3 })
           this.decrease({ stat: 'food', amount: 2 })
-          this.decrease({ stat: 'sleep', amount: 2 })
+          this.decrease({ stat: 'energy', amount: 2 })
           if (this.isSick) {
             this.decrease({ stat: 'health', amount: 2 })
           }

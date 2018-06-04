@@ -1,29 +1,41 @@
 <template>
   <section>
-    <div v-if="this.gameOver" class="Splash">
+    <div
+      v-if="gameOver"
+      class="Splash">
       <h1>GAME OVER</h1>
       <p>{{ deathText }}</p>
       <p>You survived {{ daysSurvived }} days</p>
-      <button class="Btn" @click="newGame()">Start over</button>
+      <button
+        class="Btn"
+        @click="newGame()">Start over</button>
     </div>
-    <div v-if="!this.gameOver" :class="{paused: paused}">
-      <alert></alert>
+    <div
+      v-if="!gameOver"
+      :class="{paused: paused}">
+      <alert/>
       <header class="Header">
         <div class="Header__content">
-          <mobile-menu></mobile-menu>
-          <stats></stats>
-          <days-counter></days-counter>
+          <mobile-menu/>
+          <stats/>
+          <days-counter/>
         </div>
       </header>
       <div class="Main">
-        <div class="Main__column" v-show="mobileHome">
-          <actions></actions>
+        <div
+          v-show="mobileHome"
+          class="Main__column">
+          <actions/>
         </div>
-        <div class="Main__column" v-show="mobileInventory">
-          <inventory></inventory>
+        <div
+          v-show="mobileInventory"
+          class="Main__column">
+          <inventory/>
         </div>
-        <div class="Main__column" v-show="mobileCrafting">
-          <crafting></crafting>
+        <div
+          v-show="mobileCrafting"
+          class="Main__column">
+          <crafting/>
         </div>
       </div>
     </div>
@@ -41,17 +53,6 @@ import Crafting from './Crafting'
 import Inventory from './Inventory'
 
 export default {
-  name: 'mainElement',
-  data () {
-    return {
-      navMenu: [
-        'Actions',
-        'Inventory',
-        'Crafting'
-      ],
-      isMobile: true
-    }
-  },
   components: {
     Alert,
     Actions,
@@ -61,25 +62,30 @@ export default {
     MobileMenu,
     Stats
   },
-  mounted () {
-    const bdSize = document.querySelector('body').getBoundingClientRect()
-    this.isMobile = bdSize.width <= 680
-    this.initInventory()
+  data () {
+    return {
+      navMenu: [
+        'Actions',
+        'Inventory',
+        'Crafting'
+      ],
+      isMobile: true
+    }
   },
   computed: {
     ...mapState(['disabled', 'paused', 'gameOver', 'daysSurvived', 'currentPage', 'causeOfDeath']),
     mobileHome () {
-      return this.isMobile === false || this.isMobile && this.currentPage === 'home'
+      return this.isMobile === false || (this.isMobile && this.currentPage === 'home')
     },
     mobileInventory () {
-      return this.isMobile === false || this.isMobile && this.currentPage === 'inventory'
+      return this.isMobile === false || (this.isMobile && this.currentPage === 'inventory')
     },
     mobileCrafting () {
-      return this.isMobile === false || this.isMobile && this.currentPage === 'crafting'
+      return this.isMobile === false || (this.isMobile && this.currentPage === 'crafting')
     },
-    deathText() {
+    deathText () {
       switch (this.causeOfDeath) {
-        case 'sleep':
+        case 'energy':
           return 'You died from exhaustion. Remember, sleeping is important, even in the wild.'
         case 'water':
           return 'You died of thirst. A water collector could have saved your life.'
@@ -90,9 +96,14 @@ export default {
       }
     }
   },
+  mounted () {
+    const bdSize = document.querySelector('body').getBoundingClientRect()
+    this.isMobile = bdSize.width <= 680
+    this.initInventory()
+  },
   methods: {
     ...mapActions(['initInventory']),
-    newGame(){
+    newGame () {
       window.location.reload()
       // this.$emit('newGame')
     }

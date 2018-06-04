@@ -24,9 +24,10 @@ describe('Fire', () => {
       propsData: {
         item: {
           id: 'fire',
-          type: 'camp',
           name: 'Fire',
-          items: ['wood', 'flint'],
+          description: 'Will allow you to cook items',
+          itemsNeeded: ['wood', 'flint'],
+          toolsNeeded: [],
           isCraftable: true
         }
       }

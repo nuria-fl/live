@@ -1,11 +1,14 @@
 <template>
   <article class="Item">
     <h4>
-      {{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : ''}}
+      {{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : '' }}
       <span
         v-if="isConsumable"
         class="Item__stats">
-        <span v-for="stat, key in stats" :key="key">
+        <span
+          v-for="(stat, key) in stats"
+          v-if="(stat > 0)"
+          :key="key">
           +{{ stat }} {{ key }}
         </span>
       </span>
@@ -14,9 +17,10 @@
     <div class="Item__actions Item__actions--multi">
       <button
         v-for="action in actions"
+        :key="action"
+        :disabled="disabled"
         class="Btn"
-        @click="doAction(action)"
-        :disabled="disabled">
+        @click="doAction(action)">
         {{ action }}
       </button>
     </div>
@@ -29,42 +33,37 @@ import utils from '@/utils'
 import eventBus from '@/utils/eventBus'
 
 export default {
-  props: ['item'],
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
     ...mapState(['disabled', 'isSick']),
-    isConsumable() {
-      return this.item.type === 'food' || this.item.type === 'drink'
+    isConsumable () {
+      return this.item.consumable
     },
-    typeName() {
-      if (this.item.type === 'food') {
-        return 'food'
-      }
-      if (this.item.type === 'drink') {
-        return 'water'
-      }
-    },
-    actions() {
+    actions () {
       const actions = ['discard']
-      if(this.isConsumable){
+      if (this.isConsumable) {
         actions.push('consume')
       }
       return actions
     },
-    stats() {
-      if(this.isConsumable){
+    stats () {
+      if (this.isConsumable) {
         return this.item.value
       }
     }
   },
   methods: {
     ...mapMutations(['removeInventory', 'increase', 'getSick', 'getCured']),
-    discard(item){
+    discard (item) {
       this.removeInventory(item.uid)
     },
-    doAction(action){
-      if (action === 'consume'){
-        let stat = this.item.type === 'food' ? 'food' : 'water'
-
+    doAction (action) {
+      if (action === 'consume') {
         const infected = utils.calculateProbability(this.item.risk)
 
         if (infected && !this.isSick) {

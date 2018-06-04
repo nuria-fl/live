@@ -1,22 +1,24 @@
 <template>
-    <div class="Menu">
-      <div
-        class="Btn Menu__toggle"
-        @click="toggleMenu">
-        <span></span>
-      </div>
-      <ul class="Menu__dropdown" v-show="isMenuVisible">
-        <li @click="goTo('home')">
-          Actions
-        </li>
-        <li @click="goTo('inventory')">
-          Backpack ({{ length }}/{{ maxLength }})
-        </li>
-        <li @click="goTo('crafting')">
-          Crafting
-        </li>
-      </ul>
+  <div class="Menu">
+    <div
+      class="Btn Menu__toggle"
+      @click="toggleMenu">
+      <span/>
     </div>
+    <ul
+      v-show="isMenuVisible"
+      class="Menu__dropdown">
+      <li @click="goTo('home')">
+        Actions
+      </li>
+      <li @click="goTo('inventory')">
+        Backpack ({{ length }}/{{ maxLength }})
+      </li>
+      <li @click="goTo('crafting')">
+        Crafting
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -31,12 +33,12 @@ export default {
   },
   computed: {
     ...mapState(['inventory']),
-    length() {
+    length () {
       return this.inventory.length
     },
-    maxLength() {
+    maxLength () {
       return MAXINVENTORY
-    },
+    }
   },
   methods: {
     ...mapMutations(['changePage']),

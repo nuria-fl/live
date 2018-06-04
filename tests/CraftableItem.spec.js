@@ -23,10 +23,13 @@ describe('CraftableItem', () => {
       localVue,
       propsData: {
         item: {
-          id: 'bow',
-          type: 'weapon',
           name: 'Bow',
-          items: ['string', 'wood'],
+          description: '',
+          itemsNeeded: ['string', 'wood'],
+          toolsNeeded: [],
+          upgradesNeeded: [],
+          result: ['bow'],
+          category: 'weapon',
           isCraftable: true
         }
       }

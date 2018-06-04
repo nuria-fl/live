@@ -7,10 +7,10 @@ const isProduction = process.env.NODE_ENV === 'production'
  * @param  {int|undefined} value    (Optional) An integer that you can use to provide numerical data about the user event.
  */
 const trackEvent = function (
-    category,
-    action,
-    label = undefined,
-    value = undefined
+  category,
+  action,
+  label = undefined,
+  value = undefined
 ) {
   if (isProduction && window.ga) {
     window.gtag('event', action, {

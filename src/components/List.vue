@@ -1,6 +1,8 @@
 <template>
   <ul class="List">
-    <li v-for="item in list">
+    <li
+      v-for="item in list"
+      :key="item.id">
       <consume
         :item="item" />
     </li>
@@ -11,10 +13,15 @@
 import consume from './Consume'
 
 export default {
-  name: 'list',
-  props: ['list'],
+  name: 'List',
   components: {
     consume
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>

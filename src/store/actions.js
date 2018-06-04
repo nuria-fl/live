@@ -2,8 +2,9 @@ import utils from '@/utils'
 
 export default {
   initInventory ({state, commit}) {
-    const startingItems = utils.randomizeItems(state.existingItems, 2)
-    startingItems.forEach(item => commit('addInventory', {item}))
+    const scavengeableItems = state.existingItems.filter(item => item.action === 'scavenge')
+    const startingItems = utils.randomizeItems(scavengeableItems, 2)
+    startingItems.forEach(item => commit('addInventory', item))
   },
   decreaseAsync ({state, commit}, {stat, amount, time}) {
     return new Promise((resolve, reject) => {
@@ -45,10 +46,10 @@ export default {
           const newItems = utils.randomizeItems(scavengeableItems, numberOfItems)
 
           newItems.forEach(item => {
-            commit('addInventory', {item})
+            commit('addInventory', item)
           })
 
-          commit('decrease', {stat: 'sleep', amount: 5})
+          commit('decrease', {stat: 'energy', amount: 5})
           commit('decrease', {stat: 'water', amount: 5})
           commit('decrease', {stat: 'food', amount: 3})
           commit('enable')
@@ -65,7 +66,7 @@ export default {
       commit('disable')
       if (!state.gameOver) {
         setTimeout(function () {
-          commit('decrease', {stat: 'sleep', amount: 10})
+          commit('decrease', {stat: 'energy', amount: 10})
           commit('decrease', {stat: 'water', amount: 10})
           commit('decrease', {stat: 'food', amount: 6})
           commit('enable')
@@ -78,7 +79,7 @@ export default {
             const newItems = utils.randomizeItems(huntableItems, 1)
 
             newItems.forEach(item => {
-              commit('addInventory', {item: item})
+              commit('addInventory', item)
             })
 
             resolve(newItems)

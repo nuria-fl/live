@@ -25,16 +25,19 @@ describe('Consume', () => {
       localVue,
       propsData: {
         item: {
-          type: 'food',
           id: 'berries',
           name: 'Berries',
+          description: 'Small amount of vitamins and water',
+          action: 'scavenge',
+          consumable: true,
           value: {
+            health: 0,
             food: 3,
-            water: 3
+            water: 3,
+            energy: 0
           },
           risk: 0,
-          action: 'scavenge',
-          description: 'Small amount of vitamins and water'
+          daysToPerish: 5
         }
       }
     })

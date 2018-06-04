@@ -1,6 +1,10 @@
 <template>
-  <button class="GameStatusButton" @click="toggleStatus">
-    <img :src="`./static/${iconName}.svg`" :alt="iconName">
+  <button
+    class="GameStatusButton"
+    @click="toggleStatus">
+    <img
+      :src="`./static/${iconName}.svg`"
+      :alt="iconName">
   </button>
 </template>
 
@@ -9,17 +13,17 @@ import { mapState, mapMutations } from 'vuex'
 import eventBus from '@/utils/eventBus'
 
 export default {
-  mounted () {
-    document.addEventListener('visibilitychange', this.handleVisibilityChange)
-  },
-  beforeDestroy () {
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange)
-  },
   computed: {
     ...mapState(['paused']),
     iconName () {
       return this.paused ? 'play' : 'pause'
     }
+  },
+  mounted () {
+    document.addEventListener('visibilitychange', this.handleVisibilityChange)
+  },
+  beforeDestroy () {
+    document.removeEventListener('visibilitychange', this.handleVisibilityChange)
   },
   methods: {
     ...mapMutations(['pauseGame', 'playGame']),

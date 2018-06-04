@@ -6,7 +6,11 @@ describe('List', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(List)
+    wrapper = shallow(List, {
+      propsData: {
+        list: [{}]
+      }
+    })
   })
 
   test('It should match snapshot', () => {

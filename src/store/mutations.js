@@ -36,7 +36,7 @@ export default {
       state.stats[stat] = MAX
     }
   },
-  addInventory (state, {item}) {
+  addInventory (state, item) {
     if (state.inventory.length < MAXINVENTORY) {
       item.uid = utils.generateId()
       state.inventory.push(item)

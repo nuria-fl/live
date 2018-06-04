@@ -1,7 +1,7 @@
 import { MAX, MAXINVENTORY } from '../data/constants'
 import items from '@/data/items'
-import craftableItems from '@/data/craftableItems'
-import cookableItems from '@/data/cookableItems'
+import recipes from '@/data/recipes'
+import upgrades from '@/data/upgrades'
 
 const state = {
   gameOver: false,
@@ -12,7 +12,7 @@ const state = {
     health: MAX,
     water: MAX,
     food: MAX,
-    sleep: MAX
+    energy: MAX
   },
   existingItems: items,
   inventory: [],
@@ -22,46 +22,55 @@ const state = {
   currentPage: 'home'
 }
 
+const isCraftable = recipe => {
+  // mixin so state is reactive?
+  const inventory = state.inventory.map(item => item.id)
+  const currentItems = []
+
+  let isCraftable
+
+  recipe.itemsNeeded.forEach(itemNeeded => {
+    const idx = inventory.indexOf(itemNeeded)
+
+    if (idx !== -1) {
+      // if we find the item we remove it from the temp inventory
+      inventory.splice(idx, 1)
+      currentItems.push(itemNeeded)
+    } else {
+      isCraftable = false
+    }
+  })
+
+  // if we have all the items we can craft the item
+  // TODO: is length enough? deepEqual?
+
+  if (currentItems.length === recipe.itemsNeeded.length) {
+    isCraftable = true
+    if (recipe.upgradesNeeded && recipe.upgradesNeeded.indexOf('fire') > -1 && !state.hasFire) {
+      isCraftable = false
+    }
+  }
+
+  return isCraftable
+}
+
 const getters = {
   isInventoryFull: () => state.inventory.length === MAXINVENTORY,
   slotsInInventoryLeft: () => MAXINVENTORY - state.inventory.length,
-  craftableItems: () => {
-    cookableItems.forEach(item => {
-      item.condition = 'fire'
-    })
-
-    const craftable = [...craftableItems, ...cookableItems]
-
-    return craftable.map(item => {
-      const newItem = {...item}
-      const currentItems = []
-
-        // create temporary inventory to see if we have enough items
-      const inventory = state.inventory.map(item => item.id)
-
-      newItem.items.forEach(itemNeeded => {
-        const idx = inventory.indexOf(itemNeeded)
-
-        if (idx !== -1) {
-            // if we find the item we remove it from the temp inventory
-          inventory.splice(idx, 1)
-          currentItems.push(itemNeeded)
-        } else {
-          newItem.isCraftable = false
-        }
-      })
-
-        // if we have all the items we can craft the item
-        // TODO: is length enough? deepEqual?
-
-      if (currentItems.length === newItem.items.length) {
-        newItem.isCraftable = true
-        if (newItem.condition === 'fire' && !state.hasFire) {
-          newItem.isCraftable = false
-        }
+  recipes: () => {
+    return recipes.map(recipe => {
+      return {
+        ...recipe,
+        isCraftable: isCraftable(recipe)
       }
-
-      return newItem
+    })
+  },
+  upgrades: () => {
+    return upgrades.map(upgrade => {
+      return {
+        ...upgrade,
+        isCraftable: isCraftable(upgrade)
+      }
     })
   }
 }
