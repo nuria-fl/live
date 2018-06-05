@@ -17,15 +17,15 @@ export default [
     result: ['bow'],
     category: 'weapon'
   },
-  {
-    name: 'Knife',
-    description: '',
-    itemsNeeded: ['flint', 'wood', 'rope'],
-    toolsNeeded: [],
-    upgradesNeeded: [],
-    result: ['knife'],
-    category: 'tool'
-  },
+  // {
+  //   name: 'Knife',
+  //   description: '',
+  //   itemsNeeded: ['flint', 'wood', 'rope'],
+  //   toolsNeeded: [],
+  //   upgradesNeeded: [],
+  //   result: ['knife'],
+  //   category: 'tool'
+  // },
   {
     name: 'Jerky',
     description: '',
