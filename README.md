@@ -2,7 +2,7 @@
 
 Text based survival game made with Vue.
 
-Play here: http://nuriasatorres.com/live
+Play here: http://nuria-fl.github.io/live
 
 ## Contributing
 
