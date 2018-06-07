@@ -1,3 +1,12 @@
+## 0.11.0 - 2018-06-7
+### New features
+- Get actual animal from hunting
+- Craft new items: knife, skinned rabbit
+- Aggregate duplicate items in action result message
+
+### Refactor
+- New data structure
+
 ## 0.10.1 - 2018-05-13
 ###Fixes
 - Fix scavenging and hunting not lowering food stat
