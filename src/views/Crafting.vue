@@ -17,7 +17,7 @@
       />
     </ul>
 
-    <h2 class="SectionTitle">Tools</h2>
+    <h2 class="SectionTitle">Others</h2>
     <ul>
       <craftable-item
         v-for="item in tools"
@@ -25,12 +25,14 @@
         :item="item"
         @craft="craft"
       />
-    </ul>
-
-    <h2 class="SectionTitle">Weapons</h2>
-    <ul>
       <craftable-item
         v-for="item in weapons"
+        :key="item.id"
+        :item="item"
+        @craft="craft"
+      />
+      <craftable-item
+        v-for="item in others"
         :key="item.id"
         :item="item"
         @craft="craft"
@@ -67,6 +69,9 @@ export default {
     },
     weapons () {
       return this.recipes.filter(recipe => recipe.category === 'weapon')
+    },
+    others () {
+      return this.recipes.filter(recipe => recipe.category === 'other')
     }
   },
   methods: {

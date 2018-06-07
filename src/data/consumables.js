@@ -17,7 +17,7 @@ export default [
     id: 'meat',
     name: 'Raw meat',
     description: 'Careful, might have parasites!',
-    action: 'hunt',
+    action: 'craft',
     value: {
       health: 0,
       food: 20,

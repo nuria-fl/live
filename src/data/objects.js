@@ -61,12 +61,24 @@ export default [
     description: 'Lets you hunt and defend yourself',
     action: 'craft',
     usesUntilBreakdown: 5
+  },
+  {
+    id: 'knife',
+    name: 'Knife',
+    description: 'Useful tool',
+    action: 'craft',
+    usesUntilBreakdown: 5
+  },
+  {
+    id: 'rabbit',
+    name: 'Dead rabbit',
+    description: 'Poor little thing',
+    action: 'hunt'
+  },
+  {
+    id: 'rabbit-pelt',
+    name: 'Rabbit pelt',
+    description: 'It\'s not gonna be of much use until you can craft more stuff…',
+    action: 'craft'
   }
-  // {
-  //   id: 'knife',
-  //   name: 'Knife',
-  //   description: 'Useful tool',
-  //   action: 'craft',
-  //   usesUntilBreakdown: 5
-  // }
 ]

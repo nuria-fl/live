@@ -17,15 +17,15 @@ export default [
     result: ['bow'],
     category: 'weapon'
   },
-  // {
-  //   name: 'Knife',
-  //   description: '',
-  //   itemsNeeded: ['flint', 'wood', 'rope'],
-  //   toolsNeeded: [],
-  //   upgradesNeeded: [],
-  //   result: ['knife'],
-  //   category: 'tool'
-  // },
+  {
+    name: 'Knife',
+    description: '',
+    itemsNeeded: ['flint', 'wood', 'rope'],
+    toolsNeeded: [],
+    upgradesNeeded: [],
+    result: ['knife'],
+    category: 'tool'
+  },
   {
     name: 'Jerky',
     description: '',
@@ -61,13 +61,14 @@ export default [
     upgradesNeeded: ['fire'],
     result: ['water-clean'],
     category: 'consumable'
+  },
+  {
+    name: 'Skinned rabbit',
+    description: 'Obtain meat and pelt',
+    itemsNeeded: ['rabbit'],
+    toolsNeeded: ['knife'],
+    upgradesNeeded: [],
+    result: ['meat', 'rabbit-pelt'],
+    category: 'other'
   }
-  // {
-  //   name: 'Skinned rabbit',
-  //   description: '',
-  //   itemsNeeded: ['rabbit'],
-  //   toolsNeeded: ['knife'],
-  //   upgradesNeeded: [],
-  //   result: ['meat', 'rabbit-pelt']
-  // },
 ]
