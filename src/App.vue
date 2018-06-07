@@ -49,6 +49,7 @@ export default {
   body {
     margin: 0;
     font-family: 'Fira Mono', monospace;
+    font-size: .95em;
   }
   li {
     margin: 1em 0;
