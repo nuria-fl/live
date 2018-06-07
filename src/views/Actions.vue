@@ -147,12 +147,24 @@ export default {
       this.endProgress()
 
       if (items) {
-        const itemsAcquired = []
-        items.forEach(item => {
-          itemsAcquired.push(item.name)
-        })
+        const itemsAcquired = items.reduce((accumulator, current) => {
+          const item = {...current}
+          const alreadyExistingItem = accumulator.find(accItem => accItem.name === item.name)
+
+          if (alreadyExistingItem) {
+            alreadyExistingItem.amount++
+            alreadyExistingItem.displayName = `${alreadyExistingItem.name} x${alreadyExistingItem.amount}`
+          } else {
+            item.amount = 1
+            item.displayName = item.name
+            accumulator.push(item)
+          }
+
+          return accumulator
+        }, [])
+
         this.showResults = true
-        this.lastActionResult = itemsAcquired.join(', ')
+        this.lastActionResult = itemsAcquired.map(item => item.displayName).join(', ')
       }
     },
     startProgress (action) {
