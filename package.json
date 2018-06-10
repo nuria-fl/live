@@ -5,15 +5,16 @@
   "author": "Nuria <soriano.nuria@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "NODE_ENV=development npm run dev",
-    "build": "NODE_ENV=production node build/build.js",
+    "dev": "env-cmd .env webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "env-cmd .env NODE_ENV=development npm run dev",
+    "build": "env-cmd .env NODE_ENV=production node build/build.js",
     "lint": "eslint src/**/*{.js,.vue}",
     "lint:fix": "eslint --fix src/**/*{.js,.vue}",
     "precommit": "npm run lint",
     "test": "jest tests"
   },
   "dependencies": {
+    "firebase": "^5.0.4",
     "lodash": "^4.17.4",
     "raven-js": "^3.25.1",
     "vue": "^2.5.2",
@@ -36,6 +37,7 @@
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
+    "env-cmd": "^8.0.2",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.12.0",
