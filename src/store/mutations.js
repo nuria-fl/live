@@ -1,12 +1,25 @@
 import { MAX, MAXINVENTORY } from '../data/constants'
 import utils from '@/utils'
 import tracking from '@/utils/tracking'
+import names from '@/utils/names'
 
 const findIndexById = (uid, collection) => {
   return collection.findIndex(item => item.uid === uid)
 }
 
 export default {
+  initUsername (state) {
+    if (localStorage.username) {
+      state.username = localStorage.username
+    } else {
+      state.username = names.getRandomName()
+      localStorage.username = state.username
+    }
+  },
+  setUsername (state, username) {
+    state.username = username
+    localStorage.username = username
+  },
   pauseGame (state) {
     state.paused = true
     state.disabled = true

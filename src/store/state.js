@@ -4,6 +4,7 @@ import recipes from '@/data/recipes'
 import upgrades from '@/data/upgrades'
 
 const state = {
+  username: '',
   gameOver: false,
   causeOfDeath: null,
   paused: false,

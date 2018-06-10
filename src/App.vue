@@ -3,7 +3,18 @@
     <section v-if="!hasStarted" class="Splash">
       <h1>Live</h1>
       <p>A game about survival</p>
-      <button @click="start" class="Btn">New Game</button>
+      <p>What's your name, survivor?</p>
+      <form @submit.prevent="start">
+        <input
+          type="text"
+          v-model="startUsername"
+          required>
+        <button
+          type="submit"
+          class="Btn">
+          New Game
+        </button>
+      </form>
     </section>
     <main-component v-else @newGame="start"></main-component>
     <footer class="Footer">
@@ -19,27 +30,38 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import Main from '@/views/Main'
 import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      hasStarted: false
+      hasStarted: false,
+      startUsername: ''
     }
   },
   components: {
     MainComponent: Main,
     GameStatusButton
   },
+  computed: {
+    ...mapState(['username'])
+  },
+  created() {
+    this.initUsername()
+    this.startUsername = this.username
+  },
   methods: {
+    ...mapMutations(['initUsername', 'setUsername']),
     start() {
       tracking.trackEvent('game', 'start')
+      this.setUsername(this.startUsername)
       this.hasStarted = true
     }
   }
-
 }
 </script>
 
