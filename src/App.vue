@@ -80,7 +80,7 @@ export default {
     margin: 1em 0;
   }
   .Splash {
-    padding-top: 3em;
+    padding: 3em 0 4em;
     text-align: center;
   }
   .Footer {
