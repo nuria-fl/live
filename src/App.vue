@@ -34,7 +34,8 @@ import { mapState, mapMutations } from 'vuex'
 import Main from '@/views/Main'
 import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
-import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex'
+import { auth } from '@/firebase'
 
 export default {
   data() {
@@ -53,6 +54,8 @@ export default {
   created() {
     this.initUsername()
     this.startUsername = this.username
+
+    auth.signInAnonymously()
   },
   methods: {
     ...mapMutations(['initUsername', 'setUsername']),

@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     getRanking () {
-      dbRanking.onSnapshot(snapshot => {
+      dbRanking.orderBy('days', 'desc').limit(10).onSnapshot(snapshot => {
         const ranking = []
         snapshot.forEach(item => {
           ranking.push(item.data())

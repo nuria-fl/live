@@ -8,14 +8,19 @@
       @click="newGame">
       Start over
     </button>
+    <ranking/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import Ranking from '@/components/Ranking'
 import dbRanking from '@/firebase/ranking'
 
 export default {
+  components: {
+    Ranking
+  },
   computed: {
     ...mapState(['daysSurvived', 'causeOfDeath', 'username']),
     deathText () {
@@ -36,7 +41,8 @@ export default {
     const id = time.toString()
     const message = {
       user: this.username,
-      days: this.daysSurvived
+      days: this.daysSurvived,
+      causeOfDeath: this.causeOfDeath
     }
     dbRanking.doc(id).set(message)
   },
