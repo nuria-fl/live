@@ -1,17 +1,8 @@
 <template>
   <section>
+    <game-over v-if="gameOver" />
     <div
-      v-if="gameOver"
-      class="Splash">
-      <h1>GAME OVER</h1>
-      <p>{{ deathText }}</p>
-      <p>You survived {{ daysSurvived }} days</p>
-      <button
-        class="Btn"
-        @click="newGame()">Start over</button>
-    </div>
-    <div
-      v-if="!gameOver"
+      v-else
       :class="{paused: paused}">
       <alert/>
       <header class="Header">
@@ -48,6 +39,7 @@ import DaysCounter from '@/components/DaysCounter'
 import MobileMenu from '@/components/MobileMenu'
 import Stats from '@/components/Stats'
 import Alert from '@/components/Alert'
+import GameOver from '@/components/GameOver'
 import Actions from './Actions'
 import Crafting from './Crafting'
 import Inventory from './Inventory'
@@ -60,7 +52,8 @@ export default {
     Inventory,
     DaysCounter,
     MobileMenu,
-    Stats
+    Stats,
+    GameOver
   },
   data () {
     return {
@@ -73,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['disabled', 'paused', 'gameOver', 'daysSurvived', 'currentPage', 'causeOfDeath']),
+    ...mapState(['disabled', 'paused', 'gameOver', 'currentPage']),
     mobileHome () {
       return this.isMobile === false || (this.isMobile && this.currentPage === 'home')
     },
@@ -82,18 +75,6 @@ export default {
     },
     mobileCrafting () {
       return this.isMobile === false || (this.isMobile && this.currentPage === 'crafting')
-    },
-    deathText () {
-      switch (this.causeOfDeath) {
-        case 'energy':
-          return 'You died from exhaustion. Remember, sleeping is important, even in the wild.'
-        case 'water':
-          return 'You died of thirst. A water collector could have saved your life.'
-        case 'food':
-          return 'You died of hunger. A sturdy weapon would have provided you with a steady food supply.'
-        case 'health':
-          return 'You died of sickness. Skip the paleo diet, cooking your food is important.'
-      }
     }
   },
   mounted () {
@@ -102,11 +83,7 @@ export default {
     this.initInventory()
   },
   methods: {
-    ...mapActions(['initInventory']),
-    newGame () {
-      window.location.reload()
-      // this.$emit('newGame')
-    }
+    ...mapActions(['initInventory'])
   }
 }
 </script>
