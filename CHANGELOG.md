@@ -1,3 +1,7 @@
+## 0.12.0 - 2018-06-20
+### New features
+- Add high score ranking
+
 ## 0.11.0 - 2018-06-7
 ### New features
 - Get actual animal from hunting
