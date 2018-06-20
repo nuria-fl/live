@@ -30,12 +30,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
+import { auth } from '@/firebase'
 import Main from '@/views/Main'
 import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
-import { mapGetters } from 'vuex'
-import { auth } from '@/firebase'
 
 export default {
   data() {
