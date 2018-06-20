@@ -5,9 +5,9 @@
   "author": "Nuria <soriano.nuria@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "env-cmd .env webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "env-cmd .env NODE_ENV=development npm run dev",
-    "build": "env-cmd .env NODE_ENV=production node build/build.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "start": "env-cmd development npm run dev",
+    "build": "env-cmd production node build/build.js",
     "lint": "eslint src/**/*{.js,.vue}",
     "lint:fix": "eslint --fix src/**/*{.js,.vue}",
     "precommit": "npm run lint",
