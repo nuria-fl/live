@@ -1,24 +1,26 @@
 <template>
-  <div class="Menu">
-    <div
-      class="Btn Menu__toggle"
-      @click="toggleMenu">
-      <span/>
-    </div>
-    <ul
-      v-show="isMenuVisible"
-      class="Menu__dropdown">
-      <li @click="goTo('home')">
+  <nav>
+    <ul class="Tabs">
+      <li
+        :class="{active: currentPage === 'home'}"
+        class="Tabs__tab"
+        @click="goTo('home')">
         Actions
       </li>
-      <li @click="goTo('inventory')">
-        Backpack ({{ length }}/{{ maxLength }})
+      <li
+        :class="{active: currentPage === 'inventory'}"
+        class="Tabs__tab"
+        @click="goTo('inventory')">
+        🎒 {{ length }}/{{ maxLength }}
       </li>
-      <li @click="goTo('crafting')">
+      <li
+        :class="{active: currentPage === 'crafting'}"
+        class="Tabs__tab"
+        @click="goTo('crafting')">
         Crafting
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -26,13 +28,8 @@ import { mapState, mapMutations } from 'vuex'
 import { MAXINVENTORY } from '@/data/constants'
 
 export default {
-  data () {
-    return {
-      isMenuVisible: false
-    }
-  },
   computed: {
-    ...mapState(['inventory']),
+    ...mapState(['inventory', 'currentPage']),
     length () {
       return this.inventory.length
     },
@@ -42,12 +39,8 @@ export default {
   },
   methods: {
     ...mapMutations(['changePage']),
-    toggleMenu () {
-      this.isMenuVisible = !this.isMenuVisible
-    },
     goTo (newPage) {
       this.changePage({ newPage })
-      this.toggleMenu()
     }
   }
 }
@@ -56,45 +49,39 @@ export default {
 <style lang="scss">
   @import '../assets/styles/variables';
 
-  .Menu {
-    position: absolute;
-    left: 1em;
-    top: 50%;
-    margin-top: -1.35em;
+  .Tabs {
+    width: 100%;
+    display: flex;
+    margin-top: 1em;
+    overflow-x: scroll;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #ddd;
+    }
+
     @media screen and (min-width: 680px) {
       display: none;
     }
-    &__toggle {
-      width: 2.5em;
-      height: 2.5em;
-      padding: .7em .5em;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      span,
-      &:before,
-      &:after {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 1px;
-        background: #000;
+
+    &__tab {
+      margin: 0 .3em;
+      padding: .8em 1em;
+      border: 1px solid #ddd;
+      white-space: nowrap;
+      &.active {
+        position: relative;
+        border-bottom-color: #fff;
       }
-    }
-    &__dropdown {
-      min-width: 50%;
-      position: fixed;
-      left: 0;
-      top: 4em;
-      padding: 0 1em;
-      background: $lightColor;
-      li {
-        margin: 0;
-        padding: .8em 0;
-        border-bottom: 1px solid $darkColor;
-        &:last-child {
-          border-bottom: none;
-        }
+      &:first-child {
+        margin-left: 0;
       }
     }
   }

@@ -7,26 +7,28 @@
       <alert/>
       <header class="Header">
         <div class="Header__content">
-          <mobile-menu/>
           <stats/>
           <days-counter/>
         </div>
       </header>
       <div class="Main">
-        <div
-          v-show="mobileHome"
-          class="Main__column">
-          <actions/>
-        </div>
-        <div
-          v-show="mobileInventory"
-          class="Main__column">
-          <inventory/>
-        </div>
-        <div
-          v-show="mobileCrafting"
-          class="Main__column">
-          <crafting/>
+        <mobile-menu/>
+        <div class="Main__bd">
+          <div
+            v-show="mobileHome"
+            class="Main__column">
+            <actions/>
+          </div>
+          <div
+            v-show="mobileInventory"
+            class="Main__column">
+            <inventory/>
+          </div>
+          <div
+            v-show="mobileCrafting"
+            class="Main__column">
+            <crafting/>
+          </div>
         </div>
       </div>
     </div>
@@ -92,11 +94,12 @@ export default {
   .Header {
     width: 100%;
     position: fixed;
+    z-index: 9;
     background: #DDD;
     &__content {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 1em 1em 1em 4em;
+      padding: 1em;
       @media screen and (min-width: 680px) {
         display: flex;
         justify-content: space-between;
@@ -114,15 +117,16 @@ export default {
     max-width: 1400px;
     margin: 0 auto;
     padding-top: 4.2em;
-    @media screen and (min-width: 680px) {
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: 4em;
-      > * {
-        flex: 1 1 0;
+    &__bd {
+      @media screen and (min-width: 680px) {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 4em;
+        > * {
+          flex: 1 1 0;
+        }
       }
     }
-
     &__column {
       @media screen and (min-width: 680px) {
         padding: 0 1em;

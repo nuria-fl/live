@@ -74,6 +74,7 @@ export default {
     margin: 0;
     font-family: 'Fira Mono', monospace;
     font-size: .95em;
+    overscroll-behavior: contain;
   }
   li {
     margin: 1em 0;
