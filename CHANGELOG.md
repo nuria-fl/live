@@ -1,3 +1,7 @@
+## 0.13.0 - 2018-06-21
+### New features
+- Change mobile navigation to tabs
+
 ## 0.12.0 - 2018-06-20
 ### New features
 - Add high score ranking
