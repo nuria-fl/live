@@ -42,10 +42,24 @@ const isCraftable = recipe => {
     }
   })
 
-  // if we have all the items we can craft the item
   // TODO: is length enough? deepEqual?
+  const hasItems = currentItems.length === recipe.itemsNeeded.length
 
-  if (currentItems.length === recipe.itemsNeeded.length) {
+  let hasTools = true
+
+  if (recipe.toolsNeeded) {
+    recipe.toolsNeeded.forEach(tool => {
+      const idx = inventory.indexOf(tool)
+
+      if (idx !== -1) {
+        hasTools = true
+      } else {
+        hasTools = false
+      }
+    })
+  }
+
+  if (hasItems && hasTools) {
     isCraftable = true
     if (recipe.upgradesNeeded && recipe.upgradesNeeded.indexOf('fire') > -1 && !state.hasFire) {
       isCraftable = false

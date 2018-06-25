@@ -6,6 +6,10 @@
         Items needed:
         {{ itemsNeeded }}
       </p>
+      <p v-if="toolsNeeded">
+        Tools needed:
+        {{ toolsNeeded }}
+      </p>
       <button
         :disabled="!item.isCraftable || disabled"
         type="button"
@@ -38,6 +42,11 @@ export default {
     },
     itemsNeeded () {
       return this.item.itemsNeeded.map(items.getName).join(', ')
+    },
+    toolsNeeded () {
+      if (this.item.toolsNeeded) {
+        return this.item.toolsNeeded.map(items.getName).join(', ')
+      }
     }
   },
   methods: {
