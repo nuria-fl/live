@@ -1,6 +1,7 @@
-## 0.13.0 - 2018-06-21
+## 0.13.0 - 2018-06-25
 ### New features
 - Change mobile navigation to tabs
+- Enable tools requirement for crafting
 
 ## 0.12.0 - 2018-06-20
 ### New features
