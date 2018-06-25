@@ -16,6 +16,8 @@ exports[`CraftableItem It should match snapshot 1`] = `
     
     </p>
      
+    <!---->
+     
     <button
       class="Btn"
       type="button"

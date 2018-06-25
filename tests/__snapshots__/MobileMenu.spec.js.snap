@@ -1,36 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MobileMenu It should match snapshot 1`] = `
-<div
-  class="Menu"
->
-  <div
-    class="Btn Menu__toggle"
-  >
-    <span />
-  </div>
-   
+<nav>
   <ul
-    class="Menu__dropdown"
-    style="display: none;"
+    class="Tabs"
   >
-    <li>
+    <li
+      class="Tabs__tab active"
+    >
       
       Actions
     
     </li>
      
-    <li>
+    <li
+      class="Tabs__tab"
+    >
       
-      Backpack (0/10)
+      🎒 0/10
     
     </li>
      
-    <li>
+    <li
+      class="Tabs__tab"
+    >
       
       Crafting
     
     </li>
   </ul>
-</div>
+</nav>
 `;

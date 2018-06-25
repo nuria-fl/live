@@ -27,9 +27,4 @@ describe('MobileMenu', () => {
   test('It should match snapshot', () => {
     expect(wrapper.vm.$el).toMatchSnapshot()
   })
-
-  test('Shows menu on click', () => {
-    wrapper.find('.Menu__toggle').trigger('click')
-    expect(wrapper.vm.isMenuVisible).toBe(true)
-  })
 })
