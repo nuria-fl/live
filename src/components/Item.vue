@@ -14,6 +14,9 @@
       </span>
     </h4>
     <p>{{ item.description }}</p>
+    <span v-if="isBreakable">
+      Uses until breakdown: {{ item.usesUntilBreakdown }}
+    </span>
     <div class="Item__actions Item__actions--multi">
       <button
         v-for="action in actions"
@@ -43,6 +46,9 @@ export default {
     ...mapState(['disabled', 'isSick']),
     isConsumable () {
       return this.item.consumable
+    },
+    isBreakable () {
+      return this.item.usesUntilBreakdown > 0
     },
     actions () {
       const actions = ['discard']

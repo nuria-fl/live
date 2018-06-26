@@ -28,7 +28,6 @@
 import { mapState } from 'vuex'
 import items from '@/utils/items'
 export default {
-  name: 'Consume',
   props: {
     item: {
       type: Object,

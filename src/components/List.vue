@@ -3,19 +3,19 @@
     <li
       v-for="item in list"
       :key="item.id">
-      <consume
+      <Item
         :item="item" />
     </li>
   </ul>
 </template>
 
 <script>
-import consume from './Consume'
+import Item from '@/components/Item'
 
 export default {
   name: 'List',
   components: {
-    consume
+    Item
   },
   props: {
     list: {

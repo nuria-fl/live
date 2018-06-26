@@ -61,7 +61,7 @@ export default {
       }
     })
   },
-  hunt ({state, commit}, {time}) {
+  hunt ({state, commit, dispatch}, {time, weapon}) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
@@ -74,6 +74,7 @@ export default {
           const isSuccesful = utils.calculateProbability(8)
 
           if (isSuccesful) {
+            dispatch('handleItemDegradation', weapon)
             const huntableItems = state.existingItems.filter(item => item.action === 'hunt')
 
             const newItems = utils.randomizeItems(huntableItems, 1)
@@ -91,6 +92,13 @@ export default {
         reject(new Error('game is over'))
       }
     })
+  },
+  handleItemDegradation ({state, commit}, item) {
+    if (item.usesUntilBreakdown > 1) {
+      commit('degradeItem', item.uid)
+    } else {
+      commit('removeInventory', item.uid)
+    }
   },
   removeItemsById ({state, commit}, items) {
     const findItemByName = (itemName) => {

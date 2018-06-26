@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Consume It should match snapshot 1`] = `
+exports[`Item It should match snapshot 1`] = `
 <article
   class="Item"
 >
@@ -29,6 +29,8 @@ exports[`Consume It should match snapshot 1`] = `
   <p>
     Small amount of vitamins and water
   </p>
+   
+  <!---->
    
   <div
     class="Item__actions Item__actions--multi"

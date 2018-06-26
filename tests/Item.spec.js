@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import { shallow, createLocalVue } from 'vue-test-utils'
 import { __createMocks as createStoreMocks } from '../src/store'
 
-import Consume from '../src/components/Consume'
+import Item from '../src/components/Item'
 
 // Tell Jest to use the mock implementation of the store
 jest.mock('../src/store')
@@ -13,14 +13,14 @@ localVue.use(Vuex)
 
 // TODO: test sick/cure
 
-describe('Consume', () => {
+describe('Item', () => {
   let storeMocks
   let wrapper
 
   beforeEach(() => {
     // Create a fresh store and wrapper instance for every test case.
     storeMocks = createStoreMocks()
-    wrapper = shallow(Consume, {
+    wrapper = shallow(Item, {
       store: storeMocks.store,
       localVue,
       propsData: {

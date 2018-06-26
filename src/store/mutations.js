@@ -49,6 +49,13 @@ export default {
       state.stats[stat] = MAX
     }
   },
+  degradeItem (state, uid) {
+    const idx = findIndexById(uid, state.inventory)
+
+    if (idx !== -1) {
+      state.inventory[idx].usesUntilBreakdown--
+    }
+  },
   addInventory (state, item) {
     if (state.inventory.length < MAXINVENTORY) {
       item.uid = utils.generateId()

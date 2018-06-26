@@ -108,13 +108,17 @@ export default {
       }
 
       const weapons = ['bow']
-      const hasWeapon = this.inventory.filter(item => weapons.indexOf(item.id) > -1).length > 0
+
+      const availableWeapons = this.inventory.filter(item => weapons.indexOf(item.id) > -1)
+      const hasWeapon = availableWeapons.length > 0
 
       if (hasWeapon) {
+        // for now there is only one weapon, later user will choose
+        const weapon = availableWeapons[0]
         this.startProgress('Hunting')
         this.lastActionResult = ''
 
-        this.hunt({time: 8000})
+        this.hunt({time: 8000, weapon})
           .then(items => {
             this.handleResult(items)
             if (items === false) {
