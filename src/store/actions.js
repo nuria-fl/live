@@ -1,4 +1,5 @@
 import utils from '@/utils'
+import eventBus from '@/utils/eventBus'
 
 export default {
   initInventory ({state, commit}) {
@@ -98,6 +99,9 @@ export default {
       commit('degradeItem', item.uid)
     } else {
       commit('removeInventory', item.uid)
+      eventBus.$emit('showNotification', {
+        text: `${item.name} has broken`
+      })
     }
   },
   removeItemsById ({state, commit}, items) {

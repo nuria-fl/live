@@ -100,6 +100,9 @@ export default {
 
       if (this.usesRemaining === 0) {
         this.hasWaterCollector = false
+        eventBus.$emit('showNotification', {
+          text: 'Water collector has broken'
+        })
       } else {
         this.startCollecting()
       }

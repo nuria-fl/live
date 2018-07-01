@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification snapshot should match snapshot 1`] = `
+<section
+  class="Notification v-enter v-enter-active"
+  name="notification"
+  style=""
+>
+  
+    hi
+  
+</section>
+`;

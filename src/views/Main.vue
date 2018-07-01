@@ -5,6 +5,7 @@
       v-else
       :class="{paused: paused}">
       <alert/>
+      <notification/>
       <header class="Header">
         <div class="Header__content">
           <stats/>
@@ -41,6 +42,7 @@ import DaysCounter from '@/components/DaysCounter'
 import MobileMenu from '@/components/MobileMenu'
 import Stats from '@/components/Stats'
 import Alert from '@/components/Alert'
+import Notification from '@/components/Notification'
 import GameOver from '@/components/GameOver'
 import Actions from './Actions'
 import Crafting from './Crafting'
@@ -54,6 +56,7 @@ export default {
     Inventory,
     DaysCounter,
     MobileMenu,
+    Notification,
     Stats,
     GameOver
   },

@@ -95,8 +95,8 @@ export default {
     },
     resetFire () {
       clearTimeout(this.fireLoop)
-      eventBus.$emit('showModal', {
-        body: 'Fire has burnt out!'
+      eventBus.$emit('showNotification', {
+        text: 'Fire has burnt out'
       })
       this.disableFire()
       this.fireStatus = 0
