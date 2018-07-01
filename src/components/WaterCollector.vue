@@ -30,7 +30,13 @@
         :disabled="disabled"
         class="Btn"
         @click="drinkWater">
-        Drink water
+        Drink
+      </button>
+      <button
+        :disabled="disabled"
+        class="Btn"
+        @click="collectWater">
+        Collect
       </button>
     </template>
   </article>
@@ -59,7 +65,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['disabled']),
+    ...mapState(['disabled', 'inventory', 'existingItems']),
     itemsNeeded () {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     }
@@ -96,6 +102,22 @@ export default {
         stat: 'water',
         amount: 20
       })
+      this.finishUse()
+    },
+    collectWater () {
+      const hasBottle = this.inventory.find(item => item.id === 'bottle')
+      if (hasBottle) {
+        const water = this.existingItems.find(item => item.id === 'water-clean')
+        this.removeItemsById(['bottle'])
+        this.addInventory(water)
+        this.finishUse()
+      } else {
+        eventBus.$emit('showModal', {
+          body: 'You need an empty bottle to collect water'
+        })
+      }
+    },
+    finishUse () {
       this.usesRemaining--
 
       if (this.usesRemaining === 0) {
