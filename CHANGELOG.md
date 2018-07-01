@@ -1,3 +1,9 @@
+## 0.14.0 - 2018-07-01
+### New features
+- Weapon degrades on usage
+- Water from Water Collected can be stored into a container
+- Add smaller, non-disruptive notifications
+
 ## 0.13.0 - 2018-06-25
 ### New features
 - Change mobile navigation to tabs
