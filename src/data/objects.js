@@ -67,7 +67,7 @@ export default [
     name: 'Knife',
     description: 'Useful tool',
     action: 'craft',
-    usesUntilBreakdown: 5
+    usesUntilBreakdown: 0
   },
   {
     id: 'rabbit',
