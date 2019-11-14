@@ -8,7 +8,6 @@
       @click="newGame">
       Start over
     </button>
-    <ranking/>
   </div>
 </template>
 

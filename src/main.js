@@ -1,8 +1,8 @@
-import Vue from 'vue';
-import App from './App';
-import store from './store';
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
+import Vue from "vue";
+import App from "./App";
+import store from "./store";
+// import Raven from 'raven-js';
+// import RavenVue from 'raven-js/plugins/vue';
 
 const app = new Vue(
   Vue.util.extend(
@@ -11,13 +11,12 @@ const app = new Vue(
     },
     App
   )
-)
+);
 
-if (process.env.NODE_ENV === 'production') {
-  Raven.config('https://a213b9d98bea413b845785da0cecb4d0@sentry.io/1205827')
-    .addPlugin(RavenVue, Vue)
-    .install()
-
+if (process.env.NODE_ENV === "production") {
+  // Raven.config('https://a213b9d98bea413b845785da0cecb4d0@sentry.io/1205827')
+  //   .addPlugin(RavenVue, Vue)
+  //   .install()
   // window['_fs_debug'] = false;
   // window['_fs_host'] = 'fullstory.com';
   // window['_fs_org'] = 'BM5SM';
@@ -35,4 +34,4 @@ if (process.env.NODE_ENV === 'production') {
   // })(window,document,window['_fs_namespace'],'script','user')
 }
 
-app.$mount('#app')
+app.$mount("#app");
