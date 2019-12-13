@@ -20,8 +20,6 @@
 </template>
 
 <script>
-import dbRanking from '@/firebase/ranking'
-
 export default {
   data () {
     return {
@@ -33,16 +31,7 @@ export default {
     this.getRanking()
   },
   methods: {
-    getRanking () {
-      dbRanking.orderBy('days', 'desc').limit(10).onSnapshot(snapshot => {
-        const ranking = []
-        snapshot.forEach(item => {
-          ranking.push(item.data())
-        })
-        this.ranking = ranking
-        this.loading = false
-      })
-    }
+    getRanking() {}
   }
 }
 </script>

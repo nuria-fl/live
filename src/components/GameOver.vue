@@ -14,7 +14,6 @@
 <script>
 import { mapState } from 'vuex'
 import Ranking from '@/components/Ranking'
-import dbRanking from '@/firebase/ranking'
 
 export default {
   components: {
@@ -43,7 +42,6 @@ export default {
       days: this.daysSurvived,
       causeOfDeath: this.causeOfDeath
     }
-    dbRanking.doc(id).set(message)
   },
   methods: {
     newGame () {
