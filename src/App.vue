@@ -44,8 +44,6 @@ export default {
     ...mapState(['username'])
   },
   created() {
-    console.log(process.env.API_URL)
-
     this.initUsername()
     this.startUsername = this.username
   },
