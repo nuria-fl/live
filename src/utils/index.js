@@ -1,5 +1,5 @@
 const utils = {
-  calculateProbability (probability) {
+  calculateProbability(probability) {
     const pool = []
 
     for (let i = 0; i < 10; i++) {
@@ -14,21 +14,26 @@ const utils = {
 
     return pool[idx]
   },
-  randomizeWithinRange (range) {
+  randomizeWithinRange(range) {
     return Math.floor(Math.random() * range)
   },
-  randomizeItems (source, items) {
+  randomizeItems(source, items) {
     const arr = []
 
     for (let i = 0; i < items; i++) {
       const idx = utils.randomizeWithinRange(source.length)
-      arr.push({...source[idx]})
+      arr.push({ ...source[idx] })
     }
 
     return arr
   },
-  generateId () {
-    return '_' + Math.random().toString(36).substr(2, 9)
+  generateId() {
+    return (
+      '_' +
+      Math.random()
+        .toString(36)
+        .substr(2, 9)
+    )
   }
 }
 

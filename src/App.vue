@@ -5,26 +5,20 @@
       <p>A game about survival</p>
       <p>What's your name, survivor?</p>
       <form @submit.prevent="start">
-        <input
-          type="text"
-          v-model="startUsername"
-          required>
-        <button
-          type="submit"
-          class="Btn">
+        <input v-model="startUsername" type="text" required />
+        <button type="submit" class="Btn">
           New Game
         </button>
       </form>
     </section>
-    <main-component v-else @newGame="start"></main-component>
+    <main-component v-else @newGame="start" />
     <footer class="Footer">
-      <game-status-button v-if="hasStarted"></game-status-button>
+      <game-status-button v-if="hasStarted" />
       Bug report via
       <a href="https://github.com/nuria-fl/live">Github</a>
       or
       <a href="https://twitter.com/pincfloit">Twitter</a>
-      ·
-      ☕ <a href='https://ko-fi.com/G2G5AV2X'>Buy Me a Coffee</a>
+      · ☕ <a href="https://ko-fi.com/G2G5AV2X">Buy Me a Coffee</a>
     </footer>
   </main>
 </template>
@@ -36,20 +30,22 @@ import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
 
 export default {
+  components: {
+    MainComponent: Main,
+    GameStatusButton
+  },
   data() {
     return {
       hasStarted: false,
       startUsername: ''
     }
   },
-  components: {
-    MainComponent: Main,
-    GameStatusButton
-  },
   computed: {
     ...mapState(['username'])
   },
   created() {
+    console.log(process.env.API_URL)
+
     this.initUsername()
     this.startUsername = this.username
   },
@@ -65,30 +61,30 @@ export default {
 </script>
 
 <style lang="scss">
-  @import './assets/styles/index';
+@import './assets/styles/index';
 
-  body {
-    margin: 0;
-    font-family: 'Fira Mono', monospace;
-    font-size: .95em;
-    overscroll-behavior: contain;
+body {
+  margin: 0;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.95em;
+  overscroll-behavior: contain;
+}
+li {
+  margin: 1em 0;
+}
+.Splash {
+  padding: 3em 0 4em;
+  text-align: center;
+}
+.Footer {
+  width: 100%;
+  margin-top: 2em;
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.8);
+  @media screen and (min-width: 680px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
   }
-  li {
-    margin: 1em 0;
-  }
-  .Splash {
-    padding: 3em 0 4em;
-    text-align: center;
-  }
-  .Footer {
-    width: 100%;
-    margin-top: 2em;
-    padding: 1em;
-    background: rgba(255,255,255,.8);
-    @media screen and (min-width: 680px) {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-    }
-  }
+}
 </style>

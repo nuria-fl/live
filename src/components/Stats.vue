@@ -1,15 +1,13 @@
 <template>
   <ul class="Stats">
-    <li
-      v-for="(stat, key) in stats"
-      :key="key"
-      class="Stats__item">
+    <li v-for="(stat, key) in stats" :key="key" class="Stats__item">
       <span class="Stats__icon">{{ icons[key] }}</span>
       <strong
         :class="{
           warning: stat < 50,
           danger: stat < 20
-      }">
+        }"
+      >
         {{ stat }}
       </strong>
     </li>
@@ -21,8 +19,8 @@ import { mapState, mapMutations } from 'vuex'
 import gameLoop from '@/mixins/gameLoop'
 
 export default {
-  mixins: [ gameLoop ],
-  data () {
+  mixins: [gameLoop],
+  data() {
     return {
       icons: {
         health: '❤️',
@@ -34,16 +32,16 @@ export default {
   },
   computed: {
     ...mapState(['stats', 'gameOver', 'isSick']),
-    isActive () {
+    isActive() {
       return this.gameOver === false
     }
   },
   methods: {
     ...mapMutations(['decrease']),
-    startGameLoop () {
+    startGameLoop() {
       this.decreaseStats()
     },
-    decreaseStats () {
+    decreaseStats() {
       const decreaseInterval = 12 * 1000
       this.loop = setTimeout(() => {
         if (this.isActive) {
@@ -63,28 +61,28 @@ export default {
 </script>
 
 <style lang="scss">
-  .Stats {
-    display: flex;
+.Stats {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  &__item {
     margin: 0;
-    padding: 0;
-    list-style: none;
-    &__item {
-      margin: 0;
-      white-space: nowrap;
-      padding: .1em 1em .1em 0;
-      @media screen and (min-width: 680px) {
-        margin: 1em 0;
-        padding-left: 1em;
-      }
-    }
-    &__icon {
-      filter: grayscale(50%);
+    white-space: nowrap;
+    padding: 0.1em 1em 0.1em 0;
+    @media screen and (min-width: 680px) {
+      margin: 1em 0;
+      padding-left: 1em;
     }
   }
-  .warning {
-    color: #fa0;
+  &__icon {
+    filter: grayscale(50%);
   }
-  .danger {
-    color: #c00;
-  }
+}
+.warning {
+  color: #fa0;
+}
+.danger {
+  color: #c00;
+}
 </style>

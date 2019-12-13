@@ -2,15 +2,10 @@
   <article class="Item">
     <h4>
       {{ item.name }} {{ item.amount > 1 ? `x${item.amount}` : '' }}
-      <span
-        v-if="isConsumable"
-        class="Item__stats">
-        <span
-          v-for="(stat, key) in stats"
-          v-if="(stat > 0)"
-          :key="key">
-          +{{ stat }} {{ key }}
-        </span>
+      <span v-if="isConsumable" class="Item__stats">
+        <template v-for="(stat, key) in stats">
+          <span v-if="stat > 0" :key="key"> +{{ stat }} {{ key }} </span>
+        </template>
       </span>
     </h4>
     <p>{{ item.description }}</p>
@@ -23,7 +18,8 @@
         :key="action"
         :disabled="disabled"
         class="Btn"
-        @click="doAction(action)">
+        @click="doAction(action)"
+      >
         {{ action }}
       </button>
     </div>
@@ -44,31 +40,32 @@ export default {
   },
   computed: {
     ...mapState(['disabled', 'isSick']),
-    isConsumable () {
+    isConsumable() {
       return this.item.consumable
     },
-    isBreakable () {
+    isBreakable() {
       return this.item.usesUntilBreakdown > 0
     },
-    actions () {
+    actions() {
       const actions = ['discard']
       if (this.isConsumable) {
         actions.push('consume')
       }
       return actions
     },
-    stats () {
+    stats() {
       if (this.isConsumable) {
         return this.item.value
       }
+      return false
     }
   },
   methods: {
     ...mapMutations(['removeInventory', 'increase', 'getSick', 'getCured']),
-    discard (item) {
+    discard(item) {
       this.removeInventory(item.uid)
     },
-    doAction (action) {
+    doAction(action) {
       if (action === 'consume') {
         const infected = utils.calculateProbability(this.item.risk)
 
@@ -86,7 +83,7 @@ export default {
           this.getCured()
         }
 
-        Object.keys(this.stats).forEach(stat => {
+        Object.keys(this.stats).forEach((stat) => {
           this.increase({
             stat: stat,
             amount: this.stats[stat]
@@ -101,24 +98,24 @@ export default {
 </script>
 
 <style lang="scss">
-  .Item {
-    margin: 0;
-    padding: 0 0 .5em;
-    border-bottom: .05em solid #333;
-    p {
-      margin: .2em 0;
-    }
-    &__stats {
-      color: #666;
-      font-weight: 400;
-    }
-    &__actions {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      &--multi {
-        flex-direction: row-reverse;
-      }
+.Item {
+  margin: 0;
+  padding: 0 0 0.5em;
+  border-bottom: 0.05em solid #333;
+  p {
+    margin: 0.2em 0;
+  }
+  &__stats {
+    color: #666;
+    font-weight: 400;
+  }
+  &__actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    &--multi {
+      flex-direction: row-reverse;
     }
   }
+}
 </style>

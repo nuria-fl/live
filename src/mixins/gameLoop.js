@@ -1,27 +1,27 @@
 import eventBus from '@/utils/eventBus'
 
 export default {
-  data () {
+  data() {
     return {
       loop: null
     }
   },
-  mounted () {
+  mounted() {
     eventBus.$on('gameStatusChange', this.handleGameStatusChange)
     this.startGameLoop()
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.resetGameLoop()
   },
   methods: {
-    startGameLoop () {
+    startGameLoop() {
       // to be overwritten by component
     },
-    resetGameLoop () {
+    resetGameLoop() {
       clearTimeout(this.loop)
       this.loop = null
     },
-    handleGameStatusChange (isPaused) {
+    handleGameStatusChange(isPaused) {
       if (isPaused) {
         this.resetGameLoop()
       } else {

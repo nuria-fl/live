@@ -2,18 +2,20 @@ import utils from '@/utils'
 import eventBus from '@/utils/eventBus'
 
 export default {
-  initInventory ({state, commit}) {
-    const scavengeableItems = state.existingItems.filter(item => item.action === 'scavenge')
+  initInventory({ state, commit }) {
+    const scavengeableItems = state.existingItems.filter(
+      (item) => item.action === 'scavenge'
+    )
     const startingItems = utils.randomizeItems(scavengeableItems, 2)
-    startingItems.forEach(item => commit('addInventory', item))
+    startingItems.forEach((item) => commit('addInventory', item))
   },
-  decreaseAsync ({state, commit}, {stat, amount, time}) {
+  decreaseAsync({ state, commit }, { stat, amount, time }) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
-        setTimeout(function () {
+        setTimeout(function() {
           commit('enable')
-          commit('decrease', {stat, amount})
+          commit('decrease', { stat, amount })
           resolve()
         }, time)
       } else {
@@ -21,13 +23,13 @@ export default {
       }
     })
   },
-  increaseAsync ({state, commit}, {stat, amount, time}) {
+  increaseAsync({ state, commit }, { stat, amount, time }) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
-        setTimeout(function () {
+        setTimeout(function() {
           commit('enable')
-          commit('increase', {stat, amount})
+          commit('increase', { stat, amount })
           resolve()
         }, time)
       } else {
@@ -35,24 +37,30 @@ export default {
       }
     })
   },
-  scavenge ({state, getters, commit}, {time}) {
+  scavenge({ state, getters, commit }, { time }) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
-        setTimeout(function () {
-          const scavengeableItems = state.existingItems.filter(item => item.action === 'scavenge')
+        setTimeout(function() {
+          const scavengeableItems = state.existingItems.filter(
+            (item) => item.action === 'scavenge'
+          )
 
-          const numberOfItems = getters.slotsInInventoryLeft > 3 ? 3 : getters.slotsInInventoryLeft
+          const numberOfItems =
+            getters.slotsInInventoryLeft > 3 ? 3 : getters.slotsInInventoryLeft
 
-          const newItems = utils.randomizeItems(scavengeableItems, numberOfItems)
+          const newItems = utils.randomizeItems(
+            scavengeableItems,
+            numberOfItems
+          )
 
-          newItems.forEach(item => {
+          newItems.forEach((item) => {
             commit('addInventory', item)
           })
 
-          commit('decrease', {stat: 'energy', amount: 5})
-          commit('decrease', {stat: 'water', amount: 5})
-          commit('decrease', {stat: 'food', amount: 3})
+          commit('decrease', { stat: 'energy', amount: 5 })
+          commit('decrease', { stat: 'water', amount: 5 })
+          commit('decrease', { stat: 'food', amount: 3 })
           commit('enable')
 
           resolve(newItems)
@@ -62,25 +70,27 @@ export default {
       }
     })
   },
-  hunt ({state, commit, dispatch}, {time, weapon}) {
+  hunt({ state, commit, dispatch }, { time, weapon }) {
     return new Promise((resolve, reject) => {
       commit('disable')
       if (!state.gameOver) {
-        setTimeout(function () {
-          commit('decrease', {stat: 'energy', amount: 10})
-          commit('decrease', {stat: 'water', amount: 10})
-          commit('decrease', {stat: 'food', amount: 6})
+        setTimeout(function() {
+          commit('decrease', { stat: 'energy', amount: 10 })
+          commit('decrease', { stat: 'water', amount: 10 })
+          commit('decrease', { stat: 'food', amount: 6 })
           commit('enable')
 
           const isSuccesful = utils.calculateProbability(8)
 
           if (isSuccesful) {
             dispatch('handleItemDegradation', weapon)
-            const huntableItems = state.existingItems.filter(item => item.action === 'hunt')
+            const huntableItems = state.existingItems.filter(
+              (item) => item.action === 'hunt'
+            )
 
             const newItems = utils.randomizeItems(huntableItems, 1)
 
-            newItems.forEach(item => {
+            newItems.forEach((item) => {
               commit('addInventory', item)
             })
 
@@ -94,7 +104,7 @@ export default {
       }
     })
   },
-  handleItemDegradation ({state, commit}, item) {
+  handleItemDegradation({ state, commit }, item) {
     if (item.usesUntilBreakdown > 1) {
       commit('degradeItem', item.uid)
     } else {
@@ -104,12 +114,12 @@ export default {
       })
     }
   },
-  removeItemsById ({state, commit}, items) {
+  removeItemsById({ state, commit }, items) {
     const findItemByName = (itemName) => {
-      return state.inventory.find(item => item.id === itemName)
+      return state.inventory.find((item) => item.id === itemName)
     }
 
-    items.forEach(item => {
+    items.forEach((item) => {
       const itemToRemove = findItemByName(item)
       commit('removeInventory', itemToRemove.uid)
     })

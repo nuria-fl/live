@@ -1,19 +1,15 @@
 <template lang="html">
   <div>
-    <h2 class="SectionTitle">Actions</h2>
+    <h2 class="SectionTitle">
+      Actions
+    </h2>
 
-    <modal
-      :visible.sync="showResults"
-      :is-closeable="true">
-      <p slot="body">
-        You got {{ lastActionResult }}
-      </p>
+    <modal :visible.sync="showResults" :is-closeable="true">
+      <p slot="body">You got {{ lastActionResult }}</p>
     </modal>
 
     <modal :visible.sync="inProgress">
-      <p
-        slot="body"
-        class="progress">
+      <p slot="body" class="progress">
         {{ currentAction }}
       </p>
     </modal>
@@ -24,7 +20,8 @@
       :disabled="disabled"
       type="button"
       class="Btn Action"
-      @click="action.method">
+      @click="action.method"
+    >
       <h3 class="Action__title">
         {{ action.name }}
       </h3>
@@ -47,7 +44,7 @@ export default {
   components: {
     modal
   },
-  data () {
+  data() {
     return {
       lastActionResult: '',
       currentAction: null,
@@ -81,12 +78,12 @@ export default {
   },
   methods: {
     ...mapActions(['increaseAsync', 'hunt', 'scavenge']),
-    handleFullInventory () {
+    handleFullInventory() {
       eventBus.$emit('showModal', {
         body: 'Your inventory is full. Remove at least one item to proceed.'
       })
     },
-    energy () {
+    energy() {
       this.startProgress('Sleeping')
 
       this.increaseAsync({
@@ -101,7 +98,7 @@ export default {
           console.error('oops')
         })
     },
-    goHunt () {
+    goHunt() {
       if (this.isInventoryFull) {
         this.handleFullInventory()
         return
@@ -109,7 +106,9 @@ export default {
 
       const weapons = ['bow']
 
-      const availableWeapons = this.inventory.filter(item => weapons.indexOf(item.id) > -1)
+      const availableWeapons = this.inventory.filter(
+        (item) => weapons.indexOf(item.id) > -1
+      )
       const hasWeapon = availableWeapons.length > 0
 
       if (hasWeapon) {
@@ -118,22 +117,22 @@ export default {
         this.startProgress('Hunting')
         this.lastActionResult = ''
 
-        this.hunt({time: 8000, weapon})
-          .then(items => {
-            this.handleResult(items)
-            if (items === false) {
-              eventBus.$emit('showModal', {
-                body: 'You were unable to track down any animal. Better luck next time.'
-              })
-            }
-          })
+        this.hunt({ time: 8000, weapon }).then((items) => {
+          this.handleResult(items)
+          if (items === false) {
+            eventBus.$emit('showModal', {
+              body:
+                'You were unable to track down any animal. Better luck next time.'
+            })
+          }
+        })
       } else {
         eventBus.$emit('showModal', {
           body: 'You need to craft a weapon first'
         })
       }
     },
-    goScavenge () {
+    goScavenge() {
       if (this.isInventoryFull) {
         this.handleFullInventory()
         return
@@ -142,18 +141,19 @@ export default {
       this.startProgress('Scavenging')
       this.lastActionResult = ''
 
-      this.scavenge({time: 3000})
-        .then((items) => {
-          this.handleResult(items)
-        })
+      this.scavenge({ time: 3000 }).then((items) => {
+        this.handleResult(items)
+      })
     },
-    handleResult (items) {
+    handleResult(items) {
       this.endProgress()
 
       if (items) {
         const itemsAcquired = items.reduce((accumulator, current) => {
-          const item = {...current}
-          const alreadyExistingItem = accumulator.find(accItem => accItem.name === item.name)
+          const item = { ...current }
+          const alreadyExistingItem = accumulator.find(
+            (accItem) => accItem.name === item.name
+          )
 
           if (alreadyExistingItem) {
             alreadyExistingItem.amount++
@@ -168,14 +168,16 @@ export default {
         }, [])
 
         this.showResults = true
-        this.lastActionResult = itemsAcquired.map(item => item.displayName).join(', ')
+        this.lastActionResult = itemsAcquired
+          .map((item) => item.displayName)
+          .join(', ')
       }
     },
-    startProgress (action) {
+    startProgress(action) {
       this.currentAction = action
       this.inProgress = true
     },
-    endProgress () {
+    endProgress() {
       this.currentAction = null
       this.inProgress = false
     }
@@ -184,51 +186,51 @@ export default {
 </script>
 
 <style lang="scss">
-  .Action {
-    display: block;
-    width: 100%;
-    margin: 1em 0;
-    padding: .7em;
-    border: none;
-    text-align: left;
+.Action {
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+  padding: 0.7em;
+  border: none;
+  text-align: left;
 
-    &__title {
-      margin: 0;
-      font-size: 1.4em;
-    }
-    &__stats {
-      margin: .2em 0;
-      color: #666;
-    }
-    &__desc {
-      margin: 0;
-    }
-    &:disabled &__stats {
-      color: #bbb;
-    }
+  &__title {
+    margin: 0;
+    font-size: 1.4em;
   }
-  .progress {
+  &__stats {
+    margin: 0.2em 0;
+    color: #666;
+  }
+  &__desc {
+    margin: 0;
+  }
+  &:disabled &__stats {
+    color: #bbb;
+  }
+}
+.progress {
+  &:after {
+    content: '...';
+    animation: progress 1.5s linear infinite;
+    display: inline;
+  }
+  .paused & {
     &:after {
-      content: '...';
-      animation: progress 1.5s linear infinite;
-      display: inline;
-    }
-    .paused & {
-      &:after {
-        display: none;
-      }
+      display: none;
     }
   }
+}
 
-  @keyframes progress {
-    0% {
-      content: '.'
-    }
-    33.333% {
-      content: '..'
-    }
-    66.666% {
-      content: '...'
-    }
+@keyframes progress {
+  0% {
+    content: '.';
   }
+  33.333% {
+    content: '..';
+  }
+  66.666% {
+    content: '...';
+  }
+}
 </style>

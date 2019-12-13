@@ -78,7 +78,8 @@ export default [
   {
     id: 'rabbit-pelt',
     name: 'Rabbit pelt',
-    description: 'It\'s not gonna be of much use until you can craft more stuff…',
+    description:
+      "It's not gonna be of much use until you can craft more stuff…",
     action: 'craft'
   }
 ]

@@ -3,9 +3,7 @@
     <h1>GAME OVER</h1>
     <p>{{ deathText }}</p>
     <p>You survived {{ daysSurvived }} days</p>
-    <button
-      class="Btn"
-      @click="newGame">
+    <button class="Btn" @click="newGame">
       Start over
     </button>
   </div>
@@ -13,15 +11,15 @@
 
 <script>
 import { mapState } from 'vuex'
-import Ranking from '@/components/Ranking'
+// import Ranking from '@/components/Ranking'
 
 export default {
-  components: {
-    Ranking
-  },
+  // components: {
+  //   Ranking
+  // },
   computed: {
     ...mapState(['daysSurvived', 'causeOfDeath', 'username']),
-    deathText () {
+    deathText() {
       switch (this.causeOfDeath) {
         case 'energy':
           return 'You died from exhaustion. Remember, sleeping is important, even in the wild.'
@@ -31,10 +29,12 @@ export default {
           return 'You died of hunger. A sturdy weapon would have provided you with a steady food supply.'
         case 'health':
           return 'You died of sickness. Skip the paleo diet, cooking your food is important.'
+        default:
+          return ''
       }
     }
   },
-  mounted () {
+  mounted() {
     const time = +new Date()
     const id = time.toString()
     const message = {
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    newGame () {
+    newGame() {
       window.location.reload()
     }
   }

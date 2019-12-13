@@ -23,14 +23,14 @@ const state = {
   currentPage: 'home'
 }
 
-const isCraftable = recipe => {
+const isCraftable = (recipe) => {
   // mixin so state is reactive?
-  const inventory = state.inventory.map(item => item.id)
+  const inventory = state.inventory.map((item) => item.id)
   const currentItems = []
 
   let isCraftable
 
-  recipe.itemsNeeded.forEach(itemNeeded => {
+  recipe.itemsNeeded.forEach((itemNeeded) => {
     const idx = inventory.indexOf(itemNeeded)
 
     if (idx !== -1) {
@@ -48,7 +48,7 @@ const isCraftable = recipe => {
   let hasTools = true
 
   if (recipe.toolsNeeded) {
-    recipe.toolsNeeded.forEach(tool => {
+    recipe.toolsNeeded.forEach((tool) => {
       const idx = inventory.indexOf(tool)
 
       if (idx !== -1) {
@@ -61,7 +61,11 @@ const isCraftable = recipe => {
 
   if (hasItems && hasTools) {
     isCraftable = true
-    if (recipe.upgradesNeeded && recipe.upgradesNeeded.indexOf('fire') > -1 && !state.hasFire) {
+    if (
+      recipe.upgradesNeeded &&
+      recipe.upgradesNeeded.indexOf('fire') > -1 &&
+      !state.hasFire
+    ) {
       isCraftable = false
     }
   }
@@ -73,7 +77,7 @@ const getters = {
   isInventoryFull: () => state.inventory.length === MAXINVENTORY,
   slotsInInventoryLeft: () => MAXINVENTORY - state.inventory.length,
   recipes: () => {
-    return recipes.map(recipe => {
+    return recipes.map((recipe) => {
       return {
         ...recipe,
         isCraftable: isCraftable(recipe)
@@ -81,7 +85,7 @@ const getters = {
     })
   },
   upgrades: () => {
-    return upgrades.map(upgrade => {
+    return upgrades.map((upgrade) => {
       return {
         ...upgrade,
         isCraftable: isCraftable(upgrade)

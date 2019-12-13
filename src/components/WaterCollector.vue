@@ -5,7 +5,7 @@
       <p>
         Items needed:
         {{ itemsNeeded }}
-        <br>
+        <br />
         Build a water collector to get rain water
       </p>
       <div class="Item__actions">
@@ -13,29 +13,24 @@
           :disabled="!item.isCraftable || disabled"
           type="button"
           class="Btn"
-          @click="buildWaterCollector()">
+          @click="buildWaterCollector()"
+        >
           Craft
         </button>
       </div>
     </template>
     <template v-else-if="isCollecting">
-      Uses remaining: {{ usesRemaining - 1 }}<br>
+      Uses remaining: {{ usesRemaining - 1 }}<br />
       <span class="progress">
         Collecting water
       </span>
     </template>
     <template v-else>
-      Uses remaining: {{ usesRemaining - 1 }}<br>
-      <button
-        :disabled="disabled"
-        class="Btn"
-        @click="drinkWater">
+      Uses remaining: {{ usesRemaining - 1 }}<br />
+      <button :disabled="disabled" class="Btn" @click="drinkWater">
         Drink
       </button>
-      <button
-        :disabled="disabled"
-        class="Btn"
-        @click="collectWater">
+      <button :disabled="disabled" class="Btn" @click="collectWater">
         Collect
       </button>
     </template>
@@ -54,7 +49,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       hasWaterCollector: false,
       isCollecting: false,
@@ -66,27 +61,27 @@ export default {
   },
   computed: {
     ...mapState(['disabled', 'inventory', 'existingItems']),
-    itemsNeeded () {
+    itemsNeeded() {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     }
   },
-  mounted () {
+  mounted() {
     eventBus.$on('gameStatusChange', this.handleGameStatusChange)
   },
   methods: {
     ...mapMutations(['increase', 'addInventory']),
     ...mapActions(['removeItemsById']),
-    buildWaterCollector () {
+    buildWaterCollector() {
       this.removeItemsById(this.item.itemsNeeded)
       this.usesRemaining = 3
       this.hasWaterCollector = true
       this.startCollecting()
     },
-    startCollecting () {
+    startCollecting() {
       this.isCollecting = true
       this.startCollectingLoop()
     },
-    startCollectingLoop () {
+    startCollectingLoop() {
       this.waterTimeout = setTimeout(() => {
         this.currentTime++
         if (this.currentTime === 60) {
@@ -97,17 +92,19 @@ export default {
         }
       }, 1000)
     },
-    drinkWater () {
+    drinkWater() {
       this.increase({
         stat: 'water',
         amount: 20
       })
       this.finishUse()
     },
-    collectWater () {
-      const hasBottle = this.inventory.find(item => item.id === 'bottle')
+    collectWater() {
+      const hasBottle = this.inventory.find((item) => item.id === 'bottle')
       if (hasBottle) {
-        const water = this.existingItems.find(item => item.id === 'water-clean')
+        const water = this.existingItems.find(
+          (item) => item.id === 'water-clean'
+        )
         this.removeItemsById(['bottle'])
         this.addInventory(water)
         this.finishUse()
@@ -117,7 +114,7 @@ export default {
         })
       }
     },
-    finishUse () {
+    finishUse() {
       this.usesRemaining--
 
       if (this.usesRemaining === 0) {
@@ -129,10 +126,10 @@ export default {
         this.startCollecting()
       }
     },
-    pauseWaterCollector () {
+    pauseWaterCollector() {
       clearTimeout(this.waterTimeout)
     },
-    handleGameStatusChange (isPaused) {
+    handleGameStatusChange(isPaused) {
       if (this.hasWaterCollector) {
         if (isPaused) {
           this.pauseWaterCollector()

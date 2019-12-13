@@ -1,7 +1,7 @@
 <template>
   <section>
     <h2 class="SectionTitle">Backpack {{ length }}/{{ maxLength }}</h2>
-    <list :list="orderedList"/>
+    <list :list="orderedList" />
   </section>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   components: {
     list
   },
-  data () {
+  data() {
     return {
       order: 'asc',
       key: 'id'
@@ -23,26 +23,31 @@ export default {
   },
   computed: {
     ...mapState(['inventory']),
-    length () {
+    length() {
       return this.inventory.length
     },
-    maxLength () {
+    maxLength() {
       return MAXINVENTORY
     },
-    orderedList () {
-      const aggregatedInventory = this.inventory.reduce((accumulator, current) => {
-        const item = {...current}
-        const alreadyExistingItem = accumulator.find(accItem => accItem.id === item.id)
+    orderedList() {
+      const aggregatedInventory = this.inventory.reduce(
+        (accumulator, current) => {
+          const item = { ...current }
+          const alreadyExistingItem = accumulator.find(
+            (accItem) => accItem.id === item.id
+          )
 
-        if (alreadyExistingItem) {
-          alreadyExistingItem.amount++
-        } else {
-          item.amount = 1
-          accumulator.push(item)
-        }
+          if (alreadyExistingItem) {
+            alreadyExistingItem.amount++
+          } else {
+            item.amount = 1
+            accumulator.push(item)
+          }
 
-        return accumulator
-      }, [])
+          return accumulator
+        },
+        []
+      )
 
       return _.orderBy(aggregatedInventory, this.key, this.order)
     }
