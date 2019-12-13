@@ -5,14 +5,15 @@
       <p>
         Items needed:
         {{ itemsNeeded }}
-        <br>
+        <br />
         Start a fire to cook items
       </p>
       <button
         :disabled="!item.isCraftable || disabled"
         type="button"
         class="Btn"
-        @click="startFire()">
+        @click="startFire()"
+      >
         Craft
       </button>
     </template>
@@ -23,7 +24,8 @@
         :disabled="!hasWood || disabled"
         type="button"
         class="Btn"
-        @click="rekindle()">
+        @click="rekindle()"
+      >
         Add more wood
       </button>
     </div>
@@ -42,7 +44,7 @@ export default {
       required: true
     }
   },
-  data () {
+  data() {
     return {
       fireStatus: 0,
       fireLoop: null,
@@ -50,11 +52,11 @@ export default {
     }
   },
   computed: {
-    ...mapState([ 'hasFire', 'disabled', 'inventory' ]),
-    hasWood () {
-      return !!this.inventory.find(item => item.id === 'wood')
+    ...mapState(['hasFire', 'disabled', 'inventory']),
+    hasWood() {
+      return !!this.inventory.find((item) => item.id === 'wood')
     },
-    statusMessage () {
+    statusMessage() {
       switch (this.fireStatus) {
         case 0:
           return 'Fire is burning hot'
@@ -62,27 +64,30 @@ export default {
           return 'Fire is burning'
         case 2:
           return 'Fire is burning low'
+        default:
+          return ''
       }
     },
-    itemsNeeded () {
+    itemsNeeded() {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     }
   },
-  mounted () {
+  mounted() {
     eventBus.$on('gameStatusChange', this.handleGameStatusChange)
   },
   methods: {
     ...mapMutations(['enableFire', 'disableFire']),
     ...mapActions(['removeItemsById']),
-    startFire () {
+    startFire() {
       this.removeItemsById(this.item.itemsNeeded)
       this.enableFire()
       this.startFireLoop()
     },
-    startFireLoop () {
+    startFireLoop() {
       this.fireLoop = setTimeout(() => {
         this.currentTime++
-        if (this.currentTime === 60) { // 1000 * 60 = game day
+        if (this.currentTime === 60) {
+          // 1000 * 60 = game day
           this.currentTime = 0
           this.fireStatus++
           if (this.fireStatus === 3) {
@@ -93,7 +98,7 @@ export default {
         this.startFireLoop()
       }, 1000)
     },
-    resetFire () {
+    resetFire() {
       clearTimeout(this.fireLoop)
       eventBus.$emit('showNotification', {
         text: 'Fire has burnt out'
@@ -102,17 +107,17 @@ export default {
       this.fireStatus = 0
       this.currentTime = 0
     },
-    rekindle () {
+    rekindle() {
       this.removeItemsById(['wood'])
       this.fireStatus = 0
       this.currentTime = 0
       clearTimeout(this.fireLoop)
       this.startFireLoop()
     },
-    pauseFire () {
+    pauseFire() {
       clearTimeout(this.fireLoop)
     },
-    handleGameStatusChange (isPaused) {
+    handleGameStatusChange(isPaused) {
       if (this.hasFire) {
         if (isPaused) {
           this.pauseFire()

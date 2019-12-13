@@ -1,10 +1,6 @@
 <template>
-  <button
-    class="GameStatusButton"
-    @click="toggleStatus">
-    <img
-      :src="`./static/${iconName}.svg`"
-      :alt="iconName">
+  <button class="GameStatusButton" @click="toggleStatus">
+    <img :src="`./static/${iconName}.svg`" :alt="iconName" />
   </button>
 </template>
 
@@ -15,22 +11,25 @@ import eventBus from '@/utils/eventBus'
 export default {
   computed: {
     ...mapState(['paused']),
-    iconName () {
+    iconName() {
       return this.paused ? 'play' : 'pause'
     }
   },
-  mounted () {
+  mounted() {
     document.addEventListener('visibilitychange', this.handleVisibilityChange)
   },
-  beforeDestroy () {
-    document.removeEventListener('visibilitychange', this.handleVisibilityChange)
+  beforeDestroy() {
+    document.removeEventListener(
+      'visibilitychange',
+      this.handleVisibilityChange
+    )
   },
   methods: {
     ...mapMutations(['pauseGame', 'playGame']),
-    notifyApp () {
+    notifyApp() {
       eventBus.$emit('gameStatusChange', this.paused)
     },
-    toggleStatus () {
+    toggleStatus() {
       if (this.paused) {
         this.playGame()
       } else {
@@ -38,7 +37,7 @@ export default {
       }
       this.notifyApp()
     },
-    handleVisibilityChange () {
+    handleVisibilityChange() {
       if (document.visibilityState === 'hidden') {
         this.pauseGame()
       } else if (document.visibilityState === 'visible') {
@@ -53,7 +52,7 @@ export default {
 <style lang="scss">
 .GameStatusButton {
   margin: 0;
-  padding: .2em;
+  padding: 0.2em;
   background: #eaeaea;
   border: none;
   vertical-align: middle;

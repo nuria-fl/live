@@ -4,11 +4,11 @@ import tracking from '@/utils/tracking'
 import names from '@/utils/names'
 
 const findIndexById = (uid, collection) => {
-  return collection.findIndex(item => item.uid === uid)
+  return collection.findIndex((item) => item.uid === uid)
 }
 
 export default {
-  initUsername (state) {
+  initUsername(state) {
     if (localStorage.username) {
       state.username = localStorage.username
     } else {
@@ -16,25 +16,25 @@ export default {
       localStorage.username = state.username
     }
   },
-  setUsername (state, username) {
+  setUsername(state, username) {
     state.username = username
     localStorage.username = username
   },
-  pauseGame (state) {
+  pauseGame(state) {
     state.paused = true
     state.disabled = true
   },
-  playGame (state) {
+  playGame(state) {
     state.paused = false
     state.disabled = false
   },
-  changePage (state, {newPage}) {
+  changePage(state, { newPage }) {
     state.currentPage = newPage
   },
-  increaseDayCount (state) {
+  increaseDayCount(state) {
     state.daysSurvived++
   },
-  decrease (state, {stat, amount}) {
+  decrease(state, { stat, amount }) {
     state.stats[stat] = state.stats[stat] - amount
     if (state.stats[stat] <= 0) {
       tracking.trackEvent('game', 'game-over', stat, state.daysSurvived)
@@ -43,48 +43,48 @@ export default {
       state.disabled = true
     }
   },
-  increase (state, {stat, amount}) {
+  increase(state, { stat, amount }) {
     state.stats[stat] = state.stats[stat] + amount
     if (state.stats[stat] > MAX) {
       state.stats[stat] = MAX
     }
   },
-  degradeItem (state, uid) {
+  degradeItem(state, uid) {
     const idx = findIndexById(uid, state.inventory)
 
     if (idx !== -1) {
       state.inventory[idx].usesUntilBreakdown--
     }
   },
-  addInventory (state, item) {
+  addInventory(state, item) {
     if (state.inventory.length < MAXINVENTORY) {
       item.uid = utils.generateId()
       state.inventory.push(item)
     }
   },
-  removeInventory (state, uid) {
+  removeInventory(state, uid) {
     const idx = findIndexById(uid, state.inventory)
 
     if (idx !== -1) {
       state.inventory.splice(idx, 1)
     }
   },
-  disable (state) {
+  disable(state) {
     state.disabled = true
   },
-  enable (state) {
+  enable(state) {
     state.disabled = false
   },
-  enableFire (state) {
+  enableFire(state) {
     state.hasFire = true
   },
-  disableFire (state) {
+  disableFire(state) {
     state.hasFire = false
   },
-  getSick (state) {
+  getSick(state) {
     state.isSick = true
   },
-  getCured (state) {
+  getCured(state) {
     state.isSick = false
     state.stats.health = MAX
   }

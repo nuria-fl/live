@@ -26,7 +26,7 @@ const lastNames = [
   'Andela'
 ]
 
-const getRandom = arr => {
+const getRandom = (arr) => {
   return arr[utils.randomizeWithinRange(arr.length)]
 }
 

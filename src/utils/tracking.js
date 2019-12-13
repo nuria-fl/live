@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === 'production'
  * @param  {string|undefined} label    (Optional) An optional string to provide additional dimensions to the event data.
  * @param  {int|undefined} value    (Optional) An integer that you can use to provide numerical data about the user event.
  */
-const trackEvent = function (
+const trackEvent = function(
   category,
   action,
   label = undefined,

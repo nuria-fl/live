@@ -1,8 +1,6 @@
 <template>
   <transition name="notification">
-    <section
-      v-show="visible"
-      class="Notification">
+    <section v-show="visible" class="Notification">
       {{ text }}
     </section>
   </transition>
@@ -12,27 +10,27 @@
 import eventBus from '@/utils/eventBus'
 
 export default {
-  data () {
+  data() {
     return {
       visible: false,
       text: '',
       timeout: null
     }
   },
-  mounted () {
+  mounted() {
     eventBus.$on('showNotification', this.showNotification)
   },
   methods: {
-    showNotification ({ text }) {
+    showNotification({ text }) {
       clearTimeout(this.timeout)
       this.text = text
       this.visible = true
       this.startHideNotificationTimeout()
     },
-    hideNotification () {
+    hideNotification() {
       this.visible = false
     },
-    startHideNotificationTimeout () {
+    startHideNotificationTimeout() {
       this.timeout = setTimeout(this.hideNotification, 3000)
     }
   }
@@ -41,18 +39,19 @@ export default {
 
 <style lang="scss">
 .Notification {
-  padding: .7em 1em;
+  padding: 0.7em 1em;
   position: fixed;
   top: 1em;
   right: 1em;
   z-index: 99;
   background: #fff;
-  box-shadow: 0 0 .5em rgba(0,0,0,.7);
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.7);
 }
 
 // transition
-.notification-enter-active, .notification-leave-active {
-  transition: all .5s;
+.notification-enter-active,
+.notification-leave-active {
+  transition: all 0.5s;
 }
 .notification-enter, .notification-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;

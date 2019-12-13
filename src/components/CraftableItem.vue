@@ -14,7 +14,8 @@
         :disabled="!item.isCraftable || disabled"
         type="button"
         class="Btn"
-        @click="craft">
+        @click="craft"
+      >
         Craft
       </button>
       <span v-show="showFireTip">
@@ -36,20 +37,21 @@ export default {
   },
   computed: {
     ...mapState(['hasFire', 'disabled']),
-    showFireTip () {
+    showFireTip() {
       return this.item.condition === 'fire' && !this.hasFire
     },
-    itemsNeeded () {
+    itemsNeeded() {
       return this.item.itemsNeeded.map(items.getName).join(', ')
     },
-    toolsNeeded () {
+    toolsNeeded() {
       if (this.item.toolsNeeded) {
         return this.item.toolsNeeded.map(items.getName).join(', ')
       }
+      return false
     }
   },
   methods: {
-    craft () {
+    craft() {
       this.$emit('craft', this.item)
     }
   }

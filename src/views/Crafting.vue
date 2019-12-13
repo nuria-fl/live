@@ -1,7 +1,9 @@
 <template lang="html">
   <div>
     <camp-upgrades />
-    <h2 class="SectionTitle">Food and water</h2>
+    <h2 class="SectionTitle">
+      Food and water
+    </h2>
     <ul>
       <craftable-item
         v-for="item in consumables"
@@ -17,7 +19,9 @@
       />
     </ul>
 
-    <h2 class="SectionTitle">Others</h2>
+    <h2 class="SectionTitle">
+      Others
+    </h2>
     <ul>
       <craftable-item
         v-for="item in tools"
@@ -38,7 +42,6 @@
         @craft="craft"
       />
     </ul>
-
   </div>
 </template>
 
@@ -58,33 +61,33 @@ export default {
   computed: {
     ...mapState(['hasFire', 'disabled']),
     ...mapGetters(['recipes']),
-    consumables () {
-      return this.recipes.filter(recipe => recipe.category === 'consumable')
+    consumables() {
+      return this.recipes.filter((recipe) => recipe.category === 'consumable')
     },
-    medicine () {
-      return this.recipes.filter(recipe => recipe.category === 'medicine')
+    medicine() {
+      return this.recipes.filter((recipe) => recipe.category === 'medicine')
     },
-    tools () {
-      return this.recipes.filter(recipe => recipe.category === 'tool')
+    tools() {
+      return this.recipes.filter((recipe) => recipe.category === 'tool')
     },
-    weapons () {
-      return this.recipes.filter(recipe => recipe.category === 'weapon')
+    weapons() {
+      return this.recipes.filter((recipe) => recipe.category === 'weapon')
     },
-    others () {
-      return this.recipes.filter(recipe => recipe.category === 'other')
+    others() {
+      return this.recipes.filter((recipe) => recipe.category === 'other')
     }
   },
   methods: {
     ...mapMutations(['addInventory', 'enableFire']),
     ...mapActions(['removeItemsById']),
-    craft (recipe) {
+    craft(recipe) {
       this.removeItemsById(recipe.itemsNeeded)
-      const itemsToCraft = recipe.result.map(itemId => {
-        return items.find(item => item.id === itemId)
+      const itemsToCraft = recipe.result.map((itemId) => {
+        return items.find((item) => item.id === itemId)
       })
 
-      itemsToCraft.forEach(item => {
-        this.addInventory({...item})
+      itemsToCraft.forEach((item) => {
+        this.addInventory({ ...item })
       })
     }
   }

@@ -13,12 +13,12 @@ const base = {
   usesUntilBreakdown: 0
 }
 
-const consumableItems = consumables.map(item => ({
+const consumableItems = consumables.map((item) => ({
   ...item,
   consumable: true
 }))
 
-const items = [...objects, ...consumableItems].map(item => {
+const items = [...objects, ...consumableItems].map((item) => {
   return {
     ...base,
     ...item

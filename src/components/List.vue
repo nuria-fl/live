@@ -1,10 +1,7 @@
 <template>
   <ul class="List">
-    <li
-      v-for="item in list"
-      :key="item.id">
-      <Item
-        :item="item" />
+    <li v-for="item in list" :key="item.id">
+      <Item :item="item" />
     </li>
   </ul>
 </template>
