@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+import { apolloClient } from '@/apollo'
+
 export default {
   data() {
     return {
@@ -29,7 +32,27 @@ export default {
     this.getRanking()
   },
   methods: {
-    getRanking() {}
+    getRanking() {
+      return apolloClient
+        .query({
+          query: gql`
+            {
+              scores {
+                user
+                days
+                version
+              }
+            }
+          `
+        })
+        .then(({ data }) => {
+          this.ranking = data.scores
+            .sort((scoreA, scoreB) => scoreA.days - scoreB.days)
+            .reverse()
+            .slice(0, 10)
+          this.loading = false
+        })
+    }
   }
 }
 </script>
