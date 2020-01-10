@@ -90,13 +90,9 @@ export default {
         stat: 'energy',
         amount: 35,
         time: 5000
+      }).then(() => {
+        this.handleResult()
       })
-        .then(() => {
-          this.handleResult()
-        })
-        .catch(() => {
-          console.error('oops')
-        })
     },
     goHunt() {
       if (this.isInventoryFull) {
