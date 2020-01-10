@@ -5,7 +5,12 @@
       <p>A game about survival</p>
       <p>What's your name, survivor?</p>
       <form @submit.prevent="start">
-        <input v-model="startUsername" type="text" required />
+        <input
+          v-model="startUsername"
+          type="text"
+          required
+          class="Splash__input"
+        />
         <button type="submit" class="Btn">
           New Game
         </button>
@@ -24,7 +29,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Main from '@/views/Main'
 import GameStatusButton from '@/components/GameStatusButton'
 import tracking from '@/utils/tracking'
@@ -59,8 +64,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import './assets/styles/index';
-
 body {
   margin: 0;
   font-family: 'Fira Mono', monospace;
@@ -73,6 +76,9 @@ li {
 .Splash {
   padding: 3em 0 4em;
   text-align: center;
+  &__input {
+    margin-right: 0.5rem;
+  }
 }
 .Footer {
   width: 100%;
