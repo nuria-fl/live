@@ -7,6 +7,7 @@
       Start over
     </button>
     <Ranking v-if="scoreSent" />
+    <p v-else>Updating high scores...</p>
   </div>
 </template>
 
