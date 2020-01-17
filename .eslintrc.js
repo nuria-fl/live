@@ -1,17 +1,16 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
     node: true
+  },
+  extends: ['plugin:vue/recommended', '@vue/prettier'],
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    semi: ['error', 'never'],
+    quotes: ['error', 'single', { avoidEscape: true }]
   },
   parserOptions: {
     parser: 'babel-eslint'
-  },
-  extends: [
-    'plugin:vue/recommended',
-    'prettier',
-    'prettier/vue',
-    'plugin:prettier/recommended'
-  ],
-  plugins: ['prettier']
+  }
 }

@@ -104,7 +104,7 @@ export default {
       }
     })
   },
-  handleItemDegradation({ state, commit }, item) {
+  handleItemDegradation({ commit }, item) {
     if (item.usesUntilBreakdown > 1) {
       commit('degradeItem', item.uid)
     } else {

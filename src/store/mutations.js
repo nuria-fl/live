@@ -38,9 +38,9 @@ export default {
     state.stats[stat] = state.stats[stat] - amount
     if (state.stats[stat] <= 0) {
       tracking.trackEvent('game', 'game-over', stat, state.daysSurvived)
-      state.gameOver = true
       state.causeOfDeath = stat
       state.disabled = true
+      state.gameOver = true
     }
   },
   increase(state, { stat, amount }) {

@@ -6,17 +6,26 @@
     <button class="Btn" @click="newGame">
       Start over
     </button>
+    <Ranking v-if="scoreSent" />
+    <p v-else>Updating high scores...</p>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import { mapState } from 'vuex'
-// import Ranking from '@/components/Ranking'
+import { apolloClient } from '@/apollo'
+import Ranking from '@/components/Ranking'
 
 export default {
-  // components: {
-  //   Ranking
-  // },
+  components: {
+    Ranking
+  },
+  data() {
+    return {
+      scoreSent: false
+    }
+  },
   computed: {
     ...mapState(['daysSurvived', 'causeOfDeath', 'username']),
     deathText() {
@@ -35,13 +44,37 @@ export default {
     }
   },
   mounted() {
-    const time = +new Date()
-    const id = time.toString()
-    const message = {
-      user: this.username,
-      days: this.daysSurvived,
-      causeOfDeath: this.causeOfDeath
-    }
+    return apolloClient
+      .mutate({
+        mutation: gql`
+          mutation AddScore(
+            $user: String!
+            $days: Int!
+            $causeOfDeath: String!
+            $version: String!
+          ) {
+            addScore(
+              score: {
+                user: $user
+                days: $days
+                causeOfDeath: $causeOfDeath
+                version: $version
+              }
+            ) {
+              success
+            }
+          }
+        `,
+        variables: {
+          user: this.username,
+          days: this.daysSurvived,
+          causeOfDeath: this.causeOfDeath,
+          version: 'vue-0.14.0'
+        }
+      })
+      .then(() => {
+        this.scoreSent = true
+      })
   },
   methods: {
     newGame() {
