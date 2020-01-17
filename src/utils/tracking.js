@@ -20,7 +20,7 @@ const trackEvent = function(
     // })
   } else {
     // eslint-disable-next-line no-console
-    console.info(`[TRACKER] send`, 'event', category, action, label, value)
+    console.info('[TRACKER] send', 'event', category, action, label, value)
 
     if (value !== undefined && isNaN(value)) {
       throw Error('If defined, event value must be an integer')

@@ -35,7 +35,8 @@ const consumable = {
   daysToPerish: Number // 0 for non perishable items
 }
 
-const object = { // tool or junk
+const object = {
+  // tool or junk
   uid: String, // generated, unique
   id: String,
   name: String,

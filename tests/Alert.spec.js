@@ -10,7 +10,7 @@ describe('Alert snapshot', () => {
   })
 
   test('should match snapshot', () => {
-    wrapper.setData({visible: true, text: 'hi'})
+    wrapper.setData({ visible: true, text: 'hi' })
 
     expect(wrapper.vm.$el).toMatchSnapshot()
   })
