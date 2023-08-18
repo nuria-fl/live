@@ -30,15 +30,15 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import DaysCounter from '@/components/DaysCounter'
-import MobileMenu from '@/components/MobileMenu'
-import Stats from '@/components/Stats'
-import Alert from '@/components/Alert'
-import Notification from '@/components/Notification'
-import GameOver from '@/components/GameOver'
-import Actions from './Actions'
-import Crafting from './Crafting'
-import Inventory from './Inventory'
+import DaysCounter from '@/components/DaysCounter.vue'
+import MobileMenu from '@/components/MobileMenu.vue'
+import Stats from '@/components/Stats.vue'
+import Alert from '@/components/Alert.vue'
+import Notification from '@/components/Notification.vue'
+import GameOver from '@/components/GameOver.vue'
+import Actions from './Actions.vue'
+import Crafting from './Crafting.vue'
+import Inventory from './Inventory.vue'
 
 export default {
   components: {

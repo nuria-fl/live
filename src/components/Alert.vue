@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Modal from '@/components/Modal'
+import Modal from '@/components/Modal.vue'
 import eventBus from '@/utils/eventBus'
 
 export default {

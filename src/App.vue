@@ -30,8 +30,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import Main from '@/views/Main'
-import GameStatusButton from '@/components/GameStatusButton'
+import Main from '@/views/Main.vue'
+import GameStatusButton from '@/components/GameStatusButton.vue'
 import tracking from '@/utils/tracking'
 
 export default {

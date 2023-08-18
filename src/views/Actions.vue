@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div>
     <h2 class="SectionTitle">
       Actions
@@ -41,7 +41,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import modal from '@/components/Modal'
+import modal from '@/components/Modal.vue'
 import eventBus from '@/utils/eventBus'
 
 export default {

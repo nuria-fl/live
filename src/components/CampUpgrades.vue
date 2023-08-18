@@ -17,8 +17,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Fire from '@/components/Fire'
-import WaterCollector from '@/components/WaterCollector'
+import Fire from '@/components/Fire.vue'
+import WaterCollector from '@/components/WaterCollector.vue'
 
 export default {
   components: {
