@@ -29,7 +29,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import utils from '@/utils'
-import eventBus from '@/utils/eventBus'
+import { eventBus } from '@/utils/eventBus'
 
 export default {
   props: {

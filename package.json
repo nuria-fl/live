@@ -13,17 +13,12 @@
     "core-js": "^3.4.4",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
-    "vue": "^2.6.10",
-    "vuex": "^3.1.2"
+    "tiny-emitter": "^2.1.0",
+    "vue": "^3.1.0",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-plugin-router": "^4.1.0",
-    "@vue/cli-plugin-vuex": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
-    "@vue/eslint-config-prettier": "^5.0.0",
-    "@vue/test-utils": "^1.0.0-beta.30",
+    "@vitejs/plugin-vue": "^4.3.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "eslint": "^5.16.0",
@@ -33,10 +28,7 @@
     "prettier": "^1.19.1",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
-    "vite": "^4.4.9",
-    "vite-plugin-vue2": "^2.0.3",
-    "vue-jest": "^3.0.5",
-    "vue-template-compiler": "^2.6.10"
+    "vite": "^4.4.9"
   },
   "jest": {
     "moduleFileExtensions": [

@@ -14,7 +14,7 @@
 
 <script>
 import Modal from '@/components/Modal.vue'
-import eventBus from '@/utils/eventBus'
+import { eventBus } from '@/utils/eventBus'
 
 export default {
   components: {
