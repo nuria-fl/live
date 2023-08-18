@@ -5,13 +5,17 @@
     </h2>
 
     <modal :visible.sync="showResults" :is-closeable="true">
-      <p slot="body">You got {{ lastActionResult }}</p>
+      <template v-slot:body>
+        <p>You got {{ lastActionResult }}</p>
+      </template>
     </modal>
 
     <modal :visible.sync="inProgress">
-      <p slot="body" class="progress">
-        {{ currentAction }}
-      </p>
+      <template v-slot:body>
+        <p class="progress">
+          {{ currentAction }}
+        </p>
+      </template>
     </modal>
 
     <button

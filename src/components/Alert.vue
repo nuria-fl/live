@@ -4,9 +4,11 @@
     :visible.sync="visible"
     @update:visible="closeModal"
   >
-    <p slot="body">
-      {{ text }}
-    </p>
+    <template v-slot:body>
+      <p>
+        {{ text }}
+      </p>
+    </template>
   </modal>
 </template>
 
