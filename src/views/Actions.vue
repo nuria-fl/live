@@ -4,13 +4,13 @@
       Actions
     </h2>
 
-    <modal :visible.sync="showResults" :is-closeable="true">
+    <modal v-model:visible="showResults" :is-closeable="true">
       <template v-slot:body>
         <p>You got {{ lastActionResult }}</p>
       </template>
     </modal>
 
-    <modal :visible.sync="inProgress">
+    <modal v-model:visible="inProgress">
       <template v-slot:body>
         <p class="progress">
           {{ currentAction }}

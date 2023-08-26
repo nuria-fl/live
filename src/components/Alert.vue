@@ -1,7 +1,7 @@
 <template>
   <modal
     :is-closeable="true"
-    :visible.sync="visible"
+    v-model:visible="visible"
     @update:visible="closeModal"
   >
     <template v-slot:body>
