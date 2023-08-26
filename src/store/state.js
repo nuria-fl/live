@@ -23,8 +23,7 @@ const state = {
   currentPage: 'home'
 }
 
-const isCraftable = (recipe) => {
-  // mixin so state is reactive?
+const isCraftable = (state, recipe) => {
   const inventory = state.inventory.map((item) => item.id)
   const currentItems = []
 
@@ -74,21 +73,21 @@ const isCraftable = (recipe) => {
 }
 
 const getters = {
-  isInventoryFull: () => state.inventory.length === MAXINVENTORY,
-  slotsInInventoryLeft: () => MAXINVENTORY - state.inventory.length,
-  recipes: () => {
+  isInventoryFull: (state) => state.inventory.length === MAXINVENTORY,
+  slotsInInventoryLeft: (state) => MAXINVENTORY - state.inventory.length,
+  recipes: (state) => {
     return recipes.map((recipe) => {
       return {
         ...recipe,
-        isCraftable: isCraftable(recipe)
+        isCraftable: isCraftable(state, recipe)
       }
     })
   },
-  upgrades: () => {
+  upgrades: (state) => {
     return upgrades.map((upgrade) => {
       return {
         ...upgrade,
-        isCraftable: isCraftable(upgrade)
+        isCraftable: isCraftable(state, upgrade)
       }
     })
   }

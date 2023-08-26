@@ -1,17 +1,21 @@
-<template lang="html">
+<template>
   <div>
     <h2 class="SectionTitle">
       Actions
     </h2>
 
-    <modal :visible.sync="showResults" :is-closeable="true">
-      <p slot="body">You got {{ lastActionResult }}</p>
+    <modal v-model:visible="showResults" :is-closeable="true">
+      <template v-slot:body>
+        <p>You got {{ lastActionResult }}</p>
+      </template>
     </modal>
 
-    <modal :visible.sync="inProgress">
-      <p slot="body" class="progress">
-        {{ currentAction }}
-      </p>
+    <modal v-model:visible="inProgress">
+      <template v-slot:body>
+        <p class="progress">
+          {{ currentAction }}
+        </p>
+      </template>
     </modal>
 
     <button
@@ -37,8 +41,8 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import modal from '@/components/Modal'
-import eventBus from '@/utils/eventBus'
+import modal from '@/components/Modal.vue'
+import { eventBus } from '@/utils/eventBus'
 
 export default {
   components: {

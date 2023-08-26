@@ -39,7 +39,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import eventBus from '@/utils/eventBus'
+import { eventBus } from '@/utils/eventBus'
 import items from '@/utils/items'
 
 export default {

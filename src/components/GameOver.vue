@@ -15,7 +15,7 @@
 import gql from 'graphql-tag'
 import { mapState } from 'vuex'
 import { apolloClient } from '@/apollo'
-import Ranking from '@/components/Ranking'
+import Ranking from '@/components/Ranking.vue'
 
 export default {
   components: {

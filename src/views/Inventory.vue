@@ -9,7 +9,7 @@
 import { mapState } from 'vuex'
 import _ from 'lodash'
 import { MAXINVENTORY } from '@/data/constants'
-import list from '@/components/List'
+import list from '@/components/List.vue'
 
 export default {
   components: {

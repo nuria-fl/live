@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div>
     <camp-upgrades />
     <h2 class="SectionTitle">
@@ -50,8 +50,8 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import items from '@/data/items'
 
-import CraftableItem from '@/components/CraftableItem'
-import CampUpgrades from '@/components/CampUpgrades'
+import CraftableItem from '@/components/CraftableItem.vue'
+import CampUpgrades from '@/components/CampUpgrades.vue'
 
 export default {
   components: {

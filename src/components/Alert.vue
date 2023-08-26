@@ -1,18 +1,20 @@
 <template>
   <modal
     :is-closeable="true"
-    :visible.sync="visible"
+    v-model:visible="visible"
     @update:visible="closeModal"
   >
-    <p slot="body">
-      {{ text }}
-    </p>
+    <template v-slot:body>
+      <p>
+        {{ text }}
+      </p>
+    </template>
   </modal>
 </template>
 
 <script>
-import Modal from '@/components/Modal'
-import eventBus from '@/utils/eventBus'
+import Modal from '@/components/Modal.vue'
+import { eventBus } from '@/utils/eventBus'
 
 export default {
   components: {
