@@ -6,10 +6,11 @@
   </transition>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { eventBus } from '@/utils/eventBus'
 
-export default {
+export default defineComponent({
   data() {
     return {
       visible: false,
@@ -34,7 +35,7 @@ export default {
       this.timeout = setTimeout(this.hideNotification, 3000)
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

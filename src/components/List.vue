@@ -6,10 +6,11 @@
   </ul>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Item from '@/components/Item.vue'
 
-export default {
+export default defineComponent({
   name: 'List',
   components: {
     Item
@@ -20,5 +21,5 @@ export default {
       required: true
     }
   }
-}
+})
 </script>

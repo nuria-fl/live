@@ -17,11 +17,12 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import gql from 'graphql-tag'
 import { apolloClient } from '@/apollo'
 
-export default {
+export default defineComponent({
   data() {
     return {
       ranking: [],
@@ -54,7 +55,7 @@ export default {
         })
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

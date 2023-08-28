@@ -37,12 +37,13 @@
   </article>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { eventBus } from '@/utils/eventBus'
 import items from '@/utils/items'
 
-export default {
+export default defineComponent({
   props: {
     item: {
       type: Object,
@@ -139,5 +140,5 @@ export default {
       }
     }
   }
-}
+})
 </script>

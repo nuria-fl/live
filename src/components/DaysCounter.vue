@@ -2,11 +2,12 @@
   <section>Days survived: {{ daysSurvived }}</section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapMutations } from 'vuex'
 import gameLoop from '@/mixins/gameLoop'
 
-export default {
+export default defineComponent({
   mixins: [gameLoop],
   computed: {
     ...mapState(['gameOver', 'daysSurvived']),
@@ -29,5 +30,5 @@ export default {
       }, day)
     }
   }
-}
+})
 </script>

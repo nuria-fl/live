@@ -5,13 +5,14 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 import _ from 'lodash'
 import { MAXINVENTORY } from '@/data/constants'
 import list from '@/components/List.vue'
 
-export default {
+export default defineComponent({
   components: {
     list
   },
@@ -52,5 +53,5 @@ export default {
       return _.orderBy(aggregatedInventory, this.key, this.order)
     }
   }
-}
+})
 </script>

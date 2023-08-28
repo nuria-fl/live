@@ -4,11 +4,12 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapMutations } from 'vuex'
 import { eventBus } from '@/utils/eventBus'
 
-export default {
+export default defineComponent({
   computed: {
     ...mapState(['paused']),
     iconName() {
@@ -46,7 +47,7 @@ export default {
       this.notifyApp()
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

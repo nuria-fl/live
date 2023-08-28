@@ -15,12 +15,13 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapGetters } from 'vuex'
 import Fire from '@/components/Fire.vue'
 import WaterCollector from '@/components/WaterCollector.vue'
 
-export default {
+export default defineComponent({
   components: {
     Fire,
     WaterCollector
@@ -28,5 +29,5 @@ export default {
   computed: {
     ...mapGetters(['upgrades'])
   }
-}
+})
 </script>

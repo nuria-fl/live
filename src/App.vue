@@ -28,13 +28,14 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapMutations } from 'vuex'
 import Main from '@/views/Main.vue'
 import GameStatusButton from '@/components/GameStatusButton.vue'
 import tracking from '@/utils/tracking'
 
-export default {
+export default defineComponent({
   components: {
     MainComponent: Main,
     GameStatusButton
@@ -60,7 +61,7 @@ export default {
       this.hasStarted = true
     }
   }
-}
+})
 </script>
 
 <style lang="scss">

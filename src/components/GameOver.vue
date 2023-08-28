@@ -11,13 +11,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import gql from 'graphql-tag'
 import { mapState } from 'vuex'
 import { apolloClient } from '@/apollo'
 import Ranking from '@/components/Ranking.vue'
 
-export default {
+export default defineComponent({
   components: {
     Ranking
   },
@@ -81,5 +82,5 @@ export default {
       window.location.reload()
     }
   }
-}
+})
 </script>

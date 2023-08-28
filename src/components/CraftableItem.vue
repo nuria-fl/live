@@ -25,10 +25,12 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState } from 'vuex'
 import items from '@/utils/items'
-export default {
+
+export default defineComponent({
   props: {
     item: {
       type: Object,
@@ -55,5 +57,5 @@ export default {
       this.$emit('craft', this.item)
     }
   }
-}
+})
 </script>

@@ -45,7 +45,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import items from '@/data/items'
@@ -53,7 +54,7 @@ import items from '@/data/items'
 import CraftableItem from '@/components/CraftableItem.vue'
 import CampUpgrades from '@/components/CampUpgrades.vue'
 
-export default {
+export default defineComponent({
   components: {
     CraftableItem,
     CampUpgrades
@@ -91,5 +92,5 @@ export default {
       })
     }
   }
-}
+})
 </script>

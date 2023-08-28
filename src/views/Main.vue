@@ -28,7 +28,8 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapActions } from 'vuex'
 import DaysCounter from '@/components/DaysCounter.vue'
 import MobileMenu from '@/components/MobileMenu.vue'
@@ -40,7 +41,7 @@ import Actions from './Actions.vue'
 import Crafting from './Crafting.vue'
 import Inventory from './Inventory.vue'
 
-export default {
+export default defineComponent({
   components: {
     Alert,
     Actions,
@@ -87,7 +88,7 @@ export default {
   methods: {
     ...mapActions(['initInventory'])
   }
-}
+})
 </script>
 
 <style lang="scss">

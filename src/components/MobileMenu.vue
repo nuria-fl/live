@@ -26,11 +26,12 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { mapState, mapMutations } from 'vuex'
 import { MAXINVENTORY } from '@/data/constants'
 
-export default {
+export default defineComponent({
   computed: {
     ...mapState(['inventory', 'currentPage']),
     length() {
@@ -46,7 +47,7 @@ export default {
       this.changePage({ newPage })
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
