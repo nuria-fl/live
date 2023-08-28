@@ -3,7 +3,12 @@
 		<h1 class="Ranking__title">HALL OF FAME</h1>
 		<ul>
 			<li v-if="loading">Loading...</li>
-			<li v-for="item in ranking" v-else :key="item.id" class="Ranking__item">
+			<li
+				v-for="item in ranking as any"
+				v-else
+				:key="item.id"
+				class="Ranking__item"
+			>
 				<span class="Ranking__user">
 					{{ item.user }}
 				</span>

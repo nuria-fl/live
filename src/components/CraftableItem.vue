@@ -11,7 +11,7 @@
 				{{ toolsNeeded }}
 			</p>
 			<button
-				:disabled="!item.isCraftable || disabled"
+				:disabled="!item.isCraftable || (disabled as boolean)"
 				type="button"
 				class="Btn"
 				@click="craft"
