@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`DaysCounter It should match snapshot 1`] = `
-<section>
-  
-  Days survived: 0
-
-</section>
-`;

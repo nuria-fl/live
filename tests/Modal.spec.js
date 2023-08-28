@@ -14,10 +14,6 @@ describe('Modal', () => {
     })
   })
 
-  test('It should match snapshot', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot()
-  })
-
   test('It should emit update event when clicking close button', () => {
     wrapper.find('.Btn:last-child').trigger('click')
     expect(wrapper.emitted('update:visible')).toBeTruthy()

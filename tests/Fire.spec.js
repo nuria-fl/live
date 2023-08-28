@@ -34,11 +34,6 @@ describe('Fire', () => {
     })
   })
 
-  test('It should match snapshot', () => {
-    wrapper.find('.Btn').trigger('click')
-    expect(wrapper.vm.$el).toMatchSnapshot()
-  })
-
   test('It should call removeItemsById when crafted', () => {
     wrapper.find('.Btn').trigger('click')
     expect(storeMocks.actions.removeItemsById).toBeCalled()

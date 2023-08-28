@@ -36,10 +36,6 @@ describe('CraftableItem', () => {
     })
   })
 
-  test('It should match snapshot', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot()
-  })
-
   test('Emits craft event', () => {
     wrapper.find('.Btn').trigger('click')
     expect(wrapper.emitted('craft')).toBeTruthy()

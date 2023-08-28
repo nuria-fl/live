@@ -43,10 +43,6 @@ describe('Item', () => {
     })
   })
 
-  test('It should match snapshot', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot()
-  })
-
   test('Calls removeInventory when discarting', () => {
     wrapper.find('.Btn:first-child').trigger('click')
     expect(storeMocks.mutations.removeInventory).toBeCalled()

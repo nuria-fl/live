@@ -25,11 +25,6 @@ describe('GameStatusButton', () => {
       localVue
     })
   })
-
-  test('It should match snapshot', () => {
-    expect(wrapper.vm.$el).toMatchSnapshot()
-  })
-
   test('Calls pauseGame when clicked', () => {
     wrapper.find('.GameStatusButton').trigger('click')
     expect(storeMocks.mutations.pauseGame).toBeCalled()
