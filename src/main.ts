@@ -1,10 +1,12 @@
-import '@/assets/styles/index.scss'
-import { createApp } from 'vue'
-import App from './App.vue'
-import store from './store'
+import "./assets/styles/index.scss";
 
-const app = createApp(App)
+import { createApp } from "vue";
 
-app.use(store)
+import App from "./App.vue";
+import store from "./store";
 
-app.mount('#app')
+const app = createApp(App);
+
+app.use(store);
+
+app.mount("#app");
