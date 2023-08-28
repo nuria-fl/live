@@ -1,4 +1,4 @@
-const MAX = 100
-const MAXINVENTORY = 10
+const MAX = 100;
+const MAXINVENTORY = 10;
 
-export { MAX, MAXINVENTORY }
+export { MAX, MAXINVENTORY };

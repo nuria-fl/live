@@ -1,13 +1,14 @@
-import { createStore } from 'vuex'
-import { state, getters } from './state'
-import mutations from './mutations'
-import actions from './actions'
+import { createStore } from "vuex";
+
+import actions from "./actions";
+import mutations from "./mutations";
+import { getters, state } from "./state";
 
 const store = createStore({
-  state,
-  getters,
-  mutations,
-  actions
-})
+	state,
+	getters,
+	mutations,
+	actions,
+});
 
-export default store
+export default store;

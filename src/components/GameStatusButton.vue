@@ -4,49 +4,48 @@
   </button>
 </template>
 
-<script>
-import { mapState, mapMutations } from 'vuex'
-import { eventBus } from '@/utils/eventBus'
+<script lang="ts">
+import { defineComponent } from "vue";
+import { mapMutations, mapState } from "vuex";
 
-export default {
+import { eventBus } from "@/utils/eventBus";
+
+export default defineComponent({
   computed: {
-    ...mapState(['paused']),
+    ...mapState(["paused"]),
     iconName() {
-      return this.paused ? 'play' : 'pause'
-    }
+      return this.paused ? "play" : "pause";
+    },
   },
   mounted() {
-    document.addEventListener('visibilitychange', this.handleVisibilityChange)
+    document.addEventListener("visibilitychange", this.handleVisibilityChange);
   },
   beforeDestroy() {
-    document.removeEventListener(
-      'visibilitychange',
-      this.handleVisibilityChange
-    )
+    document.removeEventListener("visibilitychange", this.handleVisibilityChange);
   },
   methods: {
-    ...mapMutations(['pauseGame', 'playGame']),
+    ...mapMutations(["pauseGame", "playGame"]),
     notifyApp() {
-      eventBus.$emit('gameStatusChange', this.paused)
+      eventBus.$emit("gameStatusChange", this.paused);
     },
     toggleStatus() {
       if (this.paused) {
-        this.playGame()
+        this.playGame();
       } else {
-        this.pauseGame()
+        this.pauseGame();
       }
-      this.notifyApp()
+      this.notifyApp();
     },
     handleVisibilityChange() {
-      if (document.visibilityState === 'hidden') {
-        this.pauseGame()
-      } else if (document.visibilityState === 'visible') {
-        this.playGame()
+      if (document.visibilityState === "hidden") {
+        this.pauseGame();
+      } else if (document.visibilityState === "visible") {
+        this.playGame();
       }
-      this.notifyApp()
-    }
-  }
-}
+      this.notifyApp();
+    },
+  },
+});
 </script>
 
 <style lang="scss">

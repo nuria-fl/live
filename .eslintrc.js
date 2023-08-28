@@ -1,16 +1,25 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true
-  },
-  extends: ['plugin:vue/recommended', '@vue/prettier'],
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    semi: ['error', 'never'],
-    quotes: ['error', 'single', { avoidEscape: true }]
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
-  }
-}
+	parser: "vue-eslint-parser",
+	extends: ["eslint-config-codely/typescript", "plugin:vue/base"],
+	overrides: [
+		{
+			files: ["*.ts", "*.tsx"],
+			parserOptions: {
+				parser: "@typescript-eslint/parser",
+				project: ["./tsconfig.json"],
+			},
+		},
+		{
+			files: ["vite.config.ts"],
+			parserOptions: {
+				parser: "@typescript-eslint/parser",
+				project: ["./tsconfig.node.json"],
+			},
+		},
+	],
+	rules: {
+		"prettier/prettier": ["error", { printWidth: 80, useTabs: true }],
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/no-unsafe-argument": "off",
+	},
+};
