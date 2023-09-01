@@ -1,6 +1,8 @@
+import { Item } from "../data/items";
+
 const utils = {
-	calculateProbability(probability) {
-		const pool = [];
+	calculateProbability(probability: number) {
+		const pool: boolean[] = [];
 
 		for (let i = 0; i < 10; i++) {
 			if (i < probability) {
@@ -10,17 +12,17 @@ const utils = {
 			}
 		}
 
-		const idx = this.randomizeWithinRange(pool.length);
+		const idx = utils.randomizeWithinRange(pool.length);
 
 		return pool[idx];
 	},
-	randomizeWithinRange(range) {
+	randomizeWithinRange(range: number) {
 		return Math.floor(Math.random() * range);
 	},
-	randomizeItems(source, items) {
-		const arr = [];
+	randomizeItems(source: Item[], amount: number) {
+		const arr: Item[] = [];
 
-		for (let i = 0; i < items; i++) {
+		for (let i = 0; i < amount; i++) {
 			const idx = utils.randomizeWithinRange(source.length);
 			arr.push({ ...source[idx] });
 		}

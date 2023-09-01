@@ -1,4 +1,14 @@
-export default [
+export interface Recipe {
+	name: string;
+	description: string;
+	itemsNeeded: string[];
+	toolsNeeded: string[];
+	upgradesNeeded: string[];
+	result: string[];
+	category: "consumable" | "weapon" | "tool" | "medicine" | "other";
+}
+
+const recipes: Recipe[] = [
 	{
 		name: "Rope",
 		description: "",
@@ -72,3 +82,5 @@ export default [
 		category: "other",
 	},
 ];
+
+export default recipes;

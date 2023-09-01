@@ -14,52 +14,44 @@
 	</ul>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-import gameLoop from "../mixins/gameLoop";
+import { useGameLoop } from "../mixins/useGameLoop";
 
-export default defineComponent({
-	mixins: [gameLoop],
-	data() {
-		return {
-			icons: {
-				health: "❤️",
-				water: "💧",
-				food: "🍗",
-				energy: "⚡",
-			},
-		};
-	},
-	computed: {
-		...mapState(["stats", "gameOver", "isSick"]),
-		isActive() {
-			return this.gameOver === false;
-		},
-	},
-	methods: {
-		...mapMutations(["decrease"]),
-		startGameLoop() {
+const store = useStore();
+
+const { loopTimeoutId, isActive } = useGameLoop(startGameLoop);
+
+const icons = {
+	health: "❤️",
+	water: "💧",
+	food: "🍗",
+	energy: "⚡",
+};
+
+const stats = computed(() => store.state.stats);
+
+function startGameLoop() {
+	decreaseStats();
+}
+
+function decreaseStats() {
+	const decreaseInterval = 12 * 1000;
+	loopTimeoutId.value = setTimeout(() => {
+		if (isActive) {
+			store.commit("decrease", { stat: "water", amount: 3 });
+			store.commit("decrease", { stat: "food", amount: 2 });
+			store.commit("decrease", { stat: "energy", amount: 2 });
+			if (store.state.isSick) {
+				store.commit("decrease", { stat: "health", amount: 2 });
+			}
+
 			this.decreaseStats();
-		},
-		decreaseStats() {
-			const decreaseInterval = 12 * 1000;
-			this.loop = setTimeout(() => {
-				if (this.isActive) {
-					this.decrease({ stat: "water", amount: 3 });
-					this.decrease({ stat: "food", amount: 2 });
-					this.decrease({ stat: "energy", amount: 2 });
-					if (this.isSick) {
-						this.decrease({ stat: "health", amount: 2 });
-					}
-
-					this.decreaseStats();
-				}
-			}, decreaseInterval);
-		},
-	},
-});
+		}
+	}, decreaseInterval);
+}
 </script>
 
 <style lang="scss">

@@ -1,4 +1,6 @@
-export default [
+import { Item } from "./items";
+
+const objects: Partial<Item>[] = [
 	{
 		id: "salt",
 		name: "Salt",
@@ -83,3 +85,5 @@ export default [
 		action: "craft",
 	},
 ];
+
+export default objects;

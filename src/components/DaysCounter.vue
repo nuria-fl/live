@@ -2,34 +2,29 @@
 	<section>Days survived: {{ daysSurvived }}</section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
+<script setup lang="ts">
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-import gameLoop from "../mixins/gameLoop";
+import { useGameLoop } from "../mixins/useGameLoop";
 
-export default defineComponent({
-	mixins: [gameLoop],
-	computed: {
-		...mapState(["gameOver", "daysSurvived"]),
-		isActive() {
-			return this.gameOver === false;
-		},
-	},
-	methods: {
-		...mapMutations(["increaseDayCount"]),
-		startGameLoop() {
-			this.startDayTimer();
-		},
-		startDayTimer() {
-			const day = 1000 * 60;
-			this.loop = setTimeout(() => {
-				if (this.isActive) {
-					this.increaseDayCount();
-					this.startDayTimer();
-				}
-			}, day);
-		},
-	},
-});
+const { loopTimeoutId, isActive } = useGameLoop(startGameLoop);
+
+const store = useStore();
+
+const daysSurvived = computed(() => store.state.daysSurvived);
+
+function startGameLoop() {
+	startDayTimer();
+}
+
+function startDayTimer() {
+	const day = 1000 * 60;
+	loopTimeoutId.value = setTimeout(() => {
+		if (isActive) {
+			store.commit("increaseDayCount");
+			startDayTimer();
+		}
+	}, day);
+}
 </script>

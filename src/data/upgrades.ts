@@ -1,4 +1,12 @@
-export default [
+export interface Upgrade {
+	id: string;
+	name: string;
+	description: string;
+	itemsNeeded: string[];
+	toolsNeeded: string[];
+}
+
+const upgrades = [
 	{
 		id: "fire",
 		name: "Fire",
@@ -21,3 +29,5 @@ export default [
 	//   toolsNeeded: []
 	// },
 ];
+
+export default upgrades;

@@ -1,4 +1,6 @@
-export default [
+import { Item } from "./items";
+
+const consumables: Partial<Item>[] = [
 	{
 		id: "berries",
 		name: "Berries",
@@ -98,3 +100,5 @@ export default [
 		daysToPerish: 0,
 	},
 ];
+
+export default consumables;

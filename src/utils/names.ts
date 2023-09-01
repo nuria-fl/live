@@ -1,4 +1,4 @@
-import utils from "../utils";
+import utils from ".";
 
 const firstNames = [
 	"Barbara",
@@ -26,7 +26,7 @@ const lastNames = [
 	"Andela",
 ];
 
-const getRandom = (arr) => {
+const getRandom = (arr: string[]) => {
 	return arr[utils.randomizeWithinRange(arr.length)];
 };
 
