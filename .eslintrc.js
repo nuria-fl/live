@@ -10,11 +10,15 @@ module.exports = {
 			},
 		},
 		{
-			files: ["vite.config.ts"],
+			files: ["./*.config.ts"],
 			parserOptions: {
 				parser: "@typescript-eslint/parser",
 				project: ["./tsconfig.node.json"],
 			},
+		},
+		{
+			files: ["./tests/**/*.ts"],
+			plugins: ["vitest"],
 		},
 	],
 	rules: {
