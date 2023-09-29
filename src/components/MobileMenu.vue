@@ -26,29 +26,21 @@
 	</nav>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
-
+<script setup lang="ts">
 import { MAXINVENTORY } from "../data/constants";
+import { useInventoryStore } from "../store/inventory";
+import { useStatusStore } from "../store/status";
 
-export default defineComponent({
-	computed: {
-		...mapState(["inventory", "currentPage"]),
-		length() {
-			return this.inventory.length;
-		},
-		maxLength() {
-			return MAXINVENTORY;
-		},
-	},
-	methods: {
-		...mapMutations(["changePage"]),
-		goTo(newPage) {
-			this.changePage({ newPage });
-		},
-	},
-});
+const statusStore = useStatusStore();
+const inventoryStore = useInventoryStore();
+
+const length = inventoryStore.inventory.length;
+const currentPage = statusStore.currentPage;
+const maxLength = MAXINVENTORY;
+
+function goTo(newPage: string) {
+	statusStore.changePage(newPage);
+}
 </script>
 
 <style lang="scss">

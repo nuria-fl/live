@@ -14,7 +14,7 @@
 				<button type="submit" class="Btn">New Game</button>
 			</form>
 		</section>
-		<main-component v-else @newGame="start" />
+		<MainComponent v-else @newGame="start" />
 		<footer class="Footer">
 			<game-status-button v-if="hasStarted" />
 			Bug report via
@@ -26,41 +26,28 @@
 	</main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 
 import GameStatusButton from "./components/GameStatusButton.vue";
+import { useStatusStore } from "./store/status";
 import tracking from "./utils/tracking";
-import Main from "./views/Main.vue";
+import MainComponent from "./views/Main.vue";
 
-export default defineComponent({
-	components: {
-		MainComponent: Main,
-		GameStatusButton,
-	},
-	data() {
-		return {
-			hasStarted: false,
-			startUsername: "",
-		};
-	},
-	computed: {
-		...mapState(["username"]),
-	},
-	created() {
-		this.initUsername();
-		this.startUsername = this.username;
-	},
-	methods: {
-		...mapMutations(["initUsername", "setUsername"]),
-		start() {
-			tracking.trackEvent("game", "start");
-			this.setUsername(this.startUsername);
-			this.hasStarted = true;
-		},
-	},
+const hasStarted = ref(false);
+const startUsername = ref("");
+const statusStore = useStatusStore();
+
+onMounted(() => {
+	statusStore.initUsername();
+	startUsername.value = statusStore.username;
 });
+
+function start() {
+	tracking.trackEvent("game", "start");
+	statusStore.setUsername(startUsername.value);
+	hasStarted.value = true;
+}
 </script>
 
 <style lang="scss">

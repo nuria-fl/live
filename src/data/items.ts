@@ -2,6 +2,7 @@ import consumables from "./consumables";
 import objects from "./objects";
 
 export interface Item {
+	uid?: string;
 	id: string;
 	name: string;
 	description: string;

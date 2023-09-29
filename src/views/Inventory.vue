@@ -5,54 +5,41 @@
 	</section>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import _ from "lodash";
-import { defineComponent } from "vue";
-import { mapState } from "vuex";
+import { computed } from "vue";
 
 import list from "../components/List.vue";
 import { MAXINVENTORY } from "../data/constants";
+import { useInventoryStore } from "../store/inventory";
 
-export default defineComponent({
-	components: {
-		list,
-	},
-	data() {
-		return {
-			order: "asc",
-			key: "id",
-		};
-	},
-	computed: {
-		...mapState(["inventory"]),
-		length() {
-			return this.inventory.length;
-		},
-		maxLength() {
-			return MAXINVENTORY;
-		},
-		orderedList() {
-			const aggregatedInventory = this.inventory.reduce(
-				(accumulator, current) => {
-					const item = { ...current };
-					const alreadyExistingItem = accumulator.find(
-						(accItem) => accItem.id === item.id,
-					);
+const inventoryStore = useInventoryStore();
+const length = computed(() => inventoryStore.inventory.length);
+const maxLength = MAXINVENTORY;
 
-					if (alreadyExistingItem) {
-						alreadyExistingItem.amount++;
-					} else {
-						item.amount = 1;
-						accumulator.push(item);
-					}
-
-					return accumulator;
-				},
-				[],
+const orderedList = computed(() => {
+	const aggregatedInventory = inventoryStore.inventory.reduce(
+		(accumulator: any[], current: any) => {
+			const item = { ...current };
+			const alreadyExistingItem = accumulator.find(
+				(accItem) => accItem.id === item.id,
 			);
 
-			return _.orderBy(aggregatedInventory, this.key, this.order);
+			if (alreadyExistingItem) {
+				alreadyExistingItem.amount++;
+			} else {
+				item.amount = 1;
+				accumulator.push(item);
+			}
+
+			return accumulator;
 		},
-	},
+		[],
+	);
+
+	const order = "asc";
+	const key = "id";
+
+	return _.orderBy(aggregatedInventory, key, order);
 });
 </script>

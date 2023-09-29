@@ -11,14 +11,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "strictNullChecks": true,
+    "noImplicitThis": true,
     "types": ["vitest/globals"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts"],

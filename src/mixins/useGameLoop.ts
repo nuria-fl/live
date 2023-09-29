@@ -1,17 +1,17 @@
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
-import { useStore } from "vuex";
 
+import { useStatusStore } from "../store/status";
 import { eventBus } from "../utils/eventBus";
 
 export function useGameLoop(startGameLoop: () => void) {
-	const store = useStore();
+	const statusStore = useStatusStore();
 
 	const loopTimeoutId = ref<ReturnType<typeof setTimeout> | undefined>(
 		undefined,
 	);
 
 	const isActive = computed(() => {
-		return store.state.gameOver === false;
+		return !statusStore.gameOver;
 	});
 
 	onMounted(() => {

@@ -37,153 +37,212 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapActions, mapGetters, mapState } from "vuex";
-
+<script setup lang="ts">
 import modal from "../components/Modal.vue";
+import { Item } from "../data/items";
+import { useInventoryStore } from "../store/inventory";
+import { useStatsStore } from "../store/stats";
+import { useStatusStore } from "../store/status";
+import utils from "../utils";
 import { eventBus } from "../utils/eventBus";
 
-export default defineComponent({
-	components: {
-		modal,
+const inventoryStore = useInventoryStore();
+const statusStore = useStatusStore();
+const statsStore = useStatsStore();
+
+const disabled = statusStore.disabled;
+
+let lastActionResult = "";
+let currentAction = null;
+let inProgress = false;
+let showResults = false;
+const actions = [
+	{
+		name: "Sleep",
+		description: "Rest to replenish your energy",
+		stats: "+35 energy",
+		method: energy,
 	},
-	data() {
-		return {
-			lastActionResult: "",
-			currentAction: null,
-			inProgress: false,
-			showResults: false,
-			actions: [
-				{
-					name: "Sleep",
-					description: "Rest to replenish your energy",
-					stats: "+35 energy",
-					method: this.energy,
-				},
-				{
-					name: "Hunt",
-					description: "Hunt for food and fur to craft equipment",
-					stats: "-10 energy, -10 water, -6 food",
-					method: this.goHunt,
-				},
-				{
-					name: "Scavenge",
-					description: "Find useful items to survive",
-					stats: "-5 energy, -5 water, -3 food",
-					method: this.goScavenge,
-				},
-			],
-		};
+	{
+		name: "Hunt",
+		description: "Hunt for food and fur to craft equipment",
+		stats: "-10 energy, -10 water, -6 food",
+		method: goHunt,
 	},
-	computed: {
-		...mapState(["disabled", "gameOver", "inventory"]),
-		...mapGetters(["isInventoryFull", "slotsInInventoryLeft"]),
+	{
+		name: "Scavenge",
+		description: "Find useful items to survive",
+		stats: "-5 energy, -5 water, -3 food",
+		method: goScavenge,
 	},
-	methods: {
-		...mapActions(["increaseAsync", "hunt", "scavenge"]),
-		handleFullInventory() {
-			eventBus.$emit("showModal", {
-				body: "Your inventory is full. Remove at least one item to proceed.",
-			});
-		},
-		energy() {
-			this.startProgress("Sleeping");
+];
 
-			this.increaseAsync({
-				stat: "energy",
-				amount: 35,
-				time: 5000,
-			}).then(() => {
-				this.handleResult();
-			});
-		},
-		goHunt() {
-			if (this.isInventoryFull) {
-				this.handleFullInventory();
+function scavenge({ time }) {
+	return new Promise((resolve, reject) => {
+		statusStore.disable();
+		if (!statusStore.gameOver) {
+			setTimeout(function () {
+				const scavengeableItems = inventoryStore.existingItems.filter(
+					(item) => item.action === "scavenge",
+				);
 
-				return;
-			}
+				const numberOfItems =
+					inventoryStore.slotsInInventoryLeft > 3
+						? 3
+						: inventoryStore.slotsInInventoryLeft;
 
-			const weapons = ["bow"];
+				const newItems = utils.randomizeItems(scavengeableItems, numberOfItems);
 
-			const availableWeapons = this.inventory.filter(
-				(item) => weapons.indexOf(item.id) > -1,
-			);
-			const hasWeapon = availableWeapons.length > 0;
-
-			if (hasWeapon) {
-				// for now there is only one weapon, later user will choose
-				const weapon = availableWeapons[0];
-				this.startProgress("Hunting");
-				this.lastActionResult = "";
-
-				this.hunt({ time: 8000, weapon }).then((items) => {
-					this.handleResult(items);
-					if (items === false) {
-						eventBus.$emit("showModal", {
-							body: "You were unable to track down any animal. Better luck next time.",
-						});
-					}
+				newItems.forEach((item) => {
+					inventoryStore.addInventory(item);
 				});
-			} else {
-				eventBus.$emit("showModal", {
-					body: "You need to craft a weapon first",
-				});
-			}
-		},
-		goScavenge() {
-			if (this.isInventoryFull) {
-				this.handleFullInventory();
 
-				return;
-			}
+				statsStore.decrease("energy", 5);
+				statsStore.decrease("water", 5);
+				statsStore.decrease("food", 3);
+				statusStore.enable();
 
-			this.startProgress("Scavenging");
-			this.lastActionResult = "";
+				resolve(newItems);
+			}, time);
+		} else {
+			reject(new Error("game is over"));
+		}
+	});
+}
+function hunt({ time, weapon }) {
+	return new Promise((resolve, reject) => {
+		statusStore.disable();
+		if (!statusStore.gameOver) {
+			setTimeout(function () {
+				statsStore.decrease("energy", 10);
+				statsStore.decrease("water", 10);
+				statsStore.decrease("food", 6);
+				statusStore.enable();
 
-			this.scavenge({ time: 3000 }).then((items) => {
-				this.handleResult(items);
-			});
-		},
-		handleResult(items) {
-			this.endProgress();
+				const isSuccesful = utils.calculateProbability(8);
 
-			if (items) {
-				const itemsAcquired = items.reduce((accumulator, current) => {
-					const item = { ...current };
-					const alreadyExistingItem = accumulator.find(
-						(accItem) => accItem.name === item.name,
+				if (isSuccesful) {
+					inventoryStore.handleItemDegradation(weapon);
+					const huntableItems = inventoryStore.existingItems.filter(
+						(item) => item.action === "hunt",
 					);
 
-					if (alreadyExistingItem) {
-						alreadyExistingItem.amount++;
-						alreadyExistingItem.displayName = `${alreadyExistingItem.name} x${alreadyExistingItem.amount}`;
-					} else {
-						item.amount = 1;
-						item.displayName = item.name;
-						accumulator.push(item);
-					}
+					const newItems = utils.randomizeItems(huntableItems, 1);
 
-					return accumulator;
-				}, []);
+					newItems.forEach((item) => {
+						inventoryStore.addInventory(item);
+					});
 
-				this.showResults = true;
-				this.lastActionResult = itemsAcquired
-					.map((item) => item.displayName)
-					.join(", ");
+					resolve(newItems);
+				} else {
+					resolve(null);
+				}
+			}, time);
+		} else {
+			reject(new Error("game is over"));
+		}
+	});
+}
+function handleFullInventory() {
+	eventBus.$emit("showModal", {
+		body: "Your inventory is full. Remove at least one item to proceed.",
+	});
+}
+function energy() {
+	startProgress("Sleeping");
+
+	statsStore
+		.increaseAsync({
+			stat: "energy",
+			amount: 35,
+			time: 5000,
+		})
+		.then(() => {
+			handleResult();
+		});
+}
+function goHunt() {
+	if (inventoryStore.isInventoryFull) {
+		handleFullInventory();
+
+		return;
+	}
+
+	const weapons = ["bow"];
+
+	const availableWeapons = inventoryStore.inventory.filter(
+		(item) => weapons.indexOf(item.id) > -1,
+	);
+	const hasWeapon = availableWeapons.length > 0;
+
+	if (hasWeapon) {
+		// for now there is only one weapon, later user will choose
+		const weapon = availableWeapons[0];
+		startProgress("Hunting");
+		lastActionResult = "";
+
+		hunt({ time: 8000, weapon }).then((items: Item[]) => {
+			handleResult(items);
+			if (!items) {
+				eventBus.$emit("showModal", {
+					body: "You were unable to track down any animal. Better luck next time.",
+				});
 			}
-		},
-		startProgress(action) {
-			this.currentAction = action;
-			this.inProgress = true;
-		},
-		endProgress() {
-			this.currentAction = null;
-			this.inProgress = false;
-		},
-	},
-});
+		});
+	} else {
+		eventBus.$emit("showModal", {
+			body: "You need to craft a weapon first",
+		});
+	}
+}
+function goScavenge() {
+	if (inventoryStore.isInventoryFull) {
+		handleFullInventory();
+
+		return;
+	}
+
+	startProgress("Scavenging");
+	lastActionResult = "";
+
+	scavenge({ time: 3000 }).then((items: Item[]) => {
+		handleResult(items);
+	});
+}
+function handleResult(items?: Item[]) {
+	endProgress();
+
+	if (items) {
+		const itemsAcquired = items.reduce((accumulator: any[], current: any) => {
+			const item = { ...current };
+			const alreadyExistingItem = accumulator.find(
+				(accItem) => accItem.name === item.name,
+			);
+
+			if (alreadyExistingItem) {
+				alreadyExistingItem.amount++;
+				alreadyExistingItem.displayName = `${alreadyExistingItem.name} x${alreadyExistingItem.amount}`;
+			} else {
+				item.amount = 1;
+				item.displayName = item.name;
+				accumulator.push(item);
+			}
+
+			return accumulator;
+		}, []);
+
+		showResults = true;
+		lastActionResult = itemsAcquired.map((item) => item.displayName).join(", ");
+	}
+}
+function startProgress(action) {
+	currentAction = action;
+	inProgress = true;
+}
+function endProgress() {
+	currentAction = null;
+	inProgress = false;
+}
 </script>
 
 <style lang="scss">

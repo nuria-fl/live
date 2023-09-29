@@ -1,61 +1,60 @@
 <template>
-  <button class="GameStatusButton" @click="toggleStatus">
-    <img :src="`/${iconName}.svg`" :alt="iconName" />
-  </button>
+	<button class="GameStatusButton" @click="toggleStatus">
+		<img :src="`/${iconName}.svg`" :alt="iconName" />
+	</button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
+<script setup lang="ts">
+import { computed, onBeforeUnmount, onMounted } from "vue";
 
-import { eventBus } from "@/utils/eventBus";
+import { useStatusStore } from "../store/status";
+import { eventBus } from "../utils/eventBus";
 
-export default defineComponent({
-  computed: {
-    ...mapState(["paused"]),
-    iconName() {
-      return this.paused ? "play" : "pause";
-    },
-  },
-  mounted() {
-    document.addEventListener("visibilitychange", this.handleVisibilityChange);
-  },
-  beforeDestroy() {
-    document.removeEventListener("visibilitychange", this.handleVisibilityChange);
-  },
-  methods: {
-    ...mapMutations(["pauseGame", "playGame"]),
-    notifyApp() {
-      eventBus.$emit("gameStatusChange", this.paused);
-    },
-    toggleStatus() {
-      if (this.paused) {
-        this.playGame();
-      } else {
-        this.pauseGame();
-      }
-      this.notifyApp();
-    },
-    handleVisibilityChange() {
-      if (document.visibilityState === "hidden") {
-        this.pauseGame();
-      } else if (document.visibilityState === "visible") {
-        this.playGame();
-      }
-      this.notifyApp();
-    },
-  },
+const statusStore = useStatusStore();
+
+const iconName = computed(() => {
+	return statusStore.paused ? "play" : "pause";
 });
+
+onMounted(() => {
+	document.addEventListener("visibilitychange", handleVisibilityChange);
+});
+
+onBeforeUnmount(() => {
+	document.removeEventListener("visibilitychange", handleVisibilityChange);
+});
+
+function notifyApp() {
+	eventBus.$emit("gameStatusChange", statusStore.paused);
+}
+
+function toggleStatus() {
+	if (statusStore.paused) {
+		statusStore.playGame();
+	} else {
+		statusStore.pauseGame();
+	}
+	notifyApp();
+}
+
+function handleVisibilityChange() {
+	if (document.visibilityState === "hidden") {
+		statusStore.pauseGame();
+	} else if (document.visibilityState === "visible") {
+		statusStore.playGame();
+	}
+	notifyApp();
+}
 </script>
 
 <style lang="scss">
 .GameStatusButton {
-  margin: 0;
-  padding: 0.2em;
-  background: #eaeaea;
-  border: none;
-  vertical-align: middle;
-  line-height: 0;
-  cursor: pointer;
+	margin: 0;
+	padding: 0.2em;
+	background: #eaeaea;
+	border: none;
+	vertical-align: middle;
+	line-height: 0;
+	cursor: pointer;
 }
 </style>

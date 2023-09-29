@@ -15,12 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { useStore } from "vuex";
-
 import { useGameLoop } from "../mixins/useGameLoop";
+import { useStatsStore } from "../store/stats";
 
-const store = useStore();
+const statsStore = useStatsStore();
+
+const stats = {
+	health: statsStore.health,
+	water: statsStore.water,
+	food: statsStore.food,
+	energy: statsStore.energy,
+};
 
 const { loopTimeoutId, isActive } = useGameLoop(startGameLoop);
 
@@ -31,8 +36,6 @@ const icons = {
 	energy: "⚡",
 };
 
-const stats = computed(() => store.state.stats);
-
 function startGameLoop() {
 	decreaseStats();
 }
@@ -41,14 +44,15 @@ function decreaseStats() {
 	const decreaseInterval = 12 * 1000;
 	loopTimeoutId.value = setTimeout(() => {
 		if (isActive) {
-			store.commit("decrease", { stat: "water", amount: 3 });
-			store.commit("decrease", { stat: "food", amount: 2 });
-			store.commit("decrease", { stat: "energy", amount: 2 });
-			if (store.state.isSick) {
-				store.commit("decrease", { stat: "health", amount: 2 });
+			statsStore.decrease("water", 3);
+			statsStore.decrease("food", 2);
+			statsStore.decrease("energy", 2);
+
+			if (statsStore.isSick) {
+				statsStore.decrease("health", 2);
 			}
 
-			this.decreaseStats();
+			decreaseStats();
 		}
 	}, decreaseInterval);
 }

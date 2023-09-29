@@ -5,13 +5,13 @@
 		<ul>
 			<craftable-item
 				v-for="item in consumables"
-				:key="item.id"
+				:key="item.name"
 				:item="item"
 				@craft="craft"
 			/>
 			<craftable-item
 				v-for="item in medicine"
-				:key="item.id"
+				:key="item.name"
 				:item="item"
 				@craft="craft"
 			/>
@@ -21,19 +21,19 @@
 		<ul>
 			<craftable-item
 				v-for="item in tools"
-				:key="item.id"
+				:key="item.name"
 				:item="item"
 				@craft="craft"
 			/>
 			<craftable-item
 				v-for="item in weapons"
-				:key="item.id"
+				:key="item.name"
 				:item="item"
 				@craft="craft"
 			/>
 			<craftable-item
 				v-for="item in others"
-				:key="item.id"
+				:key="item.name"
 				:item="item"
 				@craft="craft"
 			/>
@@ -41,51 +41,42 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapActions, mapGetters, mapMutations, mapState } from "vuex";
-
+<script setup lang="ts">
 import CampUpgrades from "../components/CampUpgrades.vue";
 import CraftableItem from "../components/CraftableItem.vue";
 import items from "../data/items";
+import { useInventoryStore } from "../store/inventory";
 
-export default defineComponent({
-	components: {
-		CraftableItem,
-		CampUpgrades,
-	},
-	computed: {
-		...mapState(["hasFire", "disabled"]),
-		...mapGetters(["recipes"]),
-		consumables() {
-			return this.recipes.filter((recipe) => recipe.category === "consumable");
-		},
-		medicine() {
-			return this.recipes.filter((recipe) => recipe.category === "medicine");
-		},
-		tools() {
-			return this.recipes.filter((recipe) => recipe.category === "tool");
-		},
-		weapons() {
-			return this.recipes.filter((recipe) => recipe.category === "weapon");
-		},
-		others() {
-			return this.recipes.filter((recipe) => recipe.category === "other");
-		},
-	},
-	methods: {
-		...mapMutations(["addInventory", "enableFire"]),
-		...mapActions(["removeItemsById"]),
-		craft(recipe) {
-			this.removeItemsById(recipe.itemsNeeded);
-			const itemsToCraft = recipe.result.map((itemId) => {
-				return items.find((item) => item.id === itemId);
-			});
+const inventoryStore = useInventoryStore();
 
-			itemsToCraft.forEach((item) => {
-				this.addInventory({ ...item });
-			});
-		},
-	},
-});
+const consumables = inventoryStore.recipes.filter(
+	(recipe) => recipe.category === "consumable",
+);
+
+const medicine = inventoryStore.recipes.filter(
+	(recipe) => recipe.category === "medicine",
+);
+
+const tools = inventoryStore.recipes.filter(
+	(recipe) => recipe.category === "tool",
+);
+
+const weapons = inventoryStore.recipes.filter(
+	(recipe) => recipe.category === "weapon",
+);
+
+const others = inventoryStore.recipes.filter(
+	(recipe) => recipe.category === "other",
+);
+
+function craft(recipe) {
+	inventoryStore.removeItemsById(recipe.itemsNeeded);
+	const itemsToCraft = recipe.result.map((itemId) => {
+		return items.find((item) => item.id === itemId);
+	});
+
+	itemsToCraft.forEach((item) => {
+		inventoryStore.addInventory({ ...item });
+	});
+}
 </script>

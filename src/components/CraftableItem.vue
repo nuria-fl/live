@@ -23,39 +23,38 @@
 	</li>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapState } from "vuex";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
 
+import { useInventoryStore } from "../store/inventory";
+import { useStatusStore } from "../store/status";
 import items from "../utils/items";
 
-export default defineComponent({
-	props: {
-		item: {
-			type: Object,
-			required: true,
-		},
-	},
-	computed: {
-		...mapState(["hasFire", "disabled"]),
-		showFireTip() {
-			return this.item.condition === "fire" && !this.hasFire;
-		},
-		itemsNeeded() {
-			return this.item.itemsNeeded.map(items.getName).join(", ");
-		},
-		toolsNeeded() {
-			if (this.item.toolsNeeded) {
-				return this.item.toolsNeeded.map(items.getName).join(", ");
-			}
+const { item } = defineProps<{ item: any }>();
+const emit = defineEmits<{
+	(e: "craft", item: any): void;
+}>();
 
-			return false;
-		},
-	},
-	methods: {
-		craft() {
-			this.$emit("craft", this.item);
-		},
-	},
+const { disabled } = storeToRefs(useStatusStore());
+const { hasFire } = useInventoryStore();
+
+const showFireTip = computed(() => {
+	item.condition === "fire" && !hasFire;
 });
+
+const itemsNeeded = computed(() => {
+	return item.itemsNeeded.map(items.getName).join(", ");
+});
+const toolsNeeded = computed(() => {
+	if (item.toolsNeeded) {
+		return item.toolsNeeded.map(items.getName).join(", ");
+	}
+
+	return false;
+});
+
+function craft() {
+	emit("craft", item);
+}
 </script>

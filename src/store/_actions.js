@@ -1,5 +1,4 @@
 import utils from "../utils";
-import { eventBus } from "../utils/eventBus";
 
 export default {
 	initInventory({ state, commit }) {
@@ -106,24 +105,24 @@ export default {
 			}
 		});
 	},
-	handleItemDegradation({ commit }, item) {
-		if (item.usesUntilBreakdown > 1) {
-			commit("degradeItem", item.uid);
-		} else {
-			commit("removeInventory", item.uid);
-			eventBus.$emit("showNotification", {
-				text: `${item.name} has broken`,
-			});
-		}
-	},
-	removeItemsById({ state, commit }, items) {
-		const findItemByName = (itemName) => {
-			return state.inventory.find((item) => item.id === itemName);
-		};
+	// handleItemDegradation({ commit }, item) {
+	// 	if (item.usesUntilBreakdown > 1) {
+	// 		commit("degradeItem", item.uid);
+	// 	} else {
+	// 		commit("removeInventory", item.uid);
+	// 		eventBus.$emit("showNotification", {
+	// 			text: `${item.name} has broken`,
+	// 		});
+	// 	}
+	// },
+	// removeItemsById({ state, commit }, items) {
+	// 	const findItemByName = (itemName) => {
+	// 		return state.inventory.find((item) => item.id === itemName);
+	// 	};
 
-		items.forEach((item) => {
-			const itemToRemove = findItemByName(item);
-			commit("removeInventory", itemToRemove.uid);
-		});
-	},
+	// 	items.forEach((item) => {
+	// 		const itemToRemove = findItemByName(item);
+	// 		commit("removeInventory", itemToRemove.uid);
+	// 	});
+	// },
 };

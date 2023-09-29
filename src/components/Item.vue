@@ -26,79 +26,81 @@
 	</article>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import { mapMutations, mapState } from "vuex";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
 
+import { Item } from "../data/items";
+import { Stat } from "../data/Stat";
+import { useInventoryStore } from "../store/inventory";
+import { useStatsStore } from "../store/stats";
+import { useStatusStore } from "../store/status";
 import utils from "../utils";
 import { eventBus } from "../utils/eventBus";
 
-export default defineComponent({
-	props: {
-		item: {
-			type: Object,
-			required: true,
-		},
-	},
-	computed: {
-		...mapState(["disabled", "isSick"]),
-		isConsumable() {
-			return this.item.consumable;
-		},
-		isBreakable() {
-			return this.item.usesUntilBreakdown > 0;
-		},
-		actions() {
-			const actions = ["discard"];
-			if (this.isConsumable) {
-				actions.push("consume");
-			}
+interface ItemWithAmount extends Item {
+	amount: number;
+}
 
-			return actions;
-		},
-		stats() {
-			if (this.isConsumable) {
-				return this.item.value;
-			}
+const { item } = defineProps<{
+	item: ItemWithAmount;
+}>();
 
-			return false;
-		},
-	},
-	methods: {
-		...mapMutations(["removeInventory", "increase", "getSick", "getCured"]),
-		discard(item) {
-			this.removeInventory(item.uid);
-		},
-		doAction(action) {
-			if (action === "consume") {
-				const infected = utils.calculateProbability(this.item.risk);
+const { disabled } = storeToRefs(useStatusStore());
+const statsStore = useStatsStore();
+const inventoryStore = useInventoryStore();
 
-				if (infected && !this.isSick) {
-					eventBus.$emit("showModal", {
-						body: "You got sick!",
-					});
-					this.getSick();
-				} else if (this.item.id === "medicinal-tea") {
-					if (this.isSick) {
-						eventBus.$emit("showModal", {
-							body: "You got cured!",
-						});
-					}
-					this.getCured();
-				}
+const isConsumable = item.consumable;
+const isBreakable = computed(() => {
+	return item.usesUntilBreakdown > 0;
+});
 
-				Object.keys(this.stats).forEach((stat) => {
-					this.increase({
-						stat,
-						amount: this.stats[stat],
-					});
+const actions = computed(() => {
+	const actions = ["discard"];
+	if (isConsumable) {
+		actions.push("consume");
+	}
+
+	return actions;
+});
+
+const stats = computed(() => {
+	if (isConsumable) {
+		return item.value;
+	}
+
+	return false;
+});
+
+function discard(item) {
+	inventoryStore.removeInventory(item.uid);
+}
+
+function doAction(action) {
+	if (action === "consume") {
+		const infected = utils.calculateProbability(item.risk);
+
+		if (infected && !statsStore.isSick) {
+			eventBus.$emit("showModal", {
+				body: "You got sick!",
+			});
+			statsStore.getSick();
+		} else if (item.id === "medicinal-tea") {
+			if (statsStore.isSick) {
+				eventBus.$emit("showModal", {
+					body: "You got cured!",
 				});
 			}
+			statsStore.getCured();
+		}
 
-			this.discard(this.item);
-		},
-	},
-});
+		Object.keys(stats).forEach((stat) => {
+			statsStore.increase(stat as Stat, stats[stat]);
+		});
+	}
+
+	discard(item);
+}
 </script>
 
 <style lang="scss">
