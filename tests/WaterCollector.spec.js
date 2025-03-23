@@ -1,27 +1,28 @@
-import { createLocalVue, shallow } from "@vue/test-utils";
-import Vuex from "vuex";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import WaterCollector from "../src/components/WaterCollector.vue";
-import { __createMocks as createStoreMocks } from "../src/store";
+import { createAppStore } from "../src/store";
 
-// Tell Jest to use the mock implementation of the store
-jest.mock("../src/store");
+const createFreshStore = () => {
+	const store = createAppStore();
 
-const localVue = createLocalVue();
+	// Reset critical state properties
+	store.state.inventory = [];
+	store.state.disabled = false;
 
-localVue.use(Vuex);
+	return store;
+};
 
 describe("WaterCollector", () => {
-	let storeMocks;
-	let wrapper;
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-	beforeEach(() => {
-		// Create a fresh store and wrapper instance for every test case.
-		storeMocks = createStoreMocks();
-		wrapper = shallow(WaterCollector, {
-			store: storeMocks.store,
-			localVue,
-			propsData: {
+	test("It should call removeItemsById when crafted", async () => {
+		const store = createFreshStore();
+
+		render(WaterCollector, {
+			props: {
 				item: {
 					id: "water-collector",
 					name: "Water collector",
@@ -31,21 +32,61 @@ describe("WaterCollector", () => {
 					isCraftable: true,
 				},
 			},
+			global: {
+				plugins: [store],
+			},
 		});
+
+		// Set up necessary items in inventory
+		store.state.inventory = [
+			{ id: "plastic", name: "Plastic" },
+			{ id: "rope", name: "Rope" },
+			{ id: "bottle", name: "Bottle" },
+		];
+
+		jest.spyOn(store, "dispatch");
+
+		const craftButton = screen.getByRole("button", { name: "Craft" });
+		await fireEvent.click(craftButton);
+
+		expect(store.dispatch).toHaveBeenCalledWith("removeItemsById", [
+			"plastic",
+			"rope",
+			"bottle",
+		]);
 	});
 
-	test("It should call removeItemsById when crafted", () => {
-		wrapper.find(".Item__actions .Btn").trigger("click");
-		expect(storeMocks.actions.removeItemsById).toBeCalled();
-	});
+	test("It should show water collector when crafted", async () => {
+		const store = createFreshStore();
 
-	test("It should set hasWaterCollector to true when crafted", () => {
-		wrapper.find(".Item__actions .Btn").trigger("click");
-		expect(wrapper.vm.hasWaterCollector).toBe(true);
-	});
+		render(WaterCollector, {
+			props: {
+				item: {
+					id: "water-collector",
+					name: "Water collector",
+					description: "Collects rain water",
+					itemsNeeded: ["plastic", "rope", "bottle"],
+					toolsNeeded: [],
+					isCraftable: true,
+				},
+			},
+			global: {
+				plugins: [store],
+			},
+		});
 
-	test("It should set isCollecting to true when crafted", () => {
-		wrapper.find(".Item__actions .Btn").trigger("click");
-		expect(wrapper.vm.isCollecting).toBe(true);
+		// Set up necessary items in inventory
+		store.state.inventory = [
+			{ id: "plastic", name: "Plastic" },
+			{ id: "rope", name: "Rope" },
+			{ id: "bottle", name: "Bottle" },
+		];
+
+		jest.spyOn(store, "dispatch");
+
+		const craftButton = screen.getByRole("button", { name: "Craft" });
+		await fireEvent.click(craftButton);
+
+		expect(screen.getByText("Collecting water")).toBeInTheDocument();
 	});
 });

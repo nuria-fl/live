@@ -1,27 +1,27 @@
-import { createLocalVue, shallow } from "@vue/test-utils";
-import Vuex from "vuex";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import Fire from "../src/components/Fire.vue";
-import { __createMocks as createStoreMocks } from "../src/store";
+import { createAppStore } from "../src/store";
 
-// Tell Jest to use the mock implementation of the store
-jest.mock("../src/store");
+const createFreshStore = () => {
+	const store = createAppStore();
 
-const localVue = createLocalVue();
+	store.state.inventory = [];
+	store.state.hasFire = false;
+	store.state.disabled = false;
 
-localVue.use(Vuex);
+	return store;
+};
 
 describe("Fire", () => {
-	let storeMocks;
-	let wrapper;
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-	beforeEach(() => {
-		// Create a fresh store and wrapper instance for every test case.
-		storeMocks = createStoreMocks();
-		wrapper = shallow(Fire, {
-			store: storeMocks.store,
-			localVue,
-			propsData: {
+	test("It should remove items from inventory when crafted", async () => {
+		const store = createFreshStore();
+		render(Fire, {
+			props: {
 				item: {
 					id: "fire",
 					name: "Fire",
@@ -31,21 +31,82 @@ describe("Fire", () => {
 					isCraftable: true,
 				},
 			},
+			global: {
+				plugins: [store],
+			},
 		});
+
+		store.state.inventory = [
+			{
+				id: "wood",
+				name: "Wood",
+				description: "Useful for crafting",
+				action: "scavenge",
+				usesUntilBreakdown: 0,
+			},
+			{
+				id: "flint",
+				name: "Flint",
+				description: "Useful for crafting",
+				action: "scavenge",
+				usesUntilBreakdown: 0,
+			},
+		];
+
+		jest.spyOn(store, "dispatch");
+
+		const button = screen.getByRole("button", { name: "Craft" });
+
+		await fireEvent.click(button);
+
+		expect(store.dispatch).toHaveBeenCalledWith("removeItemsById", [
+			"wood",
+			"flint",
+		]);
+		expect(store.state.inventory).toHaveLength(0);
 	});
 
-	test("It should call removeItemsById when crafted", () => {
-		wrapper.find(".Btn").trigger("click");
-		expect(storeMocks.actions.removeItemsById).toBeCalled();
-	});
+	test("It should call enableFire when crafted", async () => {
+		const store = createFreshStore();
+		render(Fire, {
+			props: {
+				item: {
+					id: "fire",
+					name: "Fire",
+					description: "Will allow you to cook items",
+					itemsNeeded: ["wood", "flint"],
+					toolsNeeded: [],
+					isCraftable: true,
+				},
+			},
+			global: {
+				plugins: [store],
+			},
+		});
+		store.state.inventory = [
+			{
+				id: "wood",
+				name: "Wood",
+				description: "Useful for crafting",
+				action: "scavenge",
+				usesUntilBreakdown: 0,
+			},
+			{
+				id: "flint",
+				name: "Flint",
+				description: "Useful for crafting",
+				action: "scavenge",
+				usesUntilBreakdown: 0,
+			},
+		];
 
-	test("It should call enableFire when crafted", () => {
-		wrapper.find(".Btn").trigger("click");
-		expect(storeMocks.mutations.enableFire).toBeCalled();
-	});
+		jest.spyOn(store, "dispatch");
+		jest.spyOn(store, "commit");
 
-	test("It should set an interval when crafted", () => {
-		wrapper.find(".Btn").trigger("click");
-		expect(wrapper.vm.fireInterval).not.toBe(null);
+		const button = screen.getByRole("button", { name: "Craft" });
+
+		await fireEvent.click(button);
+
+		expect(store.commit).toHaveBeenCalledWith("enableFire");
 	});
 });

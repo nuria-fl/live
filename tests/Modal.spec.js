@@ -1,24 +1,25 @@
-import { shallow } from "@vue/test-utils";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import Modal from "../src/components/Modal.vue";
 
 describe("Modal", () => {
-	let wrapper;
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-	beforeEach(() => {
-		wrapper = shallow(Modal, {
-			propsData: {
+	test("It should emit update event when clicking close button", async () => {
+		const { emitted } = render(Modal, {
+			props: {
 				visible: true,
 				isCloseable: true,
 			},
 		});
-	});
 
-	test("It should emit update event when clicking close button", () => {
-		wrapper.find(".Btn:last-child").trigger("click");
-		expect(wrapper.emitted("update:visible")).toBeTruthy();
+		// Find the close button
+		const closeButton = screen.getByRole("button");
+		await fireEvent.click(closeButton);
 
-		// weird way to get the event payload
-		expect(wrapper.emitted("update:visible")[0][0]).toBe(false);
+		expect(emitted()["update:visible"]).toBeTruthy();
+		expect(emitted()["update:visible"][0][0]).toBe(false);
 	});
 });

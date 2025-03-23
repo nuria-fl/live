@@ -1,32 +1,24 @@
-import { createLocalVue, shallow } from "@vue/test-utils";
-import Vuex from "vuex";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import GameStatusButton from "../src/components/GameStatusButton.vue";
-import { __createMocks as createStoreMocks } from "../src/store";
-
-// Tell Jest to use the mock implementation of the store
-jest.mock("../src/store");
-
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
+import { createAppStore } from "../src/store";
 
 // TODO: how to test after pause state has changed?
 
 describe("GameStatusButton", () => {
-	let storeMocks;
-	let wrapper;
-
-	beforeEach(() => {
-		// Create a fresh store and wrapper instance for every test case.
-		storeMocks = createStoreMocks();
-		wrapper = shallow(GameStatusButton, {
-			store: storeMocks.store,
-			localVue,
+	test("Calls pauseGame when clicked", async () => {
+		const store = createAppStore();
+		render(GameStatusButton, {
+			global: {
+				plugins: [store],
+			},
 		});
-	});
-	test("Calls pauseGame when clicked", () => {
-		wrapper.find(".GameStatusButton").trigger("click");
-		expect(storeMocks.mutations.pauseGame).toBeCalled();
+
+		jest.spyOn(store, "commit");
+		const button = screen.getByRole("button", { name: /pause|play/i });
+
+		await fireEvent.click(button);
+
+		expect(store.commit).toHaveBeenCalledWith("pauseGame");
 	});
 });
