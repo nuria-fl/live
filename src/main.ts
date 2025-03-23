@@ -3,7 +3,9 @@ import "./assets/styles/index.scss";
 import { createApp } from "vue";
 
 import App from "./App.vue";
-import store from "./store";
+import { createAppStore } from "./store";
+
+const store = createAppStore();
 
 const app = createApp(App);
 

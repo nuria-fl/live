@@ -1,27 +1,15 @@
-import { createLocalVue, shallow } from "@vue/test-utils";
-import Vuex from "vuex";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import CraftableItem from "../src/components/CraftableItem.vue";
-import { __createMocks as createStoreMocks } from "../src/store";
-
-// Tell Jest to use the mock implementation of the store
-jest.mock("../src/store");
-
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
+import { createAppStore } from "../src/store";
 
 describe("CraftableItem", () => {
-	let storeMocks;
-	let wrapper;
-
-	beforeEach(() => {
-		// Create a fresh store and wrapper instance for every test case.
-		storeMocks = createStoreMocks();
-		wrapper = shallow(CraftableItem, {
-			store: storeMocks.store,
-			localVue,
-			propsData: {
+	test("Emits craft event", async () => {
+		const { emitted } = render(CraftableItem, {
+			global: {
+				plugins: [createAppStore()],
+			},
+			props: {
 				item: {
 					name: "Bow",
 					description: "",
@@ -34,10 +22,10 @@ describe("CraftableItem", () => {
 				},
 			},
 		});
-	});
 
-	test("Emits craft event", () => {
-		wrapper.find(".Btn").trigger("click");
-		expect(wrapper.emitted("craft")).toBeTruthy();
+		const button = screen.getByRole("button", { name: "Craft" });
+		await fireEvent.click(button);
+
+		expect(emitted()).toHaveProperty("craft");
 	});
 });

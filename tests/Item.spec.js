@@ -1,29 +1,30 @@
-import { createLocalVue, shallow } from "@vue/test-utils";
-import Vuex from "vuex";
+import { fireEvent, render, screen } from "@testing-library/vue";
 
 import Item from "../src/components/Item.vue";
-import { __createMocks as createStoreMocks } from "../src/store";
+import { createAppStore } from "../src/store";
 
-// Tell Jest to use the mock implementation of the store
-jest.mock("../src/store");
+const createFreshStore = () => {
+	const store = createAppStore();
 
-const localVue = createLocalVue();
+	// Reset critical state properties
+	store.state.inventory = [];
+	store.state.disabled = false;
 
-localVue.use(Vuex);
+	return store;
+};
 
 // TODO: test sick/cure
 
 describe("Item", () => {
-	let storeMocks;
-	let wrapper;
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-	beforeEach(() => {
-		// Create a fresh store and wrapper instance for every test case.
-		storeMocks = createStoreMocks();
-		wrapper = shallow(Item, {
-			store: storeMocks.store,
-			localVue,
-			propsData: {
+	test("Calls removeInventory when discarding", async () => {
+		const store = createFreshStore();
+
+		const { emitted } = render(Item, {
+			props: {
 				item: {
 					id: "berries",
 					name: "Berries",
@@ -38,21 +39,100 @@ describe("Item", () => {
 					},
 					risk: 0,
 					daysToPerish: 5,
+					uid: "test-uid", // Add uid required for removal
 				},
 			},
+			global: {
+				plugins: [store],
+			},
 		});
+
+		jest.spyOn(store, "commit");
+
+		// Get the discard button (usually the first button)
+		const discardButton = screen.getAllByRole("button")[0];
+		await fireEvent.click(discardButton);
+
+		expect(store.commit).toHaveBeenCalledWith("removeInventory", "test-uid");
 	});
 
-	test("Calls removeInventory when discarting", () => {
-		wrapper.find(".Btn:first-child").trigger("click");
-		expect(storeMocks.mutations.removeInventory).toBeCalled();
+	test("Calls removeInventory when consuming", async () => {
+		const store = createFreshStore();
+
+		const { emitted } = render(Item, {
+			props: {
+				item: {
+					id: "berries",
+					name: "Berries",
+					description: "Small amount of vitamins and water",
+					action: "scavenge",
+					consumable: true,
+					value: {
+						health: 0,
+						food: 3,
+						water: 3,
+						energy: 0,
+					},
+					risk: 0,
+					daysToPerish: 5,
+					uid: "test-uid",
+				},
+			},
+			global: {
+				plugins: [store],
+			},
+		});
+
+		jest.spyOn(store, "commit");
+
+		// Get the consume button (usually the second button)
+		const consumeButton = screen.getAllByRole("button")[1];
+		await fireEvent.click(consumeButton);
+
+		expect(store.commit).toHaveBeenCalledWith("removeInventory", "test-uid");
 	});
-	test("Calls removeInventory when consuming", () => {
-		wrapper.find(".Btn:last-child").trigger("click");
-		expect(storeMocks.mutations.removeInventory).toBeCalled();
-	});
-	test("Calls increase when consuming", () => {
-		wrapper.find(".Btn:last-child").trigger("click");
-		expect(storeMocks.mutations.increase).toBeCalled();
+
+	test("Calls increase when consuming", async () => {
+		const store = createFreshStore();
+
+		const { emitted } = render(Item, {
+			props: {
+				item: {
+					id: "berries",
+					name: "Berries",
+					description: "Small amount of vitamins and water",
+					action: "scavenge",
+					consumable: true,
+					value: {
+						health: 0,
+						food: 3,
+						water: 3,
+						energy: 0,
+					},
+					risk: 0,
+					daysToPerish: 5,
+					uid: "test-uid",
+				},
+			},
+			global: {
+				plugins: [store],
+			},
+		});
+
+		jest.spyOn(store, "commit");
+
+		// Get the consume button (usually the second button)
+		const consumeButton = screen.getAllByRole("button")[1];
+		await fireEvent.click(consumeButton);
+
+		// Check for increase mutations with correct values
+		expect(store.commit).toHaveBeenCalledWith("increase", {
+			stat: "food",
+			amount: 3,
+		});
+		expect(store.commit).toHaveBeenCalledWith("increase", {
+			stat: "water",
+			amount: 3,
+		});
 	});
 });
